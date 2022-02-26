@@ -3,7 +3,6 @@ import { Layout } from 'antd';
 import Sidebar from './Components/Sidebar';
 import Body from './Components/Body';
 
-
 const { Sider } = Layout;
 
 export class App extends Component {
@@ -17,6 +16,7 @@ export class App extends Component {
   };
 
   render() {
+    console.log(this.props.history)
     const { collapsed } = this.state;
 
     return (
@@ -34,4 +34,4 @@ export class App extends Component {
   }
 }
 
-export default App
+export default App;

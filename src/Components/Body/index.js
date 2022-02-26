@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 import './content.css';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout, Row, Col } from 'antd';
+import Logo from '../../Media/Logo.png'
+import { Routes, Route } from 'react-router-dom';
+import Dashboard from '../Dashboard';
+import Upload from '../Upload';
+import Status from '../Status';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 export class Body extends Component {
   render() {
     return (
       <Layout>
-        <Header className="site-layout-background header-custom" style={{ padding: 0 }} />
+        <Row className='header' align='center'>
+          <Col>
+            <img alt='TheHangLooseHut' className='header-logo' src={Logo}/>
+          </Col>
+        </Row>
         <Content style={{ margin: '0 16px' }}>
-          asdhaksdj
-          <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-            Bill is a cat.
-          </div>
+        <Routes>
+          <Route exact path='/' element={<Dashboard />} />
+          <Route exact path='/status' element={<Status />} />
+          <Route exact path='/upload' element={<Upload />} />
+        </Routes>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        <Footer className='footer' style={{ textAlign: 'center' }}>© THE HANG LOOSE HUT 2022</Footer>
       </Layout>
     )
   }

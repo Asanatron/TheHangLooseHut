@@ -3,6 +3,7 @@
 }
 
 .ant-layout-sider-children {
+  border-right: 2px solid #141414;
   background-color: #2b2b2b !important;
 }
 
@@ -13,3 +14,4 @@
 .ant-layout-sider-trigger {
   background: #141414;
 }
+

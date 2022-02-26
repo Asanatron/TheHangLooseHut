@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
 import {
-  DesktopOutlined,
-  PieChartOutlined
+  UploadOutlined,
+  PieChartOutlined,
+  NotificationOutlined
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import './sider.css';
-
-const { SubMenu } = Menu;
+import HistoryHooks from '../HistoryHooks';
 
 export class Sidebar extends Component {
   render() {
+    const navigate = this.props.navigate;
+
     return (
       <div className='sider-custom'>
-        <div className="logo">
-
-        </div>
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Option 1
+          <Menu.Item className='sidebar-text' key="1" icon={<PieChartOutlined />} onClick={() => navigate('/')}>
+            Dashboard
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Option 2
+          <Menu.Item className='sidebar-text' key="2" icon={<UploadOutlined />} onClick={() => navigate('/upload')}>
+            Upload Design
+          </Menu.Item>
+          <Menu.Item className='sidebar-text' key="3" icon={<NotificationOutlined />} onClick={() => navigate('/status')}>
+            Status 
           </Menu.Item>
         </Menu>
       </div>
@@ -28,4 +30,4 @@ export class Sidebar extends Component {
   }
 }
 
-export default Sidebar
+export default HistoryHooks(Sidebar)
