@@ -12,13 +12,13 @@ const { Content, Footer } = Layout;
 export class Body extends Component {
   render() {
     return (
-      <Layout>
+      <Layout className='content-background'>
         <Row className='header' align='center'>
           <Col>
             <img alt='TheHangLooseHut' className='header-logo' src={Logo}/>
           </Col>
         </Row>
-        <Content style={{ margin: '0 16px' }}>
+        <Content style={{ padding: '0 0px 0px 16px' }}>
         <Routes>
           <Route exact path='/' element={<Dashboard />} />
           <Route exact path='/status' element={<Status />} />

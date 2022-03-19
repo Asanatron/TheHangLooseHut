@@ -1,0 +1,19 @@
+.status{
+  background-color: #efefef;
+  padding: 10px;
+  border-radius: 8px;
+  width: 99%;
+  max-height: 81vh;
+  overflow: scroll;
+}
+.status-designs-card{
+  border-radius: 15px;
+}
+.status-designs-card-image-wrapper{
+  height: 290px;
+  border-radius: 15px;
+}
+.status-designs-card-image{
+  border-radius: 15px;
+  max-height: 285px;
+}

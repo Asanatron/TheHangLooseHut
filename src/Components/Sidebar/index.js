@@ -22,7 +22,7 @@ export class Sidebar extends Component {
             Upload Design
           </Menu.Item>
           <Menu.Item className='sidebar-text' key="3" icon={<NotificationOutlined />} onClick={() => navigate('/status')}>
-            Status 
+            Designs 
           </Menu.Item>
         </Menu>
       </div>
