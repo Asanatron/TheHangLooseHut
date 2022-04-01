@@ -5,7 +5,6 @@ import { LoadingOutlined, InboxOutlined, UploadOutlined, RadiusUpleftOutlined,
 import axios from 'axios';
 import uuid from 'react-uuid'
 import './upload.css'
-import { imageToBlob } from 'react-native-image-to-blob';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
 const { Meta } = Card;
