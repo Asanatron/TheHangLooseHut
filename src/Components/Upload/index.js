@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
-import { Col, Divider, Row , Spin, Card, Input, Upload, message, Select, TreeSelect, Form, Button, notification, Space } from 'antd';
-import { LoadingOutlined, InboxOutlined, UploadOutlined, RadiusUpleftOutlined, 
-  RadiusUprightOutlined, RadiusBottomleftOutlined, RadiusBottomrightOutlined, BorderTopOutlined, BorderBottomOutlined} from '@ant-design/icons';
+import { Col, Divider, Row , Spin, Input, Upload, message, Select, TreeSelect, Button, notification } from 'antd';
+import { LoadingOutlined, InboxOutlined} from '@ant-design/icons';
 import axios from 'axios';
 import uuid from 'react-uuid'
 import './upload.css'
 
 const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
-const { Meta } = Card;
-const { Search } = Input;
 const { Dragger } = Upload;
 const { Option } = Select;
 
@@ -40,12 +37,12 @@ export class Submission extends Component {
   }
 
   async componentDidMount(){
-    var config = {
+    var configclients = {
       method: 'get',
       url: 'https://thehangloosehutbackend.herokuapp.com/clients',
     };
 
-    axios(config).then((res) => {
+    axios(configclients).then((res) => {
       this.setState({
         clients: res.data.clients.data
       })
@@ -54,12 +51,12 @@ export class Submission extends Component {
       console.log(error)
     });
 
-    var config = {
+    var configcategories = {
       method: 'get',
       url: 'https://thehangloosehutbackend.herokuapp.com/categories',
     };
 
-    axios(config).then((res) => {
+    axios(configcategories).then((res) => {
       var categories = []
       res.data.categories.map((category) => {
         categories.push({
@@ -80,8 +77,8 @@ export class Submission extends Component {
   }
 
   onPost(){
-    if(this.state.title != '' && this.state.category != '' && this.state.location != '' && this.state.clientID != '' && 
-    this.state.desc != '' && this.state.image != null && this.state.imageName != '' && this.state.mainLink != ''){
+    if(this.state.title !== '' && this.state.category !== '' && this.state.location !== '' && this.state.clientID !== '' && 
+    this.state.desc !== '' && this.state.image !== null && this.state.imageName !== '' && this.state.mainLink !== ''){
       var configPost = {
         method: 'post',
         url: 'http://localhost:8000/designs/',
@@ -130,21 +127,12 @@ export class Submission extends Component {
         placement: 'bottomRight',
       })
       this.setState({
-        image: this.handleFileRead(info.fileList),
+        image: info.fileList[0],
         imageName: info.fileList[0].name
       })
 
     } else if (status === 'error') {
       message.error(`${info.file.name} file upload failed.`);
-    }
-  }
-  handleFileRead = async (file) => {
-    const imageFile = await imageToBlob(file)
-    if(imageFile){
-      const base64 = await this.convertBase64(imageFile)
-      console.log(base64)
-    } else{
-      console.log('no file')
     }
   }
 

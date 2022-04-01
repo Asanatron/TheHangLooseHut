@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Col, Divider, Row , Spin, Card, Pagination, Button} from 'antd';
+import { Col, Row } from 'antd';
 import { VictoryPie } from 'victory';
-import { LoadingOutlined } from '@ant-design/icons';
 import './dashboard.css';
-
-const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
-const { Meta } = Card;
 
 const designPhases = [
   {status: 'On Hold', id: 1},
