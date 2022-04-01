@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Col, Divider, Row , Spin, Card, Pagination} from 'antd';
+import { Col, Divider, Row , Spin, Card, Pagination, Button} from 'antd';
 import { VictoryPie } from 'victory';
 import { LoadingOutlined } from '@ant-design/icons';
 import './dashboard.css';
@@ -48,6 +48,21 @@ export class Dashboard extends Component {
     });
   }
 
+  asana() {
+    console.log('asana')
+    var config = {
+      method: 'get',
+      url: 'http://localhost:8000/tasks',
+      headers: {}
+    };
+
+    axios(config).then((res) => {
+      console.log(res.data)
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+
   render() {
     var displayDesigns = this.state.designs == null ? null :this.state.designs.filter((design) => {
       return design.title.toLowerCase().includes(this.state.search.toLowerCase())
@@ -65,14 +80,15 @@ export class Dashboard extends Component {
               ]}
             />
           </Col>
+          {/* <Col lg={10}><Button onClick={this.asana}>Asana</Button></Col> */}
         </Row>
 
-        <Row className='dashboard-designs mr3'>
+        {/* <Row className='dashboard-designs mr3'>
           <Row justify='centre' className='dashboard-designs-header w-100 pr3 pl3'>
             <Col lg={3} className=''>Past Designs</Col>
             <Col lg={19}></Col>
-            {/* <Col lg={4}><Search className='dashboard-designs-search-button' placeholder="input search text" onSearch={(e) => this.setState({search: e})} enterButton/></Col> */}
-            <Col lg={2} className='tr'><a className='dashboard-designs-header-see-all'>See All</a></Col>
+            <Col lg={4}><Search className='dashboard-designs-search-button' placeholder="input search text" onSearch={(e) => this.setState({search: e})} enterButton/></Col>
+            <Col lg={2} className='tr'><a href='' className='dashboard-designs-header-see-all'>See All</a></Col>
           </Row>
           <Divider />
           {
@@ -114,7 +130,7 @@ export class Dashboard extends Component {
                 </Row>
             </>
           }
-        </Row>
+        </Row> */}
       </div>
     )
   }

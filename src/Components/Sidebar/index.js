@@ -21,9 +21,9 @@ export class Sidebar extends Component {
           <Menu.Item className='sidebar-text' key="2" icon={<UploadOutlined />} onClick={() => navigate('/upload')}>
             Upload Design
           </Menu.Item>
-          <Menu.Item className='sidebar-text' key="3" icon={<NotificationOutlined />} onClick={() => navigate('/status')}>
+          {/* <Menu.Item className='sidebar-text' key="3" icon={<NotificationOutlined />} onClick={() => navigate('/status')}>
             Designs 
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </div>
     )

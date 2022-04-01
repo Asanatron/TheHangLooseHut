@@ -6,3 +6,28 @@
   max-height: 81vh;
   overflow: scroll;
 }
+.ant-upload.ant-upload-drag p.ant-upload-drag-icon .anticon {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 48px;
+}
+.ant-upload.ant-upload-drag:not(.ant-upload-disabled):hover {
+  border-color: rgba(0, 0, 0, 0.85);
+}
+.ant-input:focus, .ant-input-focused {
+  border-color: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 0 2px rgba(128, 128, 128, 0.2);
+  border-right-width: 1px !important;
+  outline: 0;
+}
+.ant-input:hover {
+  border-color: rgba(0, 0, 0, 0.85);
+  border-right-width: 1px !important;
+}
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: rgba(0, 0, 0, 0.85);
+  border-right-width: 1px !important;
+}
+.ant-select-focused{
+  border-color: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 0 2px rgba(128, 128, 128, 0.2);
+}
