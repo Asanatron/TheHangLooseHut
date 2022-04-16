@@ -21,12 +21,6 @@ const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
 const { Dragger } = Upload;
 const { Option } = Select;
 
-const props = {
-  name: "file",
-  multiple: false,
-  action: "//jsonplaceholder.typicode.com/posts/",
-};
-
 export class Submission extends Component {
   constructor(props) {
     super(props);
@@ -42,10 +36,9 @@ export class Submission extends Component {
       image: null,
       imageName: "",
       mainLink: "",
+      files: null,
+      FILEBASE64URI: null,
     };
-
-    // this.onChange = this.onChange.bind(this);
-    this.onChangeFile = this.onChangeFile.bind(this);
   }
 
   async componentDidMount() {
@@ -103,7 +96,7 @@ export class Submission extends Component {
     ) {
       var configPost = {
         method: "post",
-        url: "http://localhost:8000/designs/",
+        url: "https://thehangloosehutbackend.herokuapp.com/designs/",
         data: {
           title: this.state.title,
           product_category_id: this.state.category,
@@ -138,52 +131,56 @@ export class Submission extends Component {
     }
   }
 
-  // onChange(info) {
-  //   const { status } = info.file;
-  //   if (status !== "uploading") {
-  //   }
-  //   if (status === "done") {
-  //     notification.success({
-  //       message: `${info.file.name} image uploaded successfully.`,
-  //       placement: "bottomRight",
-  //     });
-  //     this.setState({
-  //       image: info.fileList[0],
-  //       imageName: info.fileList[0].name,
-  //     });
-  //   } else if (status === "error") {
-  //     message.error(`${info.file.name} file upload failed.`);
-  //   }
-  // }
-
-  async onChangeFile(event) {
-    notification.success({
-      message: `${info.file.name} image uploaded successfully.`,
-      placement: "bottomRight",
-    });
-    const file = event.target.files[0];
-    const base64 = await this.convertBase64(file);
-
-    this.setState({
-      image: base64,
-      imageName: file.name,
-    });
-  }
-
-  convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
   render() {
+    const { files } = this.state;
+
+    const props = {
+      name: "file",
+      multiple: false,
+      fileList: [],
+      onRemove: (file) => {
+        this.setState((state) => {
+          // If we have to provide multi file suppourt
+          // const index = state.files.indexOf(file);
+          // const newFileList = state.files.slice();
+          // const newFileBASE64URI = state.FILEBASE64URI.slice();
+          // newFileList.splice(index, 1);
+          // newFileBASE64URI.splice(index, 1);
+          return {
+            fileList: null,
+            FILEBASE64URI: null,
+            image: null,
+          };
+        });
+      },
+      beforeUpload: (file) => {
+        // FILEBASE64URI
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          // Make a fileInfo Object
+          let fileInfo = {
+            name: file.name,
+            type: file.type,
+            size: Math.round(file.size / 1000) + " kB",
+            base64: reader.result,
+            file: file,
+          };
+
+          this.setState((state) => ({
+            // If we have to provide multi file suppourt
+            // fileList: [...state.fileList, file],
+            // FILEBASE64URI: [...state.FILEBASE64URI, fileInfo],
+            files: file,
+            imageName: fileInfo.name.substr(0, fileInfo.name.lastIndexOf(".")),
+            FILEBASE64URI: fileInfo.base64,
+            image: fileInfo.base64,
+          }));
+        };
+        return false;
+      },
+    };
+
     return (
       <div className="upload mt3">
         <Row
@@ -199,14 +196,20 @@ export class Submission extends Component {
         <Divider />
         <Row justify="center" gutter={16} className="mb3">
           <Col lg={11}>
-            <input type="file" id="upload" onChange={this.onChangeFile} />
-            {/* <Dragger {...props} onChange={this.onChange}>
+            <Dragger {...props}>
+              {this.state.FILEBASE64URI && (
+                <img src={this.state.FILEBASE64URI} width={"500px"} />
+              )}
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                        <p className="ant-upload-hint">Supported files: jpg, jpeg, png, pdf.</p>
-            </Dragger> */}
+              <p className="ant-upload-text">
+                Click or drag file to this area to upload
+              </p>
+              <p className="ant-upload-hint">
+                Supported files: jpg, jpeg, png, pdf.
+              </p>
+            </Dragger>
           </Col>
           <Col lg={11}>
             <div className="pb1 pa2 f5 b">Title</div>
