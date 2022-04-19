@@ -99,7 +99,7 @@ export class Submission extends Component {
         url: "https://thehangloosehutbackend.herokuapp.com/designs/",
         data: {
           title: this.state.title,
-          product_category_id: this.state.category,
+          product_category_id: Number(this.state.category),
           image: this.state.image,
           image_filename: this.state.imageName,
           description: this.state.desc,
