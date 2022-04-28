@@ -94,9 +94,10 @@ export class Submission extends Component {
       this.state.imageName !== "" &&
       this.state.mainLink !== ""
     ) {
+      console.log(this.state);
       var configPost = {
         method: "post",
-        url: "https://thehangloosehutbackend.herokuapp.com/designs/",
+        url: "http://localhost:8000/designs/",
         data: {
           title: this.state.title,
           product_category_id: Number(this.state.category),
@@ -172,9 +173,9 @@ export class Submission extends Component {
             // fileList: [...state.fileList, file],
             // FILEBASE64URI: [...state.FILEBASE64URI, fileInfo],
             files: file,
-            imageName: fileInfo.name.substr(0, fileInfo.name.lastIndexOf(".")),
+            imageName: fileInfo.name,
             FILEBASE64URI: fileInfo.base64,
-            image: fileInfo.base64,
+            image: fileInfo.base64.slice(22),
           }));
         };
         return false;
