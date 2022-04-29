@@ -1,201 +1,168 @@
-import React, { useEffect, useState } from "react";
-import { PieChart } from "react-minimal-pie-chart";
-import ReactTooltip from "react-tooltip";
-import { Spin } from "antd";
-import "./index.css";
+import React, { Component } from 'react'
+import axios from 'axios';
+import { Col, Row, Divider, Spin, Card, Pagination} from 'antd';
+import { VictoryPie, VictoryLegend } from 'victory';
+import { LoadingOutlined } from '@ant-design/icons';
+import './index.css';
 
-// const designPhases = [
-//     { status: "On Hold", id: 1 },
-//     { status: "Pending Licensor Review", id: 2 },
-//     { status: "Pending Admin Review", id: 3 },
-//     { status: "Rejected By Licensor", id: 7 },
-//     { status: "Rejected By Admin", id: 8 },
-//     { status: "Final Rejected By Admin", id: 9 },
-//     { status: "Approved By Admin With Changes", id: 12 },
-//     { status: "Approved By Licensor With Changes", id: 13 },
-//     { status: "Approved By Admin", id: 14 },
-//     { status: "Approved By Licensor", id: 15 },
-//   ];
+const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
+const { Meta } = Card;
 
-var colorArray = [
-  "#FF6633",
-  "#FFB399",
-  "#FF33FF",
-  "#FFFF99",
-  "#00B3E6",
-  "#E6B333",
-  "#3366E6",
-  "#999966",
-  "#99FF99",
-  "#B34D4D",
-  "#80B300",
-  "#809900",
-  "#E6B3B3",
-  "#6680B3",
-  "#66991A",
-  "#FF99E6",
-  "#CCFF1A",
-  "#FF1A66",
-  "#E6331A",
-  "#33FFCC",
-  "#66994D",
-  "#B366CC",
-  "#4D8000",
-  "#B33300",
-  "#CC80CC",
-  "#66664D",
-  "#991AFF",
-  "#E666FF",
-  "#4DB3FF",
-  "#1AB399",
-  "#E666B3",
-  "#33991A",
-  "#CC9999",
-  "#B3B31A",
-  "#00E680",
-  "#4D8066",
-  "#809980",
-  "#E6FF80",
-  "#1AFF33",
-  "#999933",
-  "#FF3380",
-  "#CCCC00",
-  "#66E64D",
-  "#4D80CC",
-  "#9900B3",
-  "#E64D66",
-  "#4DB380",
-  "#FF4D4D",
-  "#99E6E6",
-  "#6666FF",
-];
+const designPhases = new Map([
+  ['On Hold', 'yellow'],
+  ['Pending Licensor Review', 'yellow'],
+  ['Pending Admin Review', 'yellow'],
+  ['Rejected By Licensor', 'red'],
+  ['Rejected By Admin', 'red'],
+  ['Final Rejected By Admin', 'red'],
+  ['Approved By Admin With Changes', 'green'],
+  ['Approved By Licensor With Changes', 'green'],
+  ['Approved By Admin', 'green'],
+  ['Approved By Licensor', 'green']
+])
 
-const defaultLabelStyle = {
-  fontSize: "5px",
-  fontFamily: "sans-serif",
-};
-
-function makeTooltipContent(entry) {
-  return `Section ${entry.tooltip} has ${entry.value} tasks`;
-}
-
-const Dashboard = () => {
-  const [pieChartData, setPieChartData] = useState([]);
-  const [sectionName, setSectionName] = useState([]);
-  const [tasksForEachSection, setTasksForEachSection] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [selected, setSelected] = useState(undefined);
-  const [hovered, setHovered] = useState(null);
-
-  useEffect(async () => {
-    var myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer 1/1201848339257965:2a0d668cd2058837abd46b7c0e285f9f"
-    );
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
+const sections = [ {gid: '1201675561988415', name: 'Untitled section', resource_type: 'section'},
+{gid: '1202110923593137', name: 'Order Form Inquiry', resource_type: 'section'},
+{gid: '1201697191761872', name: 'GENERAL', resource_type: 'section'},
+{gid: '1201676388962279', name: 'CHECK AFFINITY', resource_type: 'section'},
+{gid: '1201681956608998', name: 'Pending approval after affinity', resource_type: 'section'},
+{gid: '1201713389856031', name: 'FEEDBACK', resource_type: 'section'}];
+export class Dashboard extends Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      designs: null,
+      pageNum: 1,
+      taskData: []
+    }
+  }
+  async componentDidMount(){
+    var configDesigns = {
+      method: 'get',
+      url: 'http://localhost:8000/designs',
+      headers: {}
     };
 
-    const projectSections = await fetch(
-      "https://app.asana.com/api/1.0/projects/1201675561988414/sections",
-      requestOptions
-    );
-
-    const allSections = await projectSections.text();
-    const sectionNames = [];
-    const promises = [];
-    JSON.parse(allSections).data.map((section) => {
-      promises.push(
-        fetch(
-          `https://app.asana.com/api/1.0/sections/${section.gid}/tasks`,
-          requestOptions
-        )
-      );
-      sectionNames.push(section.name);
+    axios(configDesigns).then((res) => {
+      this.setState({
+        designs: res.data.designs.data
+      })
+    })
+    .catch((error) => {
+      console.log(error)
     });
 
-    setSectionName(sectionNames);
+    var sectionData = [];
 
-    const JSONPromises = [];
-    await Promise.all(promises).then((values) => {
-      values.forEach((value) => {
-        JSONPromises.push(value.text());
-      });
-    });
-    const tasksInEachSectionSize = [];
-    const sectionWiseTask = [];
+    sections.forEach(section => {
+      console.log(section)
+      var configTasks= {
+        method: 'get',
+        url: `http://localhost:8000/fetchtasks?gid=${section.gid}`,
+        headers: {}
+      };
 
-    await Promise.all(JSONPromises).then((values) => {
-      values.forEach((value) => {
-        tasksInEachSectionSize.push(JSON.parse(value).data.length);
-        sectionWiseTask.push(JSON.parse(value));
-      });
-    });
-    setTasksForEachSection(sectionWiseTask);
-    let computePieChartData = [];
-    sectionNames.forEach((sec, index) => {
-      computePieChartData.push({
-        title: sec,
-        value: tasksInEachSectionSize[index],
-        color: colorArray[index],
-        tooltip: sec,
-      });
-    });
-    setPieChartData(computePieChartData);
-    setIsLoading(false);
-  }, []);
+      axios(configTasks).then((res) => {
+        console.log(res.data.tasks.data.length)
+        sectionData.push({x: res.data.tasks.data.length, y: res.data.tasks.data.length})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    })
 
-  if (isLoading) {
-    return (
-      <div className="example">
-        <Spin size="large" />
-        <span>Building Analytics from Asana</span>
-      </div>
-    );
+    this.setState({
+      taskData: sectionData
+    })
   }
-
-  return (
-    <div className="dashboard">
-      <div className="pieChart">
-        <div data-tip="" data-for="chart">
-          <PieChart
-            data={pieChartData}
-            label={({ dataEntry }) => Math.round(dataEntry.percentage) + "%"}
-            onClick={(_, index) => {
-              setSelected(index === selected ? undefined : index);
-            }}
-            animate
-            labelStyle={{
-              ...defaultLabelStyle,
-            }}
-            labelPosition={90}
-            onMouseOver={(_, index) => {
-              setHovered(index);
-            }}
-            onMouseOut={() => {
-              setHovered(null);
-            }}
-          />
-          <ReactTooltip
-            id="chart"
-            getContent={() => {
-              if (hovered != null) {
-                return makeTooltipContent(pieChartData[hovered]);
-              }
-              return null;
-            }}
-          />
-        </div>
+  render() {
+    console.log(this.state.taskData)
+    return (
+      <div className='dashboard mt3'>
+        {
+          this.state.taskData.length !== 6 ?
+          <Row className='w-100' justify='center'>
+            <Col lg={2}><Spin indicator={antIcon} className='dashboard-designs-spin'/></Col>
+          </Row> :
+          <Row>
+            <Col lg={12}>
+              <VictoryPie 
+                data={this.state.taskData}
+                animate={{
+                  duration: 2000
+                }}
+                colorScale={["#262626", "#454444", "#636363", "#737373", "#878787", "#999999" ]}
+                style={{
+                  data: {
+                    stroke: "black", strokeWidth: 0.2
+                  }
+                }}
+              />
+            </Col>
+            <Col lg={12}>
+            <VictoryLegend x={125} y={50}
+              title="Legend"
+              centerTitle
+              orientation="vertical"
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: {fontSize: 20 } }}
+              data={[
+                { name: "Untitled section", symbol: { fill: "#262626"} },
+                { name: "Order Form Inquiry", symbol: { fill: "#454444" } },
+                { name: "GENERAL", symbol: { fill: "#636363" } },
+                { name: "CHECK AFFINITY", symbol: { fill: "#737373"} },
+                { name: 'Pending approval after affinity', symbol: { fill: "#878787" } },
+                { name: "FEEDBACK", symbol: { fill: "#999999" } }
+              ]}
+            />
+            </Col>
+          </Row>
+        }
+        <Row className='dashboard-designs w-100 mr3 mt3'>
+          <Row justify='centre' className='dashboard-designs-header w-100 pr3 pl3'>
+            <Col lg={5} className=''>Past Designs</Col>
+            <Col lg={19}></Col>
+          </Row>
+          <Divider />
+          {
+            this.state.designs == null
+            ? <Row className='w-100' justify='center'>
+              <Col lg={2}><Spin indicator={antIcon} className='dashboard-designs-spin'/></Col>
+            </Row>
+            :<>
+                <Row justify='center' gutter={16} className='w-100'>
+                  {
+                    this.state.designs.slice((this.state.pageNum-1)*4, this.state.pageNum*4).map((design, index) => {
+                      return(
+                        <Col lg={6}>
+                          <Card
+                            key={index}
+                            hoverable
+                            className='dashboard-designs-card'
+                            cover={<Row justify='center' align='middle' className='dashboard-designs-card-image-wrapper'>
+                              <Col className='pa2'><img alt="example" className='dashboard-designs-card-image' src={design.iterations[0].image.urls.or} /></Col>
+                            </Row>}
+                          >
+                            <Meta title={<Row justify='center'>
+                              <Col span={8}>{design.title ? design.title.length > 15 ? design.title.slice(0,14)+'...' : design.title: ''}</Col>
+                              <Col span={12} offset={4} >{design.primary_client ? design.primary_client.name.length > 15 ? design.primary_client.name.slice(0,14)+'...' : design.primary_client.name : ''}</Col>
+                            </Row>} description={<span className={designPhases.get(design.phase.name)}>{design.phase.name}</span>} />
+                          </Card>
+                        </Col>
+                      )
+                    })
+                  }
+                </Row>
+                <Row className='w-100 pt3' justify='center'>
+                  <Col lg={7}><Pagination pageSize={4} total={this.state.designs.length} onChange={(e) => this.setState({pageNum: e})}/></Col>
+                </Row>
+            </>
+          }
+        </Row>
       </div>
-      <div className="pieChartInfo">
-        <h1>Click on any pie to get list of all tasks.</h1>
-      </div>
-    </div>
-  );
-};
+    )
+  }
+}
 
-export default Dashboard;
+export default Dashboard

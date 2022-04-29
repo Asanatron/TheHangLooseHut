@@ -1,0 +1,8 @@
+.login-box{
+  height: 45vh;
+}
+.login-form {
+  background-color: #efefef;
+  padding: 40px 50px;
+  border-radius: 10px;
+}

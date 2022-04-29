@@ -84,24 +84,22 @@ export class Submission extends Component {
   }
 
   onPost() {
+    
     if (
-      this.state.title !== "" &&
+      this.state.imageName !== "" &&
       this.state.category !== "" &&
-      this.state.location !== "" &&
       this.state.clientID !== "" &&
       this.state.desc !== "" &&
-      this.state.image !== null &&
-      this.state.imageName !== "" &&
-      this.state.mainLink !== ""
+      this.state.image !== null
     ) {
       var configPost = {
         method: "post",
-        url: "https://thehangloosehutbackend.herokuapp.com/designs/",
+        url: "http://localhost:8000/designs/",
         data: {
-          title: this.state.title,
+          title: this.state.title.length === 0 ? this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")) : this.state.title,
           product_category_id: Number(this.state.category),
           image: this.state.image,
-          image_filename: this.state.imageName,
+          image_filename: this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")),
           description: this.state.desc,
           primary_client_id: this.state.clientID,
           is_expedited: true,
@@ -172,9 +170,9 @@ export class Submission extends Component {
             // fileList: [...state.fileList, file],
             // FILEBASE64URI: [...state.FILEBASE64URI, fileInfo],
             files: file,
-            imageName: fileInfo.name.substr(0, fileInfo.name.lastIndexOf(".")),
+            imageName: fileInfo.name,
             FILEBASE64URI: fileInfo.base64,
-            image: fileInfo.base64,
+            image: fileInfo.base64.slice(23),
           }));
         };
         return false;
@@ -215,7 +213,7 @@ export class Submission extends Component {
             <div className="pb1 pa2 f5 b">Title</div>
             <Input
               className=""
-              placeholder="Enter design title"
+              placeholder={this.state.imageName.length === 0 ? "Enter design title" : this.state.imageName.substring(0,this.state.imageName.lastIndexOf("."))}
               onChange={(e) => this.setState({ title: e.target.value })}
             />
             <div className="pb1 pa2 f5 b">Description</div>
@@ -223,12 +221,6 @@ export class Submission extends Component {
               className=""
               placeholder="Enter design description"
               onChange={(e) => this.setState({ desc: e.target.value })}
-            />
-            <div className="pb1 pa2 f5 b">Location</div>
-            <Input
-              className=""
-              placeholder="Enter client location"
-              onChange={(e) => this.setState({ location: e.target.value })}
             />
             <div className="pb1 pa2 f5 b">Primary Licensor</div>
             <Select
@@ -269,12 +261,6 @@ export class Submission extends Component {
               onChange={(e) => {
                 this.setState({ category: e });
               }}
-            />
-            <div className="pb1 pa2 f5 b">Main Link</div>
-            <Input
-              className=""
-              placeholder="Enter client location"
-              onChange={(e) => this.setState({ mainLink: e.target.value })}
             />
           </Col>
         </Row>
