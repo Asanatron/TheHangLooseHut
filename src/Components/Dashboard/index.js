@@ -26,7 +26,13 @@ const sections = [ {gid: '1201675561988415', name: 'Untitled section', resource_
 {gid: '1201697191761872', name: 'GENERAL', resource_type: 'section'},
 {gid: '1201676388962279', name: 'CHECK AFFINITY', resource_type: 'section'},
 {gid: '1201681956608998', name: 'Pending approval after affinity', resource_type: 'section'},
-{gid: '1201713389856031', name: 'FEEDBACK', resource_type: 'section'}];
+{gid: '1201713389856031', name: 'FEEDBACK', resource_type: 'section'},
+{gid: '1202204681516958', name: 'Approved From Affinity', resource_type: 'section'},
+{gid: '1202204681516963', name: 'Rejected From Affinity', resource_type: 'section'},
+{gid: '1202204681516966', name: 'Uploaded to Affinity', resource_type: 'section'},
+{gid: '1202204681516973', name: 'Customer Review', resource_type: 'section'}];
+
+
 export class Dashboard extends Component {
   constructor(props) {
     super(props)
@@ -40,7 +46,7 @@ export class Dashboard extends Component {
   async componentDidMount(){
     var configDesigns = {
       method: 'get',
-      url: 'http://localhost:8000/designs',
+      url: 'https://thehangloosehutbackend.herokuapp.com/designs',
       headers: {}
     };
 
@@ -56,15 +62,13 @@ export class Dashboard extends Component {
     var sectionData = [];
 
     sections.forEach(section => {
-      console.log(section)
       var configTasks= {
         method: 'get',
-        url: `http://localhost:8000/fetchtasks?gid=${section.gid}`,
+        url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=${section.gid}`,
         headers: {}
       };
 
       axios(configTasks).then((res) => {
-        console.log(res.data.tasks.data.length)
         sectionData.push({x: res.data.tasks.data.length, y: res.data.tasks.data.length})
       })
       .catch((error) => {
@@ -77,7 +81,6 @@ export class Dashboard extends Component {
     })
   }
   render() {
-    console.log(this.state.taskData)
     return (
       <div className='dashboard mt3'>
         {

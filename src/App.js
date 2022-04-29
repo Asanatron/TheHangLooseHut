@@ -23,7 +23,7 @@ export class App extends Component {
   Login(){
     var configLogin = {
       method: "get",
-      url: `http://localhost:8000/login?id=${this.state.username}&pwd=${this.state.password}`,
+      url: `https://thehangloosehutbackend.herokuapp.com/login?id=${this.state.username}&pwd=${this.state.password}`,
     };
 
     axios(configLogin)

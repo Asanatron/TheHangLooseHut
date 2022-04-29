@@ -94,13 +94,13 @@ export class Submission extends Component {
     ) {
       var configPost = {
         method: "post",
-        url: "http://localhost:8000/designs/",
+        url: "https://thehangloosehutbackend.herokuapp.com/designs/",
         data: {
           title: this.state.title.length === 0 ? this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")) : this.state.title,
           product_category_id: Number(this.state.category),
           image: this.state.image,
           image_filename: this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")),
-          description: this.state.desc,
+          description: this.state.desc.substring(this.state.desc.lastIndexOf("/")+1),
           primary_client_id: this.state.clientID,
           is_expedited: true,
         },
@@ -108,11 +108,28 @@ export class Submission extends Component {
 
       axios(configPost)
         .then((res) => {
-          notification.success({
-            message: `${this.state.title} design uploaded successfully to Affinity.`,
-            placement: "bottomRight",
-          });
-          console.log(res);
+          if(res.error){
+            notification.error({
+              message: `Design failed to upload.`,
+              placement: "bottomRight",
+            });
+          } else{
+            var configMoveTask = {
+              method: "post",
+              url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}&sectionid=${'1202204681516966'}`,
+              headers: {}
+            };
+
+            axios(configMoveTask).then((res => {
+              notification.success({
+                message: `${this.state.title} design uploaded successfully to Affinity.`,
+                placement: "bottomRight",
+              });           
+            })).catch((error => {
+              console.log(error)
+            }))
+      
+          }
         })
         .catch((error) => {
           notification.error({
