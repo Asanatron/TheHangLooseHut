@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Row, Col, Input, Button, notification } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import Sidebar from './Components/Sidebar';
 import Body from './Components/Body';
 import Logo from './Media/Logo.png';
@@ -11,7 +12,7 @@ const { Sider } = Layout;
 export class App extends Component {
   state = {
     collapsed: false,
-    loginState: 'LoggedIn',
+    loginState: 'LoggedOut',
     username: '',
     password: ''
   };
@@ -26,7 +27,8 @@ export class App extends Component {
       url: `https://thehangloosehutbackend.herokuapp.com/login?id=${this.state.username}&pwd=${this.state.password}`,
     };
 
-    axios(configLogin)
+    if(this.state.password !== '' && this.state.username !== ''){
+      axios(configLogin)
       .then((res) => {
         if(res.data === true){
           this.setState({
@@ -42,6 +44,12 @@ export class App extends Component {
       .catch((error) => {
         console.log(error);
       });
+    } else{
+      notification.error({
+        message: `Enter Username and Password`,
+        placement: "bottomRight",
+      });
+    }
   }
 
   render() {
@@ -72,12 +80,12 @@ export class App extends Component {
               </div> */}
               <Input
                 className=""
-                placeholder="Enter username"
+                placeholder="Enter Username"
                 onChange={(e) => this.setState({ username: e.target.value })}
               />
-              <Input
-                className=""
-                placeholder="Enter password"
+              <Input.Password
+                placeholder="Enter Password"
+                iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                 onChange={(e) => this.setState({ password: e.target.value })}
               />
               <Row justify='middle' align='center' className='mt3'>
