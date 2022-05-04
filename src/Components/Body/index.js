@@ -20,9 +20,9 @@ export class Body extends Component {
         </Row>
         <Content style={{ padding: '0 0px 0px 16px' }}>
         <Routes>
-          <Route exact path='/' element={<Dashboard />} />
-          <Route exact path='/status' element={<Status />} />
-          <Route exact path='/upload' element={<Upload />} />
+          <Route exact path='/TheHangLooseHut/' element={<Dashboard />} />
+          {/* <Route exact path='/status' element={<Status />} /> */}
+          <Route exact path='/TheHangLooseHut/upload' element={<Upload />} />
         </Routes>
         </Content>
         <Footer className='footer' style={{ textAlign: 'center' }}>© THE HANG LOOSE HUT 2022</Footer>

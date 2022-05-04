@@ -15,10 +15,10 @@ export class Sidebar extends Component {
     return (
       <div className='sider-custom'>
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item className='sidebar-text' key="1" icon={<PieChartOutlined />} onClick={() => navigate('/')}>
+          <Menu.Item className='sidebar-text' key="1" icon={<PieChartOutlined />} onClick={() => navigate('TheHangLooseHut/')}>
             Dashboard
           </Menu.Item>
-          <Menu.Item className='sidebar-text' key="2" icon={<UploadOutlined />} onClick={() => navigate('/upload')}>
+          <Menu.Item className='sidebar-text' key="2" icon={<UploadOutlined />} onClick={() => navigate('TheHangLooseHut/upload')}>
             Upload Design
           </Menu.Item>
           {/* <Menu.Item className='sidebar-text' key="3" icon={<NotificationOutlined />} onClick={() => navigate('/status')}>
