@@ -3,7 +3,8 @@
   padding: 10px;
   border-radius: 8px;
   width: 99%;
-  max-height: 81vh;
+  min-height: 80vh;
+  max-height: max-content;
   overflow: scroll;
 }
 .ant-upload.ant-upload-drag p.ant-upload-drag-icon .anticon {
@@ -30,4 +31,34 @@
 .ant-select-focused{
   border-color: rgba(0, 0, 0, 0.85);
   box-shadow: 0 0 0 2px rgba(128, 128, 128, 0.2);
+}
+.ant-btn-primary {
+  border-color: #2b2b2b !important;
+  background: #2b2b2b !important;
+  border-radius: 4px;
+}
+.ant-pagination-item-active a {
+  color: #2b2b2b !important;
+}
+.ant-pagination-item-active {
+  border-color: #2b2b2b !important;
+}
+.ant-pagination-item:hover {
+  border-color: #2b2b2b !important;
+}
+.ant-pagination-item:hover a {
+  color: #2b2b2b !important;
+}
+a {
+  color: #2b2b2b !important;
+}
+.ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-link-icon, .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-link-icon {
+  color: #2b2b2b !important; 
+}
+.ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link {
+  color: #2b2b2b;
+  border-color: #2b2b2b;
+}
+.ant-spin{
+  color: #2b2b2b !important;
 }

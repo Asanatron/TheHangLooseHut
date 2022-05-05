@@ -6,7 +6,8 @@ import {
   Spin,
   Input,
   Upload,
-  message,
+  Pagination,
+  Card,
   Select,
   TreeSelect,
   Button,
@@ -20,12 +21,28 @@ import "./upload.css";
 const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
 const { Dragger } = Upload;
 const { Option } = Select;
+const { Meta } = Card;
+
+const designPhases = new Map([
+  ['On Hold', 'yellow'],
+  ['Pending Licensor Review', 'yellow'],
+  ['Pending Admin Review', 'yellow'],
+  ['Rejected By Licensor', 'red'],
+  ['Rejected By Admin', 'red'],
+  ['Final Rejected By Admin', 'red'],
+  ['Approved By Admin With Changes', 'green'],
+  ['Approved By Licensor With Changes', 'green'],
+  ['Approved By Admin', 'green'],
+  ['Approved By Licensor', 'green']
+])
 
 export class Submission extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      designs: null,
+      pageNum: 1,
       clients: null,
       category: "",
       title: "",
@@ -42,6 +59,21 @@ export class Submission extends Component {
   }
 
   async componentDidMount() {
+    var configDesigns = {
+      method: 'get',
+      url: 'https://thehangloosehutbackend.herokuapp.com/designs',
+      headers: {}
+    };
+
+    axios(configDesigns).then((res) => {
+      this.setState({
+        designs: res.data.designs.data
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+
     var configclients = {
       method: "get",
       url: "https://thehangloosehutbackend.herokuapp.com/clients",
@@ -197,12 +229,12 @@ export class Submission extends Component {
     };
 
     return (
-      <div className="upload mt3">
+      <div className="upload mt3 mb3">
         <Row
           justify="centre"
           className="dashboard-designs-header w-100 pr3 pl3"
         >
-          <Col lg={3} className="">
+          <Col lg={3} className="f4">
             Upload Design
           </Col>
           <Col lg={21}></Col>
@@ -291,6 +323,47 @@ export class Submission extends Component {
           >
             Upload to Affinity
           </Button>
+        </Row>
+        <Row className='dashboard-designs w-100 ma3'>
+          <Row justify='centre' className='dashboard-designs-header w-100 pr3 pl3'>
+            <Col lg={5} className='f4'>Past Designs</Col>
+            <Col lg={19}></Col>
+          </Row>
+          <Divider />
+          {
+            this.state.designs == null
+            ? <Row className='w-100 mb3' justify='center'>
+              <Col lg={2}><Spin indicator={antIcon} className='dashboard-designs-spin'/></Col>
+            </Row>
+            :<>
+                <Row justify='center' gutter={16} className='w-100'>
+                  {
+                    this.state.designs.slice((this.state.pageNum-1)*4, this.state.pageNum*4).map((design, index) => {
+                      return(
+                        <Col lg={6}>
+                          <Card
+                            key={index}
+                            hoverable
+                            className='dashboard-designs-card'
+                            cover={<Row justify='center' align='middle' className='dashboard-designs-card-image-wrapper'>
+                              <Col className='pa2'><img alt="example" className='dashboard-designs-card-image' src={design.iterations[0].image.urls.or} /></Col>
+                            </Row>}
+                          >
+                            <Meta title={<Row justify='center'>
+                              <Col span={8}>{design.title ? design.title.length > 15 ? design.title.slice(0,14)+'...' : design.title: ''}</Col>
+                              <Col span={12} offset={4} >{design.primary_client ? design.primary_client.name.length > 15 ? design.primary_client.name.slice(0,14)+'...' : design.primary_client.name : ''}</Col>
+                            </Row>} description={<span className={designPhases.get(design.phase.name)}>{design.phase.name}</span>} />
+                          </Card>
+                        </Col>
+                      )
+                    })
+                  }
+                </Row>
+                <Row className='w-100 pt3' justify='center'>
+                  <Col lg={7}><Pagination pageSize={4} total={this.state.designs.length} onChange={(e) => this.setState({pageNum: e})}/></Col>
+                </Row>
+            </>
+          }
         </Row>
       </div>
     );

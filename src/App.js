@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
 import { Layout, Row, Col, Input, Button, notification } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import Sidebar from './Components/Sidebar';
 import Body from './Components/Body';
 import Logo from './Media/Logo.png';
 import './App.css';
 import axios from "axios";
 
-const { Sider } = Layout;
-
 export class App extends Component {
   state = {
     collapsed: false,
-    loginState: 'LoggedOut',
+    loginState: 'LoggedIn',
     username: '',
     password: ''
   };
@@ -59,14 +56,9 @@ export class App extends Component {
       <div>
         {
           this.state.loginState === 'LoggedIn' ?
-          <Layout style={{ minHeight: '100vh' }}>
-          <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-            <Sidebar />
-          </Sider>
           <Layout className="site-layout">
             <Body />
-          </Layout>
-        </Layout> :
+          </Layout>:
         <div className='login-page'>
           <Row className='header' align='center'>
             <Col>
@@ -75,9 +67,6 @@ export class App extends Component {
           </Row>
           <Row className='login-box' justify='bottom' align='center'>
             <Col className='f3 login-form'>
-              {/* <div className='tc'>
-                Login
-              </div> */}
               <Input
                 className=""
                 placeholder="Enter Username"
