@@ -140,28 +140,21 @@ export class Submission extends Component {
 
       axios(configPost)
         .then((res) => {
-          if(res.error){
-            notification.error({
-              message: `Design failed to upload.`,
-              placement: "bottomRight",
-            });
-          } else{
-            var configMoveTask = {
-              method: "post",
-              url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}&sectionid=${'1202204681516966'}`,
-              headers: {}
-            };
+          var configMoveTask = {
+            method: "post",
+            url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}&sectionid=${'1202204681516966'}`,
+            headers: {}
+          };
 
-            axios(configMoveTask).then((res => {
-              notification.success({
-                message: `${this.state.title} design uploaded successfully to Affinity.`,
-                placement: "bottomRight",
-              });           
-            })).catch((error => {
-              console.log(error)
-            }))
-      
-          }
+          axios(configMoveTask).then((res => {
+            console.log(res)
+            notification.success({
+              message: `${this.state.title} design uploaded successfully to Affinity.`,
+              placement: "bottomRight",
+            });           
+          })).catch((error => {
+            console.log(error)
+          }))
         })
         .catch((error) => {
           notification.error({
