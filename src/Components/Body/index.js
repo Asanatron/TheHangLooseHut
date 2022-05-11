@@ -12,44 +12,57 @@ import './content.css'
 const { Content, Footer } = Layout;
 const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
 
-const sections = [ {gid: '1201675561988415', name: 'Untitled section', resource_type: 'section'},
-{gid: '1202110923593137', name: 'Order Form Inquiry', resource_type: 'section'},
-{gid: '1201697191761872', name: 'GENERAL', resource_type: 'section'},
-{gid: '1201676388962279', name: 'CHECK AFFINITY', resource_type: 'section'},
-{gid: '1201681956608998', name: 'Pending approval after affinity', resource_type: 'section'},
-{gid: '1201713389856031', name: 'FEEDBACK', resource_type: 'section'},
-{gid: '1202204681516958', name: 'Approved From Affinity', resource_type: 'section'},
-{gid: '1202204681516963', name: 'Rejected From Affinity', resource_type: 'section'},
-{gid: '1202204681516966', name: 'Uploaded to Affinity', resource_type: 'section'},
-{gid: '1202204681516973', name: 'Customer Review', resource_type: 'section'}];
-
 export class Body extends Component {
   constructor(props) {
     super(props)
   
     this.state = {
       designs: null,
-      pageNum: 1,
-      taskData: []
+      taskData: [],
+      Fetched: false
     }
   }
 
   async componentDidMount(){
-    var sectionData = [];
+    var sectionData = []
 
-    sections.forEach(section => {
-      var configTasks= {
+    var ReviewConfig = {
+      method: 'get',
+      url: `http://localhost:8080/fetchtasks?gid=1202204681516973`,
+      headers: {}
+    };
+
+    axios(ReviewConfig).then((res) => {
+      sectionData.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
+
+      var UploadedConfig = {
         method: 'get',
-        url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=${section.gid}`,
+        url: `http://localhost:8080/fetchtasks?gid=1202204681516966`,
         headers: {}
       };
+      
+      axios(UploadedConfig).then((res) => {
+        sectionData.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
+  
+        var ApprovedConfig = {
+          method: 'get',
+          url: `http://localhost:8080/fetchtasks?gid=1202204681516958`,
+          headers: {}
+        };
 
-      axios(configTasks).then((res) => {
-        sectionData.push({x: res.data.tasks.data.length, y: res.data.tasks.data.length})
-      })
-      .catch((error) => {
+        axios(ApprovedConfig).then((res) => {
+          sectionData.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
+          this.setState({
+            Fetched: true
+          })
+        }).catch((error) => {
+          console.log(error)
+        })
+      }).catch((error) => {
         console.log(error)
       })
+    }).catch((error) => {
+      console.log(error)
     })
 
     this.setState({
@@ -58,6 +71,7 @@ export class Body extends Component {
   }
   
   render() {
+    console.log(this.state)
     return (
       <Layout className='content-background'>
         <Row className='header' align='center'>
@@ -68,8 +82,8 @@ export class Body extends Component {
         <Row style={{minHeight: '85vh'}} gutter={16}>
           <Col lg={6}>
           {
-            this.state.taskData.length >= 6 ?
-            <Row className='w-100' justify='center'>
+            !this.state.Fetched ?
+            <Row className='w-100 ma3' justify='center'>
               <Col lg={2}><Spin indicator={antIcon} className='dashboard-designs-spin'/></Col>
             </Row> :
             <div className='asana ma3'>
@@ -86,7 +100,7 @@ export class Body extends Component {
                     animate={{
                       duration: 2000
                     }}
-                    colorScale={["#262626", "#454444", "#636363", "#737373", "#878787", "#999999" ]}
+                    colorScale={["#76473C", "#3C763D", "#3C4776",]}
                     style={{
                       data: {
                         stroke: "black", strokeWidth: 0.2
@@ -104,12 +118,9 @@ export class Body extends Component {
                     gutter={20}
                     style={{ border: { stroke: "black" }, title: {fontSize: 20 } }}
                     data={[
-                      { name: "Untitled section", symbol: { fill: "#262626"} },
-                      { name: "Order Form Inquiry", symbol: { fill: "#454444" } },
-                      { name: "GENERAL", symbol: { fill: "#636363" } },
-                      { name: "CHECK AFFINITY", symbol: { fill: "#737373"} },
-                      { name: 'Pending approval after affinity', symbol: { fill: "#878787" } },
-                      { name: "FEEDBACK", symbol: { fill: "#999999" } }
+                      { name: "Customer Review", symbol: { fill: "#76473C"} },
+                      { name: "Approved From Affinity", symbol: { fill: "#3C763D" } },
+                      { name: "Uploaded to Affinity", symbol: { fill: "#3C4776" } }
                     ]}
                   />
                 </Col>
@@ -121,8 +132,6 @@ export class Body extends Component {
             <Content style={{ padding: '0px 0px 0px 16px' }}>
             <Routes>
               <Route exact path='/TheHangLooseHut/' element={<Upload />} />
-              {/* <Route exact path='/status' element={<Status />} /> */}
-              {/* <Route exact path='/TheHangLooseHut/upload' element={<Upload />} /> */}
             </Routes>
             </Content>
           </Col>

@@ -3,11 +3,9 @@
   border-bottom: 2px solid #141414;
   padding: 1em;
 }
-
 .header-logo{
   width: 25rem;
 }
-
 .footer{
   background-color: #2b2b2b !important;
   border-top: 2px solid #141414;
@@ -16,18 +14,12 @@
   height: 48px;
   font-size: 16px;
 }
-
 .sidebar-text{
   font-size: 18px;
 }
 .content-background{
   background-color: white;
 }
-.asana{
-
-}
-
 .ant-divider-horizontal {
   margin: 0px 0px 18px 0px !important;
-  /* margin-bottom: 12px !important; */
 }

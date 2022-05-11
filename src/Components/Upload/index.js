@@ -1,18 +1,5 @@
 import React, { Component } from "react";
-import {
-  Col,
-  Divider,
-  Row,
-  Spin,
-  Input,
-  Upload,
-  Pagination,
-  Card,
-  Select,
-  TreeSelect,
-  Button,
-  notification,
-} from "antd";
+import { Col, Divider, Row, Spin, Input, Upload, Pagination, Card, Select, TreeSelect, Button, Radio, notification } from "antd";
 import { LoadingOutlined, InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
 import uuid from "react-uuid";
@@ -42,26 +29,27 @@ export class Submission extends Component {
 
     this.state = {
       designs: null,
-      pageNum: 1,
       clients: null,
-      category: "",
-      title: "",
-      location: "",
-      clientID: "",
       treeData: null,
-      desc: "",
+
       image: null,
-      imageName: "",
-      mainLink: "",
       files: null,
       FILEBASE64URI: null,
+
+      imageName: "",
+      category: "",
+      title: "",
+      clientID: "",
+      desc: "",
+      is_expedited: false,
+      pageNum: 1,
     };
   }
 
   async componentDidMount() {
     var configDesigns = {
       method: 'get',
-      url: 'https://thehangloosehutbackend.herokuapp.com/designs',
+      url: 'http://localhost:8080/designs',
       headers: {}
     };
 
@@ -69,34 +57,33 @@ export class Submission extends Component {
       this.setState({
         designs: res.data.designs.data
       })
-    })
-    .catch((error) => {
+    }).catch((error) => {
       console.log(error)
     });
 
-    var configclients = {
+    var configClients = {
       method: "get",
-      url: "https://thehangloosehutbackend.herokuapp.com/clients",
+      url: "http://localhost:8080/clients",
     };
 
-    axios(configclients)
+    axios(configClients)
       .then((res) => {
         this.setState({
           clients: res.data.clients.data,
         });
-      })
-      .catch((error) => {
+      }).catch((error) => {
         console.log(error);
       });
 
-    var configcategories = {
+    var configCategories = {
       method: "get",
-      url: "https://thehangloosehutbackend.herokuapp.com/categories",
+      url: "http://localhost:8080/categories",
     };
 
-    axios(configcategories)
+    axios(configCategories)
       .then((res) => {
         var categories = [];
+
         res.data.categories.map((category) => {
           categories.push({
             title: category[0],
@@ -109,16 +96,14 @@ export class Submission extends Component {
         this.setState({
           treeData: categories,
         });
-      })
-      .catch((error) => {
+      }).catch((error) => {
         console.log(error);
       });
   }
 
   onPost() {
-    
     if (
-      this.state.imageName !== "" &&
+      (this.state.imageName !== "" || this.state.title) &&
       this.state.category !== "" &&
       this.state.clientID !== "" &&
       this.state.desc !== "" &&
@@ -126,7 +111,7 @@ export class Submission extends Component {
     ) {
       var configPost = {
         method: "post",
-        url: "https://thehangloosehutbackend.herokuapp.com/designs/",
+        url: "http://localhost:8080/designs/",
         data: {
           title: this.state.title.length === 0 ? this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")) : this.state.title,
           product_category_id: Number(this.state.category),
@@ -134,29 +119,37 @@ export class Submission extends Component {
           image_filename: this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")),
           description: this.state.desc.substring(this.state.desc.lastIndexOf("/")+1),
           primary_client_id: this.state.clientID,
-          is_expedited: true,
+          is_expedited: this.state.is_expedited,
         },
       };
 
       axios(configPost)
         .then((res) => {
-          var configMoveTask = {
+          var AddTagConfig = {
             method: "post",
-            url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}&sectionid=${'1202204681516966'}`,
+            url: `http://localhost:8080/tagreview?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}`,
             headers: {}
           };
 
-          axios(configMoveTask).then((res => {
-            console.log(res)
-            notification.success({
-              message: `${this.state.title} design uploaded successfully to Affinity.`,
-              placement: "bottomRight",
-            });           
+          axios(AddTagConfig).then((res => {
+            var CheckSubtasksConfig = {
+              method: "post",
+              url: `http://localhost:8080/movetask?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}`,
+              headers: {}
+            };
+
+            axios(CheckSubtasksConfig).then((res => {
+              notification.success({
+                message: `${this.state.title} design uploaded successfully to Affinity.`,
+                placement: "bottomRight",
+              });  
+            })).catch((error => {
+              console.log(error)
+            }))
           })).catch((error => {
             console.log(error)
           }))
-        })
-        .catch((error) => {
+        }).catch((error) => {
           notification.error({
             message: `${error}`,
             placement: "bottomRight",
@@ -172,33 +165,21 @@ export class Submission extends Component {
   }
 
   render() {
-    const { files } = this.state;
-
     const props = {
       name: "file",
       multiple: false,
       fileList: [],
       onRemove: (file) => {
-        this.setState((state) => {
-          // If we have to provide multi file suppourt
-          // const index = state.files.indexOf(file);
-          // const newFileList = state.files.slice();
-          // const newFileBASE64URI = state.FILEBASE64URI.slice();
-          // newFileList.splice(index, 1);
-          // newFileBASE64URI.splice(index, 1);
-          return {
-            fileList: null,
-            FILEBASE64URI: null,
-            image: null,
-          };
+        this.setState({
+          fileList: null,
+          FILEBASE64URI: null,
+          image: null,
         });
       },
       beforeUpload: (file) => {
-        // FILEBASE64URI
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-          // Make a fileInfo Object
           let fileInfo = {
             name: file.name,
             type: file.type,
@@ -207,15 +188,12 @@ export class Submission extends Component {
             file: file,
           };
 
-          this.setState((state) => ({
-            // If we have to provide multi file suppourt
-            // fileList: [...state.fileList, file],
-            // FILEBASE64URI: [...state.FILEBASE64URI, fileInfo],
+          this.setState({
             files: file,
             imageName: fileInfo.name,
             FILEBASE64URI: fileInfo.base64,
-            image: fileInfo.base64.slice(23),
-          }));
+            image: fileInfo.base64.slice(23)
+          });
         };
         return false;
       },
@@ -223,15 +201,11 @@ export class Submission extends Component {
 
     return (
       <div className="upload mt3 mb3">
-        <Row
-          justify="centre"
-          className="dashboard-designs-header w-100 pr3 pl3"
-        >
+        <Row justify="centre" className="dashboard-designs-header w-100 pr3 pl3">
           <Col lg={3} className="f4">
             Upload Design
           </Col>
           <Col lg={21}></Col>
-          {/* <Col lg={4}><Search className='dashboard-designs-search-button' placeholder="input search text" onSearch={(e) => this.setState({search: e})} enterButton/></Col> */}
         </Row>
         <Divider />
         <Row justify="center" gutter={16} className="mb3">
@@ -304,16 +278,15 @@ export class Submission extends Component {
                 this.setState({ category: e });
               }}
             />
+            <div className="pb1 pa2 f5 b">Expedite</div>
+            <Radio.Group className="tc" onChange={(e) => {this.setState({is_expedited: e.target.value})}} value={this.state.is_expedited}>
+              <Radio value={true}>Yes</Radio>
+              <Radio value={false}>No</Radio>
+            </Radio.Group>
           </Col>
         </Row>
         <Row justify="center mb3 pt3">
-          <Button
-            className=""
-            type="primary"
-            onClick={() => {
-              this.onPost();
-            }}
-          >
+          <Button className="" type="primary" onClick={() => {this.onPost()}}>
             Upload to Affinity
           </Button>
         </Row>

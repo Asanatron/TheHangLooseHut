@@ -8,20 +8,15 @@ import axios from "axios";
 
 export class App extends Component {
   state = {
-    collapsed: false,
     loginState: 'LoggedIn',
     username: '',
     password: ''
   };
 
-  onCollapse = collapsed => {
-    this.setState({ collapsed });
-  };
-
   Login(){
     var configLogin = {
       method: "get",
-      url: `https://thehangloosehutbackend.herokuapp.com/login?id=${this.state.username}&pwd=${this.state.password}`,
+      url: `http://localhost:8080/login?id=${this.state.username}&pwd=${this.state.password}`,
     };
 
     if(this.state.password !== '' && this.state.username !== ''){
@@ -50,8 +45,6 @@ export class App extends Component {
   }
 
   render() {
-    const { collapsed } = this.state;
-
     return (
       <div>
         {
@@ -93,7 +86,6 @@ export class App extends Component {
          
         </div>
         }
-        
       </div>
     )
   }
