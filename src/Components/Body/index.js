@@ -28,7 +28,7 @@ export class Body extends Component {
 
     var ReviewConfig = {
       method: 'get',
-      url: `http://localhost:8080/fetchtasks?gid=1202204681516973`,
+      url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202204681516973`,
       headers: {}
     };
 
@@ -37,7 +37,7 @@ export class Body extends Component {
 
       var UploadedConfig = {
         method: 'get',
-        url: `http://localhost:8080/fetchtasks?gid=1202204681516966`,
+        url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202204681516966`,
         headers: {}
       };
       
@@ -46,7 +46,7 @@ export class Body extends Component {
   
         var ApprovedConfig = {
           method: 'get',
-          url: `http://localhost:8080/fetchtasks?gid=1202204681516958`,
+          url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202204681516958`,
           headers: {}
         };
 
@@ -71,7 +71,6 @@ export class Body extends Component {
   }
   
   render() {
-    console.log(this.state)
     return (
       <Layout className='content-background'>
         <Row className='header' align='center'>

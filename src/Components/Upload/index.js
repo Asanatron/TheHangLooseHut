@@ -43,13 +43,16 @@ export class Submission extends Component {
       desc: "",
       is_expedited: false,
       pageNum: 1,
+
+      AreAllPending: true,
+      index: 0,
     };
   }
 
   async componentDidMount() {
     var configDesigns = {
       method: 'get',
-      url: 'http://localhost:8080/designs',
+      url: 'https://thehangloosehutbackend.herokuapp.com/designs',
       headers: {}
     };
 
@@ -58,12 +61,15 @@ export class Submission extends Component {
         designs: res.data.designs.data
       })
     }).catch((error) => {
-      console.log(error)
+      notification.error({
+            message: `${error}`,
+            placement: "bottomRight",
+          });
     });
 
     var configClients = {
       method: "get",
-      url: "http://localhost:8080/clients",
+      url: "https://thehangloosehutbackend.herokuapp.com/clients",
     };
 
     axios(configClients)
@@ -72,12 +78,15 @@ export class Submission extends Component {
           clients: res.data.clients.data,
         });
       }).catch((error) => {
-        console.log(error);
+        notification.error({
+            message: `${error}`,
+            placement: "bottomRight",
+          });;
       });
 
     var configCategories = {
       method: "get",
-      url: "http://localhost:8080/categories",
+      url: "https://thehangloosehutbackend.herokuapp.com/categories",
     };
 
     axios(configCategories)
@@ -97,7 +106,10 @@ export class Submission extends Component {
           treeData: categories,
         });
       }).catch((error) => {
-        console.log(error);
+        notification.error({
+            message: `${error}`,
+            placement: "bottomRight",
+          });;
       });
   }
 
@@ -111,7 +123,7 @@ export class Submission extends Component {
     ) {
       var configPost = {
         method: "post",
-        url: "http://localhost:8080/designs/",
+        url: "https://thehangloosehutbackend.herokuapp.com/designs/",
         data: {
           title: this.state.title.length === 0 ? this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")) : this.state.title,
           product_category_id: Number(this.state.category),
@@ -127,34 +139,91 @@ export class Submission extends Component {
         .then((res) => {
           var AddTagConfig = {
             method: "post",
-            url: `http://localhost:8080/tagreview?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}`,
+            url: `https://thehangloosehutbackend.herokuapp.com/tagreview?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}`,
             headers: {}
           };
 
           axios(AddTagConfig).then((res => {
-            var CheckSubtasksConfig = {
-              method: "post",
-              url: `http://localhost:8080/movetask?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}`,
+            var GetTaskConfig = {
+              method: "get",
+              url: `https://thehangloosehutbackend.herokuapp.com/gettask?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}`,
               headers: {}
             };
 
-            axios(CheckSubtasksConfig).then((res => {
-              notification.success({
-                message: `${this.state.title} design uploaded successfully to Affinity.`,
+            axios(GetTaskConfig).then((res) => {
+              this.setState({
+                ParentID: res.data.task.data.parent.gid
+              })
+
+              var GetAllSubtasksConfig = {
+                method: "get",
+                url: `https://thehangloosehutbackend.herokuapp.com/getsubtask?taskid=${res.data.task.data.parent.gid}`,
+                headers: {}
+              };
+              
+
+              axios(GetAllSubtasksConfig).then((res) => {
+                var isComplete = true
+
+                Promise.all(res.data.subtasks.data.map(subtask => {
+                  return axios.get(`https://thehangloosehutbackend.herokuapp.com/gettask?taskid=${subtask.gid}`)
+                })).then(function(values) {
+                  values.map(value => {
+                    if(value.data.task.data.tags.length === 0){
+                      isComplete = false
+                    } else if(value.data.task.data.tags[0].gid !== '1202253595593946'){
+                      isComplete = false
+                    }
+                  })
+
+                  if(isComplete === true){
+                    var MoveTaskConfig = {
+                      method: "post",
+                      url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=1202204681516966`,
+                      headers: {}
+                    };
+                    axios(MoveTaskConfig).then((res) => {
+                      notification.success({
+                        message: `Successfully uploaded design to affinity`,
+                        description: 'Moved asana task',
+                        placement: "bottomRight",
+                      });
+                    }).catch((error => {
+                      notification.error({
+                        message: `${error}`,
+                        placement: "bottomRight",
+                      });
+                    }))
+                  } else{
+                    notification.success({
+                      message: `Successfully uploaded design to affinity`,
+                      placement: "bottomRight",
+                    });
+                  }
+                });      
+              }).catch((error => {
+                notification.error({
+                  message: `${error}`,
+                  placement: "bottomRight",
+                });
+              }))
+            }).catch((error => {
+              notification.error({
+                message: `${error}`,
                 placement: "bottomRight",
-              });  
-            })).catch((error => {
-              console.log(error)
+              });
             }))
           })).catch((error => {
-            console.log(error)
+              notification.error({
+              message: `${error}`,
+              placement: "bottomRight",
+            });
           }))
         }).catch((error) => {
           notification.error({
             message: `${error}`,
             placement: "bottomRight",
           });
-          console.log(error);
         });
     } else {
       notification.error({
@@ -306,9 +375,8 @@ export class Submission extends Component {
                   {
                     this.state.designs.slice((this.state.pageNum-1)*4, this.state.pageNum*4).map((design, index) => {
                       return(
-                        <Col lg={6}>
+                        <Col key={index} lg={6}>
                           <Card
-                            key={index}
                             hoverable
                             className='dashboard-designs-card'
                             cover={<Row justify='center' align='middle' className='dashboard-designs-card-image-wrapper'>

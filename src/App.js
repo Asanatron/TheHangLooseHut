@@ -16,7 +16,7 @@ export class App extends Component {
   Login(){
     var configLogin = {
       method: "get",
-      url: `http://localhost:8080/login?id=${this.state.username}&pwd=${this.state.password}`,
+      url: `https://thehangloosehutbackend.herokuapp.com/login?id=${this.state.username}&pwd=${this.state.password}`,
     };
 
     if(this.state.password !== '' && this.state.username !== ''){
