@@ -68,3 +68,7 @@ a {
 .ant-radio-checked .ant-radio-inner {
   border-color: #2b2b2b;
 }
+.dashboard-designs-spin{
+  font-size: small;
+  color: white !important;
+}

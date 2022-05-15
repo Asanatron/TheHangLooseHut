@@ -83,7 +83,7 @@ export class Body extends Component {
           {
             !this.state.Fetched ?
             <Row className='w-100 ma3' justify='center'>
-              <Col lg={2}><Spin indicator={antIcon} className='dashboard-designs-spin'/></Col>
+              <Col lg={2}><Spin indicator={antIcon} className=''/></Col>
             </Row> :
             <div className='asana ma3'>
               <Row>

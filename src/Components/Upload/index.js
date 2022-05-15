@@ -6,6 +6,8 @@ import uuid from "react-uuid";
 import "./upload.css";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
+const SmallantIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
 const { Dragger } = Upload;
 const { Option } = Select;
 const { Meta } = Card;
@@ -44,9 +46,10 @@ export class Submission extends Component {
       is_expedited: false,
       pageNum: 1,
 
-      AreAllPending: true,
-      index: 0,
+      uploading: false
     };
+
+    this.onPost = this.onPost.bind(this)
   }
 
   async componentDidMount() {
@@ -74,12 +77,13 @@ export class Submission extends Component {
 
     axios(configClients)
       .then((res) => {
+        console.log(res)
         this.setState({
           clients: res.data.clients.data,
         });
       }).catch((error) => {
         notification.error({
-            message: `${error}`,
+            message: `test ${error}`,
             placement: "bottomRight",
           });;
       });
@@ -119,8 +123,12 @@ export class Submission extends Component {
       this.state.category !== "" &&
       this.state.clientID !== "" &&
       this.state.desc !== "" &&
-      this.state.image !== null
+      this.state.image !== null &&
+      this.state.uploading == false
     ) {
+      this.setState({
+        uploading: true
+      })
       var configPost = {
         method: "post",
         url: "https://thehangloosehutbackend.herokuapp.com/designs/",
@@ -167,7 +175,7 @@ export class Submission extends Component {
 
                 Promise.all(res.data.subtasks.data.map(subtask => {
                   return axios.get(`https://thehangloosehutbackend.herokuapp.com/gettask?taskid=${subtask.gid}`)
-                })).then(function(values) {
+                })).then(values => {
                   values.map(value => {
                     if(value.data.task.data.tags.length === 0){
                       isComplete = false
@@ -187,6 +195,35 @@ export class Submission extends Component {
                         message: `Successfully uploaded design to affinity`,
                         description: 'Moved asana task',
                         placement: "bottomRight",
+                      })
+                      this.setState({
+                        uploading: false,
+                        category: "",
+                        title: "",
+                        clientID: "",
+                        desc: "",
+                        is_expedited: false,
+                        files: null,
+                        imageName: "",
+                        FILEBASE64URI:  null,
+                        image: null
+                      })
+
+                      var configDesigns = {
+                        method: 'get',
+                        url: 'https://thehangloosehutbackend.herokuapp.com/designs',
+                        headers: {}
+                      };
+                  
+                      axios(configDesigns).then((res) => {
+                        this.setState({
+                          designs: res.data.designs.data
+                        })
+                      }).catch((error) => {
+                        notification.error({
+                          message: `${error}`,
+                          placement: "bottomRight",
+                        });
                       });
                     }).catch((error => {
                       notification.error({
@@ -198,9 +235,38 @@ export class Submission extends Component {
                     notification.success({
                       message: `Successfully uploaded design to affinity`,
                       placement: "bottomRight",
+                    })
+                    this.setState({
+                      uploading: false,
+                      category: "",
+                      title: "",
+                      clientID: "",
+                      desc: "",
+                      is_expedited: false,
+                      files: null,
+                      imageName: "",
+                      FILEBASE64URI:  null,
+                      image: null
+                    })
+
+                    var configDesigns = {
+                      method: 'get',
+                      url: 'https://thehangloosehutbackend.herokuapp.com/designs',
+                      headers: {}
+                    };
+                
+                    axios(configDesigns).then((res) => {
+                      this.setState({
+                        designs: res.data.designs.data
+                      })
+                    }).catch((error) => {
+                      notification.error({
+                        message: `${error}`,
+                        placement: "bottomRight",
+                      });
                     });
                   }
-                });      
+                }) 
               }).catch((error => {
                 notification.error({
                   message: `${error}`,
@@ -224,12 +290,15 @@ export class Submission extends Component {
             message: `${error}`,
             placement: "bottomRight",
           });
-        });
+        })
     } else {
       notification.error({
         message: `Complete the form`,
         placement: "bottomRight",
       });
+      this.setState({
+        uploading: false
+      })
     }
   }
 
@@ -300,12 +369,14 @@ export class Submission extends Component {
               className=""
               placeholder={this.state.imageName.length === 0 ? "Enter design title" : this.state.imageName.substring(0,this.state.imageName.lastIndexOf("."))}
               onChange={(e) => this.setState({ title: e.target.value })}
+              value={this.state.title}
             />
             <div className="pb1 pa2 f5 b">Description</div>
             <Input
               className=""
               placeholder="Enter design description"
               onChange={(e) => this.setState({ desc: e.target.value })}
+              value={this.state.desc}
             />
             <div className="pb1 pa2 f5 b">Primary Licensor</div>
             <Select
@@ -315,6 +386,7 @@ export class Submission extends Component {
               }}
               className="w-100"
               placeholder="Select province"
+              value={this.state.clientID}
             >
               {this.state.clients ? (
                 this.state.clients.map((client, index) => {
@@ -330,7 +402,7 @@ export class Submission extends Component {
                     <Col lg={2}>
                       <Spin
                         indicator={antIcon}
-                        className="dashboard-designs-spin"
+                        className=""
                       />
                     </Col>
                   </Row>
@@ -346,6 +418,7 @@ export class Submission extends Component {
               onChange={(e) => {
                 this.setState({ category: e });
               }}
+              value={this.state.category}
             />
             <div className="pb1 pa2 f5 b">Expedite</div>
             <Radio.Group className="tc" onChange={(e) => {this.setState({is_expedited: e.target.value})}} value={this.state.is_expedited}>
@@ -355,9 +428,16 @@ export class Submission extends Component {
           </Col>
         </Row>
         <Row justify="center mb3 pt3">
-          <Button className="" type="primary" onClick={() => {this.onPost()}}>
-            Upload to Affinity
-          </Button>
+          {
+            this.state.uploading === false 
+            ? <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.onPost()}}>
+              Upload to Affinity
+            </Button> 
+            : <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.onPost()}}>
+            <Spin indicator={SmallantIcon} className='dashboard-designs-spin'/>
+          </Button> 
+          }
+          
         </Row>
         <Row className='dashboard-designs w-100 ma3'>
           <Row justify='centre' className='dashboard-designs-header w-100 pr3 pl3'>
@@ -368,7 +448,7 @@ export class Submission extends Component {
           {
             this.state.designs == null
             ? <Row className='w-100 mb3' justify='center'>
-              <Col lg={2}><Spin indicator={antIcon} className='dashboard-designs-spin'/></Col>
+              <Col lg={2}><Spin indicator={antIcon} className=''/></Col>
             </Row>
             :<>
                 <Row justify='center' gutter={16} className='w-100'>
