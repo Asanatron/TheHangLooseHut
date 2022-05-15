@@ -77,7 +77,6 @@ export class Submission extends Component {
 
     axios(configClients)
       .then((res) => {
-        console.log(res)
         this.setState({
           clients: res.data.clients.data,
         });
@@ -326,11 +325,14 @@ export class Submission extends Component {
             file: file,
           };
 
+          console.log(fileInfo.base64)
+          console.log(fileInfo.type)
+
           this.setState({
             files: file,
             imageName: fileInfo.name,
             FILEBASE64URI: fileInfo.base64,
-            image: fileInfo.base64.slice(23)
+            image: fileInfo.type === 'image/png' ? fileInfo.base64.slice(22) : fileInfo.base64.slice(23)
           });
         };
         return false;
