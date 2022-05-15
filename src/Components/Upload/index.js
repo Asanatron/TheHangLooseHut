@@ -361,7 +361,7 @@ export class Submission extends Component {
                 Click or drag file to this area to upload
               </p>
               <p className="ant-upload-hint">
-                Supported files: jpg and jpeg only
+                Supported files: jpg, jpeg and png only
               </p>
             </Dragger>
           </Col>
