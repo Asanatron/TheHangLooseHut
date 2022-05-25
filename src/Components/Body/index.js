@@ -99,7 +99,7 @@ export class Body extends Component {
                     animate={{
                       duration: 2000
                     }}
-                    colorScale={["#76473C", "#3C763D", "#3C4776",]}
+                    colorScale={["#171717", "#454545", "#737373",]}
                     style={{
                       data: {
                         stroke: "black", strokeWidth: 0.2
@@ -117,9 +117,9 @@ export class Body extends Component {
                     gutter={20}
                     style={{ border: { stroke: "black" }, title: {fontSize: 20 } }}
                     data={[
-                      { name: "Customer Review", symbol: { fill: "#76473C"} },
-                      { name: "Approved From Affinity", symbol: { fill: "#3C763D" } },
-                      { name: "Uploaded to Affinity", symbol: { fill: "#3C4776" } }
+                      { name: "Customer Review", symbol: { fill: "#171717"} },
+                      { name: "Approved From Affinity", symbol: { fill: "#454545" } },
+                      { name: "Uploaded to Affinity", symbol: { fill: "#737373" } }
                     ]}
                   />
                 </Col>

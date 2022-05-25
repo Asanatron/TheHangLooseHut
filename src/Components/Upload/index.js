@@ -466,9 +466,9 @@ export class Submission extends Component {
                             </Row>}
                           >
                             <Meta title={<Row justify='center'>
-                              <Col span={8}>{design.title ? design.title.length > 15 ? design.title.slice(0,14)+'...' : design.title: ''}</Col>
-                              <Col span={12} offset={4} >{design.primary_client ? design.primary_client.name.length > 15 ? design.primary_client.name.slice(0,14)+'...' : design.primary_client.name : ''}</Col>
-                            </Row>} description={<span className={designPhases.get(design.phase.name)}>{design.phase.name}</span>} />
+                              <Col span={8}>{design.title ? design.title.length > 30 ? design.title.slice(0,29)+'...' : design.title: ''}</Col>
+                              <Col span={12} offset={4} ></Col>
+                            </Row>} description={<div><div>{design.primary_client ? design.primary_client.name.length > 30 ? design.primary_client.name.slice(0,29)+'...' : design.primary_client.name : ''}</div><span className={designPhases.get(design.phase.name)}>{design.phase.name}</span></div>} />
                           </Card>
                         </Col>
                       )

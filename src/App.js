@@ -8,7 +8,7 @@ import axios from "axios";
 
 export class App extends Component {
   state = {
-    loginState: 'LoggedOut',
+    loginState: 'LoggedIn',
     username: '',
     password: ''
   };
