@@ -476,7 +476,7 @@ export class Submission extends Component {
                   }
                 </Row>
                 <Row className='w-100 pt3' justify='center'>
-                  <Col lg={7}><Pagination pageSize={4} total={this.state.designs.length} onChange={(e) => this.setState({pageNum: e})}/></Col>
+                  <Col lg={8}><Pagination pageSize={4} total={this.state.designs.length} onChange={(e) => this.setState({pageNum: e})}/></Col>
                 </Row>
             </>
           }
