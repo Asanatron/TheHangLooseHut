@@ -202,7 +202,7 @@ export class Submission extends Component {
                     if(value.data.task.data.tags.length === 0){
                       isComplete = false
                     } else if(value.data.task.data.tags.length !== 0){
-                      isComplete = false
+                      isComplete = true
                     }
                   })
 
