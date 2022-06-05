@@ -115,7 +115,7 @@ export class Body extends Component {
                     centerTitle
                     orientation="vertical"
                     gutter={20}
-                    style={{ border: { stroke: "black" }, title: {fontSize: 26 }, labels: {fontSize: 20}}}
+                    style={{title: {fontSize: 26 }, labels: {fontSize: 20}}}
                     data={[
                       { name: "Customer Review", symbol: { fill: "#171717"}},
                       { name: "Approved From Affinity", symbol: { fill: "#454545" } },

@@ -122,8 +122,6 @@ export class Submission extends Component {
     } else{
       link = this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)
     }
-
-    console.log(link)
     
     if (
       (this.state.imageName !== "" || this.state.title) &&
@@ -136,32 +134,49 @@ export class Submission extends Component {
       this.setState({
         uploading: true
       })
-      var configPost = {
-        method: "post",
-        url: "https://thehangloosehutbackend.herokuapp.com/designs/",
-        data: {
-          title: this.state.title.length === 0 ? this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")) : this.state.title,
-          product_category_id: Number(this.state.category),
-          image: this.state.image,
-          image_filename: this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")),
-          description: link,
-          primary_client_id: this.state.clientID,
-          is_expedited: this.state.is_expedited,
-        },
-      };
+
+      var configPost = {}
+      if(this.state.is_expedited){
+        configPost = {
+          method: "post",
+          url: "https://thehangloosehutbackend.herokuapp.com/designs/",
+          data: {
+            title: this.state.title.length === 0 ? this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")) : this.state.title,
+            product_category_id: Number(this.state.category),
+            image: this.state.image,
+            image_filename: this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")),
+            description: link,
+            primary_client_id: this.state.clientID,
+            is_expedited: this.state.is_expedited,
+          },
+        };
+      } else {
+        configPost = {
+          method: "post",
+          url: "https://thehangloosehutbackend.herokuapp.com/designs/",
+          data: {
+            title: this.state.title.length === 0 ? this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")) : this.state.title,
+            product_category_id: Number(this.state.category),
+            image: this.state.image,
+            image_filename: this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")),
+            description: link,
+            primary_client_id: this.state.clientID,
+          },
+        };
+      }
 
       axios(configPost)
         .then((res) => {
           var AddTagConfig = {
             method: "post",
-            url: `https://thehangloosehutbackend.herokuapp.com/tagreview?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}`,
+            url: `https://thehangloosehutbackend.herokuapp.com/tagreview?taskid=${link}`,
             headers: {}
           };
 
           axios(AddTagConfig).then((res => {
             var GetTaskConfig = {
               method: "get",
-              url: `https://thehangloosehutbackend.herokuapp.com/gettask?taskid=${this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)}`,
+              url: `https://thehangloosehutbackend.herokuapp.com/gettask?taskid=${link}`,
               headers: {}
             };
 
