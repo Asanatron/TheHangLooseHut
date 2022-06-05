@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Col, Divider, Row, Spin, Input, Upload, Pagination, Card, Select, TreeSelect, Button, Radio, notification } from "antd";
+import { Col, Divider, Row, Spin, Input, Upload, Pagination, Card, Select, Button, Radio, notification } from "antd";
 import { LoadingOutlined, InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
-import uuid from "react-uuid";
+// import uuid from "react-uuid";
 import "./upload.css";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
@@ -95,13 +95,11 @@ export class Submission extends Component {
     axios(configCategories)
       .then((res) => {
         var categories = [];
-
+        
         res.data.categories.map((category) => {
           categories.push({
-            title: category[0],
-            value: uuid(),
-            children: category[1],
-            selectable: false,
+            id: category.id,
+            name: category.name
           });
         });
 
@@ -117,13 +115,23 @@ export class Submission extends Component {
   }
 
   onPost() {
+    var link = ''
+    if(this.state.desc[this.state.desc.length-1] === 'f'){
+      var subs1 = this.state.desc.substring(0,this.state.desc.lastIndexOf("/"))
+      link = subs1.substring(subs1.lastIndexOf("/")+1)
+    } else{
+      link = this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)
+    }
+
+    console.log(link)
+    
     if (
       (this.state.imageName !== "" || this.state.title) &&
       this.state.category !== "" &&
       this.state.clientID !== "" &&
       this.state.desc !== "" &&
       this.state.image !== null &&
-      this.state.uploading == false
+      this.state.uploading === false
     ) {
       this.setState({
         uploading: true
@@ -136,7 +144,7 @@ export class Submission extends Component {
           product_category_id: Number(this.state.category),
           image: this.state.image,
           image_filename: this.state.imageName.substring(0, this.state.imageName.lastIndexOf(".")),
-          description: this.state.desc.substring(this.state.desc.lastIndexOf("/")+1),
+          description: link,
           primary_client_id: this.state.clientID,
           is_expedited: this.state.is_expedited,
         },
@@ -325,9 +333,6 @@ export class Submission extends Component {
             file: file,
           };
 
-          console.log(fileInfo.base64)
-          console.log(fileInfo.type)
-
           this.setState({
             files: file,
             imageName: fileInfo.name,
@@ -339,20 +344,24 @@ export class Submission extends Component {
       },
     };
 
+    // var FilteredClients = this.state.clients;
+
+    // var FilteredCategories = this.state.treeData;
+
     return (
       <div className="upload mt3 mb3">
         <Row justify="centre" className="dashboard-designs-header w-100 pr3 pl3">
-          <Col lg={3} className="f4">
+          <Col lg={4} className="f4">
             Upload Design
           </Col>
-          <Col lg={21}></Col>
+          <Col lg={20}></Col>
         </Row>
         <Divider />
         <Row justify="center" gutter={16} className="mb3">
           <Col lg={11}>
             <Dragger {...props}>
               {this.state.FILEBASE64URI && (
-                <img src={this.state.FILEBASE64URI} width={"500px"} />
+                <img alt='design to be uploaded' src={this.state.FILEBASE64URI} width={"500px"} />
               )}
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
@@ -373,7 +382,7 @@ export class Submission extends Component {
               onChange={(e) => this.setState({ title: e.target.value })}
               value={this.state.title}
             />
-            <div className="pb1 pa2 f5 b">Description</div>
+            <div className="pb1 pa2 f5 b">Task Link</div>
             <Input
               className=""
               placeholder="Enter design description"
@@ -389,6 +398,8 @@ export class Submission extends Component {
               className="w-100"
               placeholder="Select province"
               value={this.state.clientID}
+              showSearch
+              filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
             >
               {this.state.clients ? (
                 this.state.clients.map((client, index) => {
@@ -412,7 +423,39 @@ export class Submission extends Component {
               )}
             </Select>
             <div className="pb1 pa2 f5 b">Category</div>
-            <TreeSelect
+            <Select
+              defaultOpen=""
+              onChange={(e) => {
+                this.setState({ category: e });
+              }}
+              className="w-100"
+              placeholder="Select province"
+              value={this.state.category}
+              showSearch
+              filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
+            >
+              {this.state.treeData ? (
+                this.state.treeData.map((category, index) => {
+                  return (
+                    <Option key={index} value={category.id}>
+                      {category.name}
+                    </Option>
+                  );
+                })
+              ) : (
+                <Option value={0}>
+                  <Row className="w-100" justify="center">
+                    <Col lg={2}>
+                      <Spin
+                        indicator={antIcon}
+                        className=""
+                      />
+                    </Col>
+                  </Row>
+                </Option>
+              )}
+            </Select>
+            {/* <TreeSelect
               style={{ width: "100%" }}
               dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
               treeData={this.state.treeData}
@@ -421,7 +464,8 @@ export class Submission extends Component {
                 this.setState({ category: e });
               }}
               value={this.state.category}
-            />
+              showSearch
+            /> */}
             <div className="pb1 pa2 f5 b">Expedite</div>
             <Radio.Group className="tc" onChange={(e) => {this.setState({is_expedited: e.target.value})}} value={this.state.is_expedited}>
               <Radio value={true}>Yes</Radio>
@@ -468,7 +512,7 @@ export class Submission extends Component {
                             <Meta title={<Row justify='center'>
                               <Col span={8}>{design.title ? design.title.length > 30 ? design.title.slice(0,29)+'...' : design.title: ''}</Col>
                               <Col span={12} offset={4} ></Col>
-                            </Row>} description={<div><div>{design.primary_client ? design.primary_client.name.length > 30 ? design.primary_client.name.slice(0,29)+'...' : design.primary_client.name : ''}</div><span className={designPhases.get(design.phase.name)}>{design.phase.name}</span></div>} />
+                            </Row>} description={<div><div>{design.primary_client ? design.primary_client.name : ''}</div><span className={designPhases.get(design.phase.name)}>{design.phase.name}</span></div>} />
                           </Card>
                         </Col>
                       )
@@ -476,7 +520,7 @@ export class Submission extends Component {
                   }
                 </Row>
                 <Row className='w-100 pt3' justify='center'>
-                  <Col lg={8}><Pagination pageSize={4} total={this.state.designs.length} onChange={(e) => this.setState({pageNum: e})}/></Col>
+                  <Col lg={10}><Pagination pageSize={4} total={this.state.designs.length} onChange={(e) => this.setState({pageNum: e})}/></Col>
                 </Row>
             </>
           }

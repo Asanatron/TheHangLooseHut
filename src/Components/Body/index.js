@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './content.css';
-import { Layout, Row, Col, Card, Spin, Divider} from 'antd';
+import { Layout, Row, Col, Spin, Divider} from 'antd';
 import Logo from '../../Media/Logo.png'
 import { Routes, Route } from 'react-router-dom';
 import Upload from '../Upload';
@@ -115,9 +115,9 @@ export class Body extends Component {
                     centerTitle
                     orientation="vertical"
                     gutter={20}
-                    style={{ border: { stroke: "black" }, title: {fontSize: 20 } }}
+                    style={{ border: { stroke: "black" }, title: {fontSize: 26 }, labels: {fontSize: 20}}}
                     data={[
-                      { name: "Customer Review", symbol: { fill: "#171717"} },
+                      { name: "Customer Review", symbol: { fill: "#171717"}},
                       { name: "Approved From Affinity", symbol: { fill: "#454545" } },
                       { name: "Uploaded to Affinity", symbol: { fill: "#737373" } }
                     ]}
