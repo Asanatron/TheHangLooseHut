@@ -201,7 +201,7 @@ export class Submission extends Component {
                   values.map(value => {
                     if(value.data.task.data.tags.length === 0){
                       isComplete = false
-                    } else if(value.data.task.data.tags[0].gid !== '1202253595593946'){
+                    } else if(value.data.task.data.tags.length !== 0){
                       isComplete = false
                     }
                   })
