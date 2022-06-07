@@ -25,6 +25,24 @@ const designPhases = new Map([
   ['Approved By Licensor', 'green']
 ])
 
+// {
+//   "gid": "1202401225268634",
+//   "name": "T_Customer Review",
+//   "resource_type": "section"
+// },
+// {
+//   "gid": "1202401225268637",
+//   "name": "T_Uploaded to Affinity",
+//   "resource_type": "section"
+// },
+// {
+//   "gid": "1202401225268638",
+//   "name": "T_Approved by Affinity",
+//   "resource_type": "section"
+// }
+// ]
+// }
+
 export class Submission extends Component {
   constructor(props) {
     super(props);
@@ -209,7 +227,7 @@ export class Submission extends Component {
                   if(isComplete === true){
                     var MoveTaskConfig = {
                       method: "post",
-                      url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=1202204681516966`,
+                      url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=1202401225268637`,
                       headers: {}
                     };
                     axios(MoveTaskConfig).then((res) => {
@@ -358,10 +376,6 @@ export class Submission extends Component {
         return false;
       },
     };
-
-    // var FilteredClients = this.state.clients;
-
-    // var FilteredCategories = this.state.treeData;
 
     return (
       <div className="upload mt3 mb3">

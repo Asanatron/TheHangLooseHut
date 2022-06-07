@@ -28,7 +28,7 @@ export class Body extends Component {
 
     var ReviewConfig = {
       method: 'get',
-      url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202204681516973`,
+      url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202401225268634`,
       headers: {}
     };
 
@@ -37,7 +37,7 @@ export class Body extends Component {
 
       var UploadedConfig = {
         method: 'get',
-        url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202204681516966`,
+        url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202401225268638`,
         headers: {}
       };
       
@@ -46,7 +46,7 @@ export class Body extends Component {
   
         var ApprovedConfig = {
           method: 'get',
-          url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202204681516958`,
+          url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202401225268637`,
           headers: {}
         };
 
