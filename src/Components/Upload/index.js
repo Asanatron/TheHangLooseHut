@@ -68,6 +68,7 @@ export class Submission extends Component {
     };
 
     this.onPost = this.onPost.bind(this)
+    this.getSectionID = this.getSectionID.bind(this)
   }
 
   async componentDidMount() {
@@ -246,7 +247,7 @@ export class Submission extends Component {
                   if(isComplete === true){
                     var MoveTaskConfig = {
                       method: "post",
-                      url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=${getSectionID(this.state.ParentID)}`,
+                      url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=${this.getSectionID(this.state.ParentID)}`,
                       headers: {}
                     };
                     axios(MoveTaskConfig).then((res) => {
