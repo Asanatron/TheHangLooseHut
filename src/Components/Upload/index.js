@@ -132,6 +132,25 @@ export class Submission extends Component {
       });
   }
 
+  getSectionID(taskID){
+    var GetParentConfig = {
+      method: "get",
+      url: `https://thehangloosehutbackend.herokuapp.com/getprojectid?taskid=${taskID}`,
+      headers: {}
+    };
+    axios(GetParentConfig).then((res) => {
+      var GetSections = {
+        method: "get",
+        url: `https://thehangloosehutbackend.herokuapp.com/getsections?projectid=${res.data.projectID}`,
+        headers: {}
+      };
+
+      axios(GetSections).then((res) => {
+        return res.data.sectionID
+      })
+    })
+  }
+
   onPost() {
     var link = ''
     if(this.state.desc[this.state.desc.length-1] === 'f'){
@@ -227,7 +246,7 @@ export class Submission extends Component {
                   if(isComplete === true){
                     var MoveTaskConfig = {
                       method: "post",
-                      url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=1202401225268637`,
+                      url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=${getSectionID(this.state.ParentID)}`,
                       headers: {}
                     };
                     axios(MoveTaskConfig).then((res) => {
