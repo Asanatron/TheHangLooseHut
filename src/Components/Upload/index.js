@@ -25,23 +25,6 @@ const designPhases = new Map([
   ['Approved By Licensor', 'green']
 ])
 
-// {
-//   "gid": "1202401225268634",
-//   "name": "T_Customer Review",
-//   "resource_type": "section"
-// },
-// {
-//   "gid": "1202401225268637",
-//   "name": "T_Uploaded to Affinity",
-//   "resource_type": "section"
-// },
-// {
-//   "gid": "1202401225268638",
-//   "name": "T_Approved by Affinity",
-//   "resource_type": "section"
-// }
-// ]
-// }
 
 export class Submission extends Component {
   constructor(props) {

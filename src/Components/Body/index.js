@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './content.css';
-import { Layout, Row, Col, Spin, Divider} from 'antd';
+import { Layout, Row, Col, Spin, Divider, Button} from 'antd';
 import Logo from '../../Media/Logo.png'
 import { Routes, Route } from 'react-router-dom';
 import Upload from '../Upload';
@@ -18,13 +18,16 @@ export class Body extends Component {
   
     this.state = {
       designs: null,
-      taskData: [],
-      Fetched: false
+      taskDataOld: [],
+      taskDataNew: [],
+      Fetched: false,
+      Logistics: 1
     }
   }
 
   async componentDidMount(){
-    var sectionData = []
+    var sectionDataOld = []
+    var sectionDataNew = []
 
     var ReviewConfig = {
       method: 'get',
@@ -33,7 +36,7 @@ export class Body extends Component {
     };
 
     axios(ReviewConfig).then((res) => {
-      sectionData.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
+      sectionDataOld.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
 
       var UploadedConfig = {
         method: 'get',
@@ -42,7 +45,7 @@ export class Body extends Component {
       };
       
       axios(UploadedConfig).then((res) => {
-        sectionData.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
+        sectionDataOld.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
   
         var ApprovedConfig = {
           method: 'get',
@@ -51,7 +54,46 @@ export class Body extends Component {
         };
 
         axios(ApprovedConfig).then((res) => {
-          sectionData.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
+          sectionDataOld.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
+          this.setState({
+            Fetched: true
+          })
+        }).catch((error) => {
+          console.log(error)
+        })
+      }).catch((error) => {
+        console.log(error)
+      })
+    }).catch((error) => {
+      console.log(error)
+    })
+
+    var ReviewConfig = {
+      method: 'get',
+      url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1203923992086451`,
+      headers: {}
+    };
+
+    axios(ReviewConfig).then((res) => {
+      sectionDataNew.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
+
+      var UploadedConfig = {
+        method: 'get',
+        url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1202401225268638`,
+        headers: {}
+      };
+      
+      axios(UploadedConfig).then((res) => {
+        sectionDataNew.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
+  
+        var ApprovedConfig = {
+          method: 'get',
+          url: `https://thehangloosehutbackend.herokuapp.com/fetchtasks?gid=1204085369322326`,
+          headers: {}
+        };
+
+        axios(ApprovedConfig).then((res) => {
+          sectionDataNew.push({x: Math.round(res.data.tasks.data.length, 0), y: Math.round(res.data.tasks.data.length, 0)})
           this.setState({
             Fetched: true
           })
@@ -66,7 +108,8 @@ export class Body extends Component {
     })
 
     this.setState({
-      taskData: sectionData
+      taskDataOld: sectionDataOld,
+      taskDataNew: sectionDataNew
     })
   }
   
@@ -92,38 +135,81 @@ export class Body extends Component {
                   <Divider />
                 </Col>
               </Row>
-              <Row>
-                <Col>
-                  <VictoryPie 
-                    data={this.state.taskData}
-                    animate={{
-                      duration: 2000
-                    }}
-                    colorScale={["#171717", "#454545", "#737373",]}
-                    style={{
-                      data: {
-                        stroke: "black", strokeWidth: 0.2
-                      }
-                    }}
-                  />
-                </Col>
+              <Row justify="center mb3 pt3" gutter={4}>
+                <Col lg={12}><Button style={{minWidth: '32px', width: '100%'}} type="primary" onClick={() => {this.setState({Logistics: 1})}}>Hang Loose</Button></Col>
+                <Col lg={12}><Button style={{minWidth: '32px', width: '100%'}} type="primary" onClick={() => {this.setState({Logistics: 2})}}>New Marketing</Button></Col>
               </Row>
-              <Row>
-                <Col>
-                  <VictoryLegend x={125} y={50}
-                    title="Legend"
-                    centerTitle
-                    orientation="vertical"
-                    gutter={20}
-                    style={{title: {fontSize: 26 }, labels: {fontSize: 20}}}
-                    data={[
-                      { name: "Customer Review", symbol: { fill: "#171717"}},
-                      { name: "Approved From Affinity", symbol: { fill: "#454545" } },
-                      { name: "Uploaded to Affinity", symbol: { fill: "#737373" } }
-                    ]}
-                  />
-                </Col>
-              </Row>
+              {
+                this.state.Logistics === 1 ? 
+                <div>
+                  <Row>
+                    <Col>
+                      <VictoryPie 
+                        data={this.state.taskDataOld}
+                        animate={{
+                          duration: 2000
+                        }}
+                        colorScale={["#171717", "#454545", "#737373",]}
+                        style={{
+                          data: {
+                            stroke: "black", strokeWidth: 0.2
+                          }
+                        }}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <VictoryLegend x={125} y={50}
+                        title="Legend"
+                        centerTitle
+                        orientation="vertical"
+                        gutter={20}
+                        style={{title: {fontSize: 26 }, labels: {fontSize: 20}}}
+                        data={[
+                          { name: "Customer Review", symbol: { fill: "#171717"}},
+                          { name: "Approved From Affinity", symbol: { fill: "#454545" } },
+                          { name: "Uploaded to Affinity", symbol: { fill: "#737373" } }
+                        ]}
+                      />
+                    </Col>
+                  </Row>
+                </div> : 
+                <div>
+                  <Row>
+                    <Col>
+                      <VictoryPie 
+                        data={this.state.taskDataNew}
+                        animate={{
+                          duration: 2000
+                        }}
+                        colorScale={["#171717", "#454545", "#737373",]}
+                        style={{
+                          data: {
+                            stroke: "black", strokeWidth: 0.2
+                          }
+                        }}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <VictoryLegend x={125} y={50}
+                        title="Legend"
+                        centerTitle
+                        orientation="vertical"
+                        gutter={20}
+                        style={{title: {fontSize: 26 }, labels: {fontSize: 20}}}
+                        data={[
+                          { name: "Needs revision", symbol: { fill: "#171717"}},
+                          { name: "Needs final approval", symbol: { fill: "#454545" } },
+                          { name: "Pending affinity", symbol: { fill: "#737373" } }
+                        ]}
+                      />
+                    </Col>
+                  </Row>
+                </div>
+              }
             </div>
           }
           </Col>
