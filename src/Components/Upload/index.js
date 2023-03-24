@@ -47,7 +47,9 @@ export class Submission extends Component {
       is_expedited: false,
       pageNum: 1,
 
-      uploading: false
+      uploading: false,
+
+      sectionID: ''
     };
 
     this.onPost = this.onPost.bind(this)
@@ -130,7 +132,9 @@ export class Submission extends Component {
       };
 
       axios(GetSections).then((res) => {
-        return res.data.sectionID
+        this.setState({
+          sectionID: res.data.sectionID
+        }) 
       })
     })
   }
@@ -228,52 +232,55 @@ export class Submission extends Component {
                   })
 
                   if(isComplete === true){
-                    var MoveTaskConfig = {
-                      method: "post",
-                      url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=${this.getSectionID(this.state.ParentID)}`,
-                      headers: {}
-                    };
-                    axios(MoveTaskConfig).then((res) => {
-                      notification.success({
-                        message: `Successfully uploaded design to affinity`,
-                        description: 'Moved asana task',
-                        placement: "bottomRight",
-                      })
-                      this.setState({
-                        uploading: false,
-                        category: "",
-                        title: "",
-                        clientID: "",
-                        desc: "",
-                        is_expedited: false,
-                        files: null,
-                        imageName: "",
-                        FILEBASE64URI:  null,
-                        image: null
-                      })
-
-                      var configDesigns = {
-                        method: 'get',
-                        url: 'https://thehangloosehutbackend.herokuapp.com/designs',
+                    if(this.state.sectionID){
+                      console.log("section found")
+                      var MoveTaskConfig = {
+                        method: "post",
+                        url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=${this.state.sectionID}`,
                         headers: {}
                       };
-                  
-                      axios(configDesigns).then((res) => {
-                        this.setState({
-                          designs: res.data.designs.data
+                      axios(MoveTaskConfig).then((res) => {
+                        notification.success({
+                          message: `Successfully uploaded design to affinity`,
+                          description: 'Moved asana task',
+                          placement: "bottomRight",
                         })
-                      }).catch((error) => {
+                        this.setState({
+                          uploading: false,
+                          category: "",
+                          title: "",
+                          clientID: "",
+                          desc: "",
+                          is_expedited: false,
+                          files: null,
+                          imageName: "",
+                          FILEBASE64URI:  null,
+                          image: null
+                        })
+  
+                        var configDesigns = {
+                          method: 'get',
+                          url: 'https://thehangloosehutbackend.herokuapp.com/designs',
+                          headers: {}
+                        };
+                    
+                        axios(configDesigns).then((res) => {
+                          this.setState({
+                            designs: res.data.designs.data
+                          })
+                        }).catch((error) => {
+                          notification.error({
+                            message: `${error}`,
+                            placement: "bottomRight",
+                          });
+                        });
+                      }).catch((error => {
                         notification.error({
                           message: `${error}`,
                           placement: "bottomRight",
                         });
-                      });
-                    }).catch((error => {
-                      notification.error({
-                        message: `${error}`,
-                        placement: "bottomRight",
-                      });
-                    }))
+                      }))
+                    }
                   } else{
                     notification.success({
                       message: `Successfully uploaded design to affinity`,
