@@ -53,7 +53,6 @@ export class Submission extends Component {
     };
 
     this.onPost = this.onPost.bind(this)
-    this.getSectionID = this.getSectionID.bind(this)
   }
 
   async componentDidMount() {
@@ -118,27 +117,6 @@ export class Submission extends Component {
       });
   }
 
-  getSectionID(taskID){
-    var GetParentConfig = {
-      method: "get",
-      url: `https://thehangloosehutbackend.herokuapp.com/getprojectid?taskid=${taskID}`,
-      headers: {}
-    };
-    axios(GetParentConfig).then((res) => {
-      var GetSections = {
-        method: "get",
-        url: `https://thehangloosehutbackend.herokuapp.com/getsections?projectid=${res.data.projectID}`,
-        headers: {}
-      };
-
-      axios(GetSections).then((res) => {
-        this.setState({
-          sectionID: res.data.sectionID
-        }) 
-      })
-    })
-  }
-
   onPost() {
     var link = ''
     if(this.state.desc[this.state.desc.length-1] === 'f'){
@@ -147,7 +125,7 @@ export class Submission extends Component {
     } else{
       link = this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)
     }
-    
+
     if (
       (this.state.imageName !== "" || this.state.title) &&
       this.state.category !== "" &&
@@ -206,9 +184,33 @@ export class Submission extends Component {
             };
 
             axios(GetTaskConfig).then((res) => {
-              this.setState({
-                ParentID: res.data.task.data.parent.gid
-              })
+              if(res.data.task.data.parent){
+                this.setState({
+                  ParentID: res.data.task.data.parent.gid
+                })
+              } else {
+                this.setState({
+                  ParentID: res.data.task.data.gid
+                })
+              }
+              var GetParentConfig = {
+                method: "get",
+                url: `https://thehangloosehutbackend.herokuapp.com/getprojectid?taskid=${this.state.ParentID}`,
+                headers: {}
+              };
+              axios(GetParentConfig).then((res) => {
+                var GetSections = {
+                  method: "get",
+                  url: `https://thehangloosehutbackend.herokuapp.com/getsections?projectid=${res.data.projectID}`,
+                  headers: {}
+                };
+          
+                axios(GetSections).then((res) => {
+                  this.setState({
+                    sectionID: res.data.sectionID
+                  })
+                })
+                })
 
               var GetAllSubtasksConfig = {
                 method: "get",
