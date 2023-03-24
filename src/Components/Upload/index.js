@@ -193,6 +193,7 @@ export class Submission extends Component {
                   ParentID: res.data.task.data.gid
                 })
               }
+
               var GetParentConfig = {
                 method: "get",
                 url: `https://thehangloosehutbackend.herokuapp.com/getprojectid?taskid=${this.state.ParentID}`,
@@ -209,42 +210,81 @@ export class Submission extends Component {
                   this.setState({
                     sectionID: res.data.sectionID
                   })
-                })
-                })
 
-              var GetAllSubtasksConfig = {
-                method: "get",
-                url: `https://thehangloosehutbackend.herokuapp.com/getsubtask?taskid=${this.state.ParentID}`,
-                headers: {}
-              };
-              
-
-              axios(GetAllSubtasksConfig).then((res) => {
-                var isComplete = true
-
-                Promise.all(res.data.subtasks.data.map(subtask => {
-                  return axios.get(`https://thehangloosehutbackend.herokuapp.com/gettask?taskid=${subtask.gid}`)
-                })).then(values => {
-                  values.map(value => {
-                    if(value.data.task.data.tags.length === 0){
-                      isComplete = false
-                    } else if(value.data.task.data.tags.length !== 0){
-                      isComplete = true
-                    }
-                  })
-
-                  if(isComplete === true){
-                    if(this.state.sectionID){
-                      console.log("section found")
-                      var MoveTaskConfig = {
-                        method: "post",
-                        url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=${this.state.sectionID}`,
-                        headers: {}
-                      };
-                      axios(MoveTaskConfig).then((res) => {
+                  var GetAllSubtasksConfig = {
+                    method: "get",
+                    url: `https://thehangloosehutbackend.herokuapp.com/getsubtask?taskid=${this.state.ParentID}`,
+                    headers: {}
+                  };
+                  
+    
+                  axios(GetAllSubtasksConfig).then((res) => {
+                    var isComplete = true
+    
+                    Promise.all(res.data.subtasks.data.map(subtask => {
+                      return axios.get(`https://thehangloosehutbackend.herokuapp.com/gettask?taskid=${subtask.gid}`)
+                    })).then(values => {
+                      values.map(value => {
+                        if(value.data.task.data.tags.length === 0){
+                          isComplete = false
+                        } else if(value.data.task.data.tags.length !== 0){
+                          isComplete = true
+                        }
+                      })
+    
+                      if(isComplete === true){
+                        if(this.state.sectionID){
+                          console.log("section found")
+                          var MoveTaskConfig = {
+                            method: "post",
+                            url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=${this.state.sectionID}`,
+                            headers: {}
+                          };
+                          axios(MoveTaskConfig).then((res) => {
+                            notification.success({
+                              message: `Successfully uploaded design to affinity`,
+                              description: 'Moved asana task',
+                              placement: "bottomRight",
+                            })
+                            this.setState({
+                              uploading: false,
+                              category: "",
+                              title: "",
+                              clientID: "",
+                              desc: "",
+                              is_expedited: false,
+                              files: null,
+                              imageName: "",
+                              FILEBASE64URI:  null,
+                              image: null
+                            })
+      
+                            var configDesigns = {
+                              method: 'get',
+                              url: 'https://thehangloosehutbackend.herokuapp.com/designs',
+                              headers: {}
+                            };
+                        
+                            axios(configDesigns).then((res) => {
+                              this.setState({
+                                designs: res.data.designs.data
+                              })
+                            }).catch((error) => {
+                              notification.error({
+                                message: `${error}`,
+                                placement: "bottomRight",
+                              });
+                            });
+                          }).catch((error => {
+                            notification.error({
+                              message: `${error}`,
+                              placement: "bottomRight",
+                            });
+                          }))
+                        }
+                      } else{
                         notification.success({
                           message: `Successfully uploaded design to affinity`,
-                          description: 'Moved asana task',
                           placement: "bottomRight",
                         })
                         this.setState({
@@ -259,7 +299,7 @@ export class Submission extends Component {
                           FILEBASE64URI:  null,
                           image: null
                         })
-  
+    
                         var configDesigns = {
                           method: 'get',
                           url: 'https://thehangloosehutbackend.herokuapp.com/designs',
@@ -276,55 +316,16 @@ export class Submission extends Component {
                             placement: "bottomRight",
                           });
                         });
-                      }).catch((error => {
-                        notification.error({
-                          message: `${error}`,
-                          placement: "bottomRight",
-                        });
-                      }))
-                    }
-                  } else{
-                    notification.success({
-                      message: `Successfully uploaded design to affinity`,
+                      }
+                    }) 
+                  }).catch((error => {
+                    notification.error({
+                      message: `${error}`,
                       placement: "bottomRight",
-                    })
-                    this.setState({
-                      uploading: false,
-                      category: "",
-                      title: "",
-                      clientID: "",
-                      desc: "",
-                      is_expedited: false,
-                      files: null,
-                      imageName: "",
-                      FILEBASE64URI:  null,
-                      image: null
-                    })
-
-                    var configDesigns = {
-                      method: 'get',
-                      url: 'https://thehangloosehutbackend.herokuapp.com/designs',
-                      headers: {}
-                    };
-                
-                    axios(configDesigns).then((res) => {
-                      this.setState({
-                        designs: res.data.designs.data
-                      })
-                    }).catch((error) => {
-                      notification.error({
-                        message: `${error}`,
-                        placement: "bottomRight",
-                      });
                     });
-                  }
-                }) 
-              }).catch((error => {
-                notification.error({
-                  message: `${error}`,
-                  placement: "bottomRight",
-                });
-              }))
+                  }))
+                })
+                })
             }).catch((error => {
               notification.error({
                 message: `${error}`,
