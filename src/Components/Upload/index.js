@@ -508,7 +508,7 @@ export class Submission extends Component {
               value={this.state.category}
               showSearch
             /> */}
-            <div className="pb1 pa2 f5 b">Expediter</div>
+            <div className="pb1 pa2 f5 b">Expedite</div>
             <Radio.Group className="tc" onChange={(e) => {this.setState({is_expedited: e.target.value})}} value={this.state.is_expedited}>
               <Radio value={true}>Yes</Radio>
               <Radio value={false}>No</Radio>
