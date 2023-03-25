@@ -1,5 +1,5 @@
 .header{
-  background-color: #2b2b2b !important;
+  background-color: #7FC9EF !important;
   border-bottom: 2px solid #141414;
   padding: 1em;
 }
@@ -7,10 +7,10 @@
   width: 25rem;
 }
 .footer{
-  background-color: #2b2b2b !important;
+  background-color: #7FC9EF !important;
   border-top: 2px solid #141414;
   padding: 1em;
-  color: white;
+  color: #141414;
   height: 48px;
   font-size: 16px;
 }

@@ -149,7 +149,7 @@ export class Body extends Component {
                         animate={{
                           duration: 2000
                         }}
-                        colorScale={["#171717", "#454545", "#737373",]}
+                        colorScale={["#E48EC3", "#7FC9EF", "#FAD447",]}
                         style={{
                           data: {
                             stroke: "black", strokeWidth: 0.2
@@ -167,9 +167,9 @@ export class Body extends Component {
                         gutter={20}
                         style={{title: {fontSize: 26 }, labels: {fontSize: 20}}}
                         data={[
-                          { name: "Customer Review", symbol: { fill: "#171717"}},
-                          { name: "Approved From Affinity", symbol: { fill: "#454545" } },
-                          { name: "Uploaded to Affinity", symbol: { fill: "#737373" } }
+                          { name: "Customer Review", symbol: { fill: "#E48EC3"}},
+                          { name: "Approved From Affinity", symbol: { fill: "#7FC9EF" } },
+                          { name: "Uploaded to Affinity", symbol: { fill: "#FAD447" } }
                         ]}
                       />
                     </Col>
@@ -183,7 +183,7 @@ export class Body extends Component {
                         animate={{
                           duration: 2000
                         }}
-                        colorScale={["#171717", "#454545", "#737373",]}
+                        colorScale={["#E48EC3", "#7FC9EF", "#FAD447",]}
                         style={{
                           data: {
                             stroke: "black", strokeWidth: 0.2
@@ -201,9 +201,9 @@ export class Body extends Component {
                         gutter={20}
                         style={{title: {fontSize: 26 }, labels: {fontSize: 20}}}
                         data={[
-                          { name: "Needs revision", symbol: { fill: "#171717"}},
-                          { name: "Needs final approval", symbol: { fill: "#454545" } },
-                          { name: "Pending affinity", symbol: { fill: "#737373" } }
+                          { name: "Needs revision", symbol: { fill: "#E48EC3"}},
+                          { name: "Needs final approval", symbol: { fill: "#7FC9EF" } },
+                          { name: "Pending affinity", symbol: { fill: "#FAD447" } }
                         ]}
                       />
                     </Col>

@@ -496,18 +496,7 @@ export class Submission extends Component {
                   </Row>
                 </Option>
               )}
-            </Select>
-            {/* <TreeSelect
-              style={{ width: "100%" }}
-              dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-              treeData={this.state.treeData}
-              placeholder="Select Category"
-              onChange={(e) => {
-                this.setState({ category: e });
-              }}
-              value={this.state.category}
-              showSearch
-            /> */}
+            </Select> 
             <div className="pb1 pa2 f5 b">Expedite</div>
             <Radio.Group className="tc" onChange={(e) => {this.setState({is_expedited: e.target.value})}} value={this.state.is_expedited}>
               <Radio value={true}>Yes</Radio>

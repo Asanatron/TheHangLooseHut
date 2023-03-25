@@ -9,3 +9,9 @@
 .site-layout{
   min-height: 100vh;
 }
+.ant-btn-primary {
+  border-color: #2b2b2b !important;
+  background: #E48EC3 !important;
+  border-radius: 4px;
+  color: #2b2b2b;
+}
