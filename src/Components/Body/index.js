@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './content.css';
 import { Layout, Row, Col, Spin, Divider, Button} from 'antd';
-import Logo from '../../Media/Logo.png'
+import HLHLogoText from '../../Media/HLHLogoText.png'
+import HLHLogo from '../../Media/hlhlogo.png'
 import { Routes, Route } from 'react-router-dom';
 import Upload from '../Upload';
 import axios from 'axios';
@@ -118,7 +119,7 @@ export class Body extends Component {
       <Layout className='content-background'>
         <Row className='header' align='center'>
           <Col>
-            <img alt='TheHangLooseHut' className='header-logo' src={Logo}/>
+            <img alt='TheHangLooseHut' className='header-logo' src={HLHLogo}/><img alt='TheHangLooseHut' className='header-logo-text' src={HLHLogoText}/>
           </Col>
         </Row>
         <Row style={{minHeight: '85vh'}} gutter={16}>
@@ -130,13 +131,13 @@ export class Body extends Component {
             </Row> :
             <div className='asana ma3'>
               <Row>
-                <Col className='f4'>
-                  Asana Logistics
+                <Col className='font-prim-big'>
+                  Asana Metrics
                   <Divider />
                 </Col>
               </Row>
               <Row justify="center mb3 pt3" gutter={4}>
-                <Col lg={12}><Button style={{minWidth: '32px', width: '100%'}} type="primary" onClick={() => {this.setState({Logistics: 1})}}>Hang Loose</Button></Col>
+                <Col lg={12}><Button className='font-sec-small' style={{minWidth: '32px', width: '100%'}} type="primary" onClick={() => {this.setState({Logistics: 1})}}>Hang Loose</Button></Col>
                 <Col lg={12}><Button style={{minWidth: '32px', width: '100%'}} type="primary" onClick={() => {this.setState({Logistics: 2})}}>New Marketing</Button></Col>
               </Row>
               {
@@ -221,7 +222,7 @@ export class Body extends Component {
             </Content>
           </Col>
         </Row>        
-        <Footer className='footer' style={{ textAlign: 'center' }}>© THE HANG LOOSE HUT 2022</Footer>
+        <Footer className='footer' style={{ textAlign: 'center' }}>© THE HANG LOOSE HUT 2023</Footer>
       </Layout>
     )
   }

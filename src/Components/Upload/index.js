@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Col, Divider, Row, Spin, Input, Upload, Pagination, Card, Select, Button, Radio, notification } from "antd";
 import { LoadingOutlined, InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
-// import uuid from "react-uuid";
+import Pink from '../../Media/pink.png'
 import "./upload.css";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
@@ -393,7 +393,7 @@ export class Submission extends Component {
     return (
       <div className="upload mt3 mb3">
         <Row justify="centre" className="dashboard-designs-header w-100 pr3 pl3">
-          <Col lg={4} className="f4">
+          <Col lg={4} className="f4 font-prim-big">
             Upload Design
           </Col>
           <Col lg={20}></Col>
@@ -417,21 +417,21 @@ export class Submission extends Component {
             </Dragger>
           </Col>
           <Col lg={11}>
-            <div className="pb1 pa2 f5 b">Title</div>
+            <div className="pl2 pr2 pt2 font-prim-small">Title</div>
             <Input
               className=""
               placeholder={this.state.imageName.length === 0 ? "Enter design title" : this.state.imageName.substring(0,this.state.imageName.lastIndexOf("."))}
               onChange={(e) => this.setState({ title: e.target.value })}
               value={this.state.title}
             />
-            <div className="pb1 pa2 f5 b">Task Link</div>
+            <div className="pl2 pr2 pt2 font-prim-small">Task Link</div>
             <Input
               className=""
-              placeholder="Enter design description"
+              placeholder="Enter design link"
               onChange={(e) => this.setState({ desc: e.target.value })}
               value={this.state.desc}
             />
-            <div className="pb1 pa2 f5 b">Primary Licensor</div>
+            <div className="pl2 pr2 pt2 font-prim-small">Primary Licensor</div>
             <Select
               defaultOpen=""
               onChange={(e) => {
@@ -464,7 +464,7 @@ export class Submission extends Component {
                 </Option>
               )}
             </Select>
-            <div className="pb1 pa2 f5 b">Category</div>
+            <div className="pl2 pr2 pt2 font-prim-small">Category</div>
             <Select
               defaultOpen=""
               onChange={(e) => {
@@ -497,7 +497,7 @@ export class Submission extends Component {
                 </Option>
               )}
             </Select> 
-            <div className="pb1 pa2 f5 b">Expedite</div>
+            <div className="pl2 pr2 pt2 font-prim-small">Expedite</div>
             <Radio.Group className="tc" onChange={(e) => {this.setState({is_expedited: e.target.value})}} value={this.state.is_expedited}>
               <Radio value={true}>Yes</Radio>
               <Radio value={false}>No</Radio>
@@ -508,7 +508,7 @@ export class Submission extends Component {
           {
             this.state.uploading === false 
             ? <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.onPost()}}>
-              Upload to Affinity
+              <img className="button-logo" src={Pink}></img>Upload to Affinity
             </Button> 
             : <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.onPost()}}>
             <Spin indicator={SmallantIcon} className='dashboard-designs-spin'/>
@@ -518,7 +518,7 @@ export class Submission extends Component {
         </Row>
         <Row className='dashboard-designs w-100 ma3'>
           <Row justify='centre' className='dashboard-designs-header w-100 pr3 pl3'>
-            <Col lg={5} className='f4'>Past Designs</Col>
+            <Col lg={5} className='f4 font-prim-big'>Past Designs</Col>
             <Col lg={19}></Col>
           </Row>
           <Divider />

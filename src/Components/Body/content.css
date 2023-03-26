@@ -1,18 +1,21 @@
 .header{
-  background-color: #7FC9EF !important;
+  background-color: #E48EC3 !important;
   border-bottom: 2px solid #141414;
   padding: 1em;
 }
 .header-logo{
-  width: 25rem;
+  width: 4rem;
+}
+.footer-logo{
+  width: 2rem;
 }
 .footer{
-  background-color: #7FC9EF !important;
-  border-top: 2px solid #141414;
-  padding: 1em;
-  color: #141414;
-  height: 48px;
-  font-size: 16px;
+  background-color: #2b2b2b !important;
+  border-top: 1px solid #141414;
+  padding: 0.5em;
+  color: white;
+  height: 30px;
+  font-size: 12px;
 }
 .sidebar-text{
   font-size: 18px;
