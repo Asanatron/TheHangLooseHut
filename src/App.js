@@ -3,6 +3,8 @@ import { Layout, Row, Col, Input, Button, notification } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import Body from './Components/Body';
 import Logo from './Media/Logo.png';
+import HLHLogoText from './Media/HLHLogoText.png'
+import HLHLogo from './Media/hlhlogo.png'
 import './App.css';
 import axios from "axios";
 
@@ -55,7 +57,7 @@ export class App extends Component {
         <div className='login-page'>
           <Row className='header' align='center'>
             <Col>
-              <img alt='TheHangLooseHut' className='header-logo' src={Logo}/>
+            <img alt='TheHangLooseHut' className='header-logo' src={HLHLogo}/><img alt='TheHangLooseHut' className='header-logo-text' src={HLHLogoText}/>
             </Col>
           </Row>
           <Row className='login-box' justify='bottom' align='center'>
