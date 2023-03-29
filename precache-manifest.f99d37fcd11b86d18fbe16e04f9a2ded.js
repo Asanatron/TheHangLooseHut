@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "a1b0d4e9616807846018",
-    "url": "/TheHangLooseHut/static/css/main.a6d8b915.chunk.css"
+    "revision": "fb61b815d9fae94d85e3",
+    "url": "/TheHangLooseHut/static/css/main.3ae252d1.chunk.css"
   },
   {
-    "revision": "a1b0d4e9616807846018",
-    "url": "/TheHangLooseHut/static/js/main.a1b0d4e9.chunk.js"
+    "revision": "fb61b815d9fae94d85e3",
+    "url": "/TheHangLooseHut/static/js/main.fb61b815.chunk.js"
   },
   {
     "revision": "35b3b638c25fc85eeb75",
@@ -24,8 +24,8 @@ self.__precacheManifest = [
     "url": "/TheHangLooseHut/static/js/runtime~main.ae8daa22.js"
   },
   {
-    "revision": "fd6b768dcfb8878d69a66525a8ab363c",
-    "url": "/TheHangLooseHut/static/media/HLHLogoText.fd6b768d.png"
+    "revision": "68f4b336d6468d0d53535235a71f9005",
+    "url": "/TheHangLooseHut/static/media/HLHLogoText.68f4b336.png"
   },
   {
     "revision": "771c9b84beb9f9d8d013067739dbd5f1",
@@ -40,7 +40,7 @@ self.__precacheManifest = [
     "url": "/TheHangLooseHut/static/media/Logo.7839023b.png"
   },
   {
-    "revision": "b68cfa1f5b7496260152b927aa301cd3",
+    "revision": "2febdd1a4a580d435eaf3db3c8bb9181",
     "url": "/TheHangLooseHut/index.html"
   }
 ];

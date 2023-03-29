@@ -1,7 +1,7 @@
 {
-  "main.css": "/TheHangLooseHut/static/css/main.a6d8b915.chunk.css",
-  "main.js": "/TheHangLooseHut/static/js/main.a1b0d4e9.chunk.js",
-  "main.js.map": "/TheHangLooseHut/static/js/main.a1b0d4e9.chunk.js.map",
+  "main.css": "/TheHangLooseHut/static/css/main.3ae252d1.chunk.css",
+  "main.js": "/TheHangLooseHut/static/js/main.fb61b815.chunk.js",
+  "main.js.map": "/TheHangLooseHut/static/js/main.fb61b815.chunk.js.map",
   "static/js/1.35b3b638.chunk.js": "/TheHangLooseHut/static/js/1.35b3b638.chunk.js",
   "static/js/1.35b3b638.chunk.js.map": "/TheHangLooseHut/static/js/1.35b3b638.chunk.js.map",
   "static/css/2.c0b2eadf.chunk.css": "/TheHangLooseHut/static/css/2.c0b2eadf.chunk.css",
@@ -9,13 +9,13 @@
   "static/js/2.245b3b09.chunk.js.map": "/TheHangLooseHut/static/js/2.245b3b09.chunk.js.map",
   "runtime~main.js": "/TheHangLooseHut/static/js/runtime~main.ae8daa22.js",
   "runtime~main.js.map": "/TheHangLooseHut/static/js/runtime~main.ae8daa22.js.map",
-  "static/media/HLHLogoText.png": "/TheHangLooseHut/static/media/HLHLogoText.fd6b768d.png",
+  "static/media/HLHLogoText.png": "/TheHangLooseHut/static/media/HLHLogoText.68f4b336.png",
   "static/media/hlhlogo.png": "/TheHangLooseHut/static/media/hlhlogo.771c9b84.png",
   "static/media/pink.png": "/TheHangLooseHut/static/media/pink.be97cbda.png",
   "static/media/Logo.png": "/TheHangLooseHut/static/media/Logo.7839023b.png",
-  "static/css/main.a6d8b915.chunk.css.map": "/TheHangLooseHut/static/css/main.a6d8b915.chunk.css.map",
+  "static/css/main.3ae252d1.chunk.css.map": "/TheHangLooseHut/static/css/main.3ae252d1.chunk.css.map",
   "static/css/2.c0b2eadf.chunk.css.map": "/TheHangLooseHut/static/css/2.c0b2eadf.chunk.css.map",
   "index.html": "/TheHangLooseHut/index.html",
-  "precache-manifest.4ed7e8fdc28612c790992050f3799b15.js": "/TheHangLooseHut/precache-manifest.4ed7e8fdc28612c790992050f3799b15.js",
+  "precache-manifest.f99d37fcd11b86d18fbe16e04f9a2ded.js": "/TheHangLooseHut/precache-manifest.f99d37fcd11b86d18fbe16e04f9a2ded.js",
   "service-worker.js": "/TheHangLooseHut/service-worker.js"
 }
