@@ -150,7 +150,7 @@ export class Body extends Component {
                         animate={{
                           duration: 2000
                         }}
-                        colorScale={["#E48EC3", "#7FC9EF", "#FAD447",]}
+                        colorScale={["#f58bc5", "#7FC9EF", "#FAD447",]}
                         style={{
                           data: {
                             stroke: "black", strokeWidth: 0.2
@@ -168,7 +168,7 @@ export class Body extends Component {
                         gutter={20}
                         style={{title: {fontSize: 26 }, labels: {fontSize: 20}}}
                         data={[
-                          { name: "Customer Review", symbol: { fill: "#E48EC3"}},
+                          { name: "Customer Review", symbol: { fill: "#f58bc5"}},
                           { name: "Approved From Affinity", symbol: { fill: "#7FC9EF" } },
                           { name: "Uploaded to Affinity", symbol: { fill: "#FAD447" } }
                         ]}
@@ -184,7 +184,7 @@ export class Body extends Component {
                         animate={{
                           duration: 2000
                         }}
-                        colorScale={["#E48EC3", "#7FC9EF", "#FAD447",]}
+                        colorScale={["#f58bc5", "#7FC9EF", "#FAD447",]}
                         style={{
                           data: {
                             stroke: "black", strokeWidth: 0.2
@@ -202,7 +202,7 @@ export class Body extends Component {
                         gutter={20}
                         style={{title: {fontSize: 26 }, labels: {fontSize: 20}}}
                         data={[
-                          { name: "Needs revision", symbol: { fill: "#E48EC3"}},
+                          { name: "Needs revision", symbol: { fill: "#f58bc5"}},
                           { name: "Needs final approval", symbol: { fill: "#7FC9EF" } },
                           { name: "Pending affinity", symbol: { fill: "#FAD447" } }
                         ]}

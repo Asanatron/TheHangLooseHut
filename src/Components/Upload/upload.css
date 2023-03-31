@@ -8,7 +8,7 @@
   overflow: scroll;
 }
 .ant-upload.ant-upload-drag p.ant-upload-drag-icon .anticon {
-  color: #E48EC3;
+  color: #f58bc5;
   font-size: 48px;
 }
 .ant-upload.ant-upload-drag:not(.ant-upload-disabled):hover {
