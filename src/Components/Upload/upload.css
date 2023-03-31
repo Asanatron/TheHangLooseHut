@@ -77,3 +77,11 @@ a {
   padding-right: 5px;
   padding-bottom: 2px;
 }
+.ant-card-cover img {
+  border-radius: 2px 2px 0 0;
+  height: 270px;
+}
+.ant-card-body {
+  padding: 24px;
+  height: 140px !important;
+}
