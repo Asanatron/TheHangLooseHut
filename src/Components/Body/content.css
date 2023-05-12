@@ -26,3 +26,11 @@
 .ant-divider-horizontal {
   margin: 0px 0px 18px 0px !important;
 }
+.logo-ext{
+  color: white;
+  font-family: 'Anton', sans-serif;
+  font-family: 'Bebas Neue', sans-serif;
+  text-shadow: -2px 1px black;
+  font-size: 38px;
+  vertical-align: middle;
+}

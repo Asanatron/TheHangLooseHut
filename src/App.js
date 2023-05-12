@@ -12,7 +12,8 @@ export class App extends Component {
   state = {
     loginState: 'LoggedOut',
     username: '',
-    password: ''
+    password: '',
+    userType: ''
   };
 
   Login(){
@@ -24,9 +25,11 @@ export class App extends Component {
     if(this.state.password !== '' && this.state.username !== ''){
       axios(configLogin)
       .then((res) => {
-        if(res.data === true){
+        console.log(res.data)
+        if(res.data.status === true){
           this.setState({
-            loginState: 'LoggedIn'
+            loginState: 'LoggedIn',
+            userType: res.data.userType
           })
         } else{
           notification.error({
@@ -52,7 +55,7 @@ export class App extends Component {
         {
           this.state.loginState === 'LoggedIn' ?
           <Layout className="site-layout">
-            <Body />
+            <Body userType={this.state.userType}/>
           </Layout>:
         <div className='login-page'>
           <Row className='header' align='center'>

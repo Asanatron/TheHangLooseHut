@@ -5,9 +5,10 @@ import App from './App';
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
+
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter >
       <App />
     </BrowserRouter>
   </React.StrictMode>,
