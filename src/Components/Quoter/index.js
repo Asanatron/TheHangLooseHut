@@ -1,136 +1,240 @@
 import React, { Component } from 'react'
 import { Col, Divider, Row, Spin, Input, Upload, Pagination, Card, Select, Button, Radio, notification } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
-import Pink from '../../Media/pink.png'
+import DTF from './DTF';
+import Screenprint from './Screenprint';
+import Embroidery from './Embroidery';
 
-const antIcon = <LoadingOutlined style={{ fontSize: 72 }} spin />;
-const SmallantIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+const { Dragger } = Upload;
 
-const { Option } = Select;
-
+var printTypes = [
+  {
+    label: 'Direct to film',
+    value: 'dtf'
+  },
+  {
+    label: 'Screen Print',
+    value: 'screenprint'
+  }, 
+  {
+    label: 'Embroidery',
+    value: 'embroidery'
+  },
+];
 
 export class Quoter extends Component {
   constructor(props) {
     super(props)
   
     this.state = {
-       
+      printType: 'dtf',
+      disc_dtf: [],
+      disc_embroidery: [],
+      disc_screenprint: [],
+      dtf: [],
+      embroidery: [],
+      screenprint: [],
+      dtf_metadata: [],
+      embroidery_metadata: [],
+      screenprint_metadata: [],
     }
   }
+
+  async componentDidMount(){
+    var GetTableData_disc_dtf = {
+      method: 'get',
+      url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=disc_dtf',
+      headers: {}
+    }
+
+    axios(GetTableData_disc_dtf).then((res) => {
+      this.setState({
+        disc_dtf: res.data.solution
+      })
+
+      var GetTableData_dtf = {
+        method: 'get',
+        url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=dtf',
+        headers: {}
+      }
+  
+      axios(GetTableData_dtf).then((res) => {
+        var obj = []
+
+        for(var i=0; i<res.data.solution.length; i++){
+          obj.push({
+            label: res.data.solution[i].Item,
+            value: res.data.solution[i].Cost
+          })
+        }
+
+        this.setState({
+          dtf: obj
+        })
+
+        var GetTableData_dtf_metadata = {
+          method: 'get',
+          url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=dtf_metadata',
+          headers: {}
+        }
+
+        axios(GetTableData_dtf_metadata).then((res) => {
+          this.setState({
+            dtf_metadata: res.data.solution
+          })
+
+        }).catch((error) => {
+          console.log(error)
+        })
+        
+      }).catch((error) => {
+        console.log(error)
+      })
+    }).catch((error) => {
+      console.log(error)
+    })
+
+    var GetTableData_disc_embroidery = {
+      method: 'get',
+      url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=disc_embroidery',
+      headers: {}
+    }
+
+    axios(GetTableData_disc_embroidery).then((res) => {
+      this.setState({
+        disc_embroidery: res.data.solution
+      })
+
+      var GetTableData_embroidery = {
+        method: 'get',
+        url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=embroidery',
+        headers: {}
+      }
+  
+      axios(GetTableData_embroidery).then((res) => {
+        var obj = []
+
+        for(var i=0; i<res.data.solution.length; i++){
+          obj.push({
+            label: res.data.solution[i].Item,
+            value: res.data.solution[i].Cost
+          })
+        }
+
+        this.setState({
+          embroidery: obj
+        })
+
+        var GetTableData_embroidery_metadata = {
+          method: 'get',
+          url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=embroidery_metadata',
+          headers: {}
+        }
+
+        axios(GetTableData_embroidery_metadata).then((res) => {
+          this.setState({
+            embroidery_metadata: res.data.solution
+          })
+
+        }).catch((error) => {
+          console.log(error)
+        })
+        
+      }).catch((error) => {
+        console.log(error)
+      })
+    }).catch((error) => {
+      console.log(error)
+    })
+
+    var GetTableData_disc_screenprint = {
+      method: 'get',
+      url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=disc_screenprint',
+      headers: {}
+    }
+
+    axios(GetTableData_disc_screenprint).then((res) => {
+      this.setState({
+        disc_screenprint: res.data.solution
+      })
+
+      var GetTableData_screenprint = {
+        method: 'get',
+        url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=screenprint',
+        headers: {}
+      }
+  
+      axios(GetTableData_screenprint).then((res) => {
+        var obj = []
+
+        for(var i=0; i<res.data.solution.length; i++){
+          obj.push({
+            label: res.data.solution[i].Item,
+            value: res.data.solution[i].Cost
+          })
+        }
+
+        this.setState({
+          screenprint: obj
+        })
+
+        var GetTableData_screenprint_metadata = {
+          method: 'get',
+          url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=screenprint_metadata',
+          headers: {}
+        }
+
+        axios(GetTableData_screenprint_metadata).then((res) => {
+          this.setState({
+            screenprint_metadata: res.data.solution
+          })
+
+        }).catch((error) => {
+          console.log(error)
+        })
+        
+      }).catch((error) => {
+        console.log(error)
+      })
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+
+  GetQuote(){
+
+  }
+  
   render() {
+    // console.log(this.state)
     return (
       <div className="upload mt3 mb3">
         <Row justify="centre" className="dashboard-designs-header w-100 pr3 pl3">
-          <Col lg={4} className="f4 font-prim-big">
-            Get Quote
+          <Col lg={8} className="f4 font-prim-big">
+            Get Quote | <span>{this.state.printType === 'dtf' ? 'Direct to film': this.state.printType}</span>
           </Col>
-          <Col lg={20}></Col>
+          <Col lg={16}></Col>
         </Row>
         <Divider />
         <Row justify="center" gutter={16} className="mb3">
-          <Col lg={11}>
-            
-          </Col>
-          <Col lg={11}>
-            <div className="pl2 pr2 pt2 font-prim-small">Title</div>
-            <Input
-              className=""
-              placeholder="Enter design title"
-              onChange={(e) => this.setState({ title: e.target.value })}
-              value={this.state.title}
-            />
-            <div className="pl2 pr2 pt2 font-prim-small">Task Link</div>
-            <Input
-              className=""
-              placeholder="Enter design link"
-              onChange={(e) => this.setState({ desc: e.target.value })}
-              value={this.state.desc}
-            />
-            <div className="pl2 pr2 pt2 font-prim-small">Primary Licensor</div>
+          <Col lg={18}>
+          <div className="pl2 pr2 pt2 font-prim-small">Print Type</div>
             <Select
-              defaultOpen=""
-              onChange={(e) => {
-                this.setState({ clientID: e });
-              }}
-              className="w-100"
-              placeholder="Select province"
-              value={this.state.clientID}
-              showSearch
-              filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
-            >
-              {this.state.clients ? (
-                this.state.clients.map((client, index) => {
-                  return (
-                    <Option key={index} value={client.id}>
-                      {client.name}
-                    </Option>
-                  );
-                })
-              ) : (
-                <Option value={0}>
-                  <Row className="w-100" justify="center">
-                    <Col lg={2}>
-                      <Spin
-                        indicator={antIcon}
-                        className=""
-                      />
-                    </Col>
-                  </Row>
-                </Option>
-              )}
-            </Select>
-            <div className="pl2 pr2 pt2 font-prim-small">Category</div>
-            <Select
-              defaultOpen=""
-              onChange={(e) => {
-                this.setState({ category: e });
-              }}
-              className="w-100"
-              placeholder="Select province"
-              value={this.state.category}
-              showSearch
-              filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
-            >
-              {this.state.treeData ? (
-                this.state.treeData.map((category, index) => {
-                  return (
-                    <Option key={index} value={category.id}>
-                      {category.name}
-                    </Option>
-                  );
-                })
-              ) : (
-                <Option value={0}>
-                  <Row className="w-100" justify="center">
-                    <Col lg={2}>
-                      <Spin
-                        indicator={antIcon}
-                        className=""
-                      />
-                    </Col>
-                  </Row>
-                </Option>
-              )}
-            </Select> 
-            <div className="pl2 pr2 pt2 font-prim-small">Expedite</div>
-            <Radio.Group className="tc" onChange={(e) => {this.setState({is_expedited: e.target.value})}} value={this.state.is_expedited}>
-              <Radio value={true}>Yes</Radio>
-              <Radio value={false}>No</Radio>
-            </Radio.Group>
+              defaultValue={this.state.printType}
+              style={{ width: '100%' }}
+              onChange={(e) => {this.setState({printType: e})}}
+              options={printTypes}
+              value={this.state.printType}
+            />
+
+            {
+              this.state.printType === 'dtf' ? 
+                <DTF dtfItemList = {this.state.dtf} meta = {this.state.dtf_metadata} discount = {this.state.disc_dtf}/>
+              : this.state.printType === 'screenprint' ?  
+                <Screenprint screenPrintItemList = {this.state.screenprint} meta = {this.state.screenprint_metadata} discount = {this.state.disc_screenprint}/>
+              : <Embroidery embroideryItemList = {this.state.embroidery} meta = {this.state.embroidery_metadata} discount = {this.state.disc_embroidery}/>
+            }
           </Col>
-        </Row>
-        <Row justify="center mb3 pt3">
-          {
-            this.state.uploading === false 
-            ? <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.onPost()}}>
-              <img className="button-logo" src={Pink}></img>Upload to Affinity
-            </Button> 
-            : <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.onPost()}}>
-            <Spin indicator={SmallantIcon} className='dashboard-designs-spin'/>
-          </Button> 
-          }
-          
         </Row>
       </div>
     )

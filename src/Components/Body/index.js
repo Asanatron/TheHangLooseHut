@@ -6,6 +6,7 @@ import HLHLogo from '../../Media/hlhlogo.png'
 import './content.css'
 import Asanatron from '../Asanatron';
 import Quotemaster from '../Quotemaster';
+import Admin from '../Admin';
 
 const { Content, Footer } = Layout;
 
@@ -38,8 +39,8 @@ export class Body extends Component {
             <Asanatron /> : 
               this.props.userType === 'quotemaster' ?
                 <Quotemaster /> : 
-                this.props.userType === 'quotemaster' ?
-                  <div>Admin</div> :
+                this.props.userType === 'admin' ?
+                  <Admin />:
                     <div>Bad path</div>
             } 
         </Content>    
