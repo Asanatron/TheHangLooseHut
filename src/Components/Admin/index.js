@@ -45,6 +45,7 @@ const metadata_clmn = [
     key: 'Value',
   }
 ];
+
 const tables = [{
   value: 'disc_dtf',
   label: 'Direct to film Discount'
@@ -73,6 +74,7 @@ const tables = [{
   value: 'screenprint_metadata',
   label: 'Screenprint Details'
 }]
+
 const metadata = [{
   tableName: 'disc_dtf',
   keyColumn: 'print',
@@ -119,7 +121,7 @@ export class Admin extends Component {
       embroidery_metadata: [],
       screenprint_metadata: [],
       printType: '',
-      tableType: '',
+      tableType: 'disc_dtf',
       keyColumn: '',
       keyValue: '',
       newValue: null,
@@ -127,15 +129,31 @@ export class Admin extends Component {
     }
   }
 
-  toObject(keys, values) {
-    const obj = {};
+  toObject(keys, values, type) {
+    const arrObj = [];
     
     for(var i = 0; i<keys.length; i++){
-      obj[keys[i]] = values[i]
+      if(type == 'disc'){
+        var obj = {
+          label: keys[i].Piece,
+          value: values[i].Piece
+        }
+      } else if(type == 'items'){
+        var obj = {
+          label: keys[i].Item,
+          value: values[i].Item
+        }
+      } else{ 
+        var obj = {
+          label: keys[i].Label,
+          value: values[i].Label
+        }
+      }
+
+      arrObj.push(obj)
     }
 
-    console.log(obj)
-    // return obj;
+    return arrObj;
   }
 
   async componentDidMount(){
@@ -273,14 +291,14 @@ export class Admin extends Component {
   }
 
   UpdateTable(){
-    if(this.state.keyColumn != '' && this.state.keyValue != '' && this.state.newValue != null && this.state.tableType != '' && this.state.printType != '' ){
-      this.setState({
-        updating: true
-      })
+    if(this.state.keyValue != '' && this.state.newValue != null && this.state.tableType != ''){
+      var meta = metadata.find((data) => data.tableName == this.state.tableType)
+
+      console.log(meta)
 
       var UpdateTable = {
         method: 'post',
-        url: `https://thehangloosehutbackend.herokuapp.com/update?printType=${this.state.printType}&tblType=${this.state.tableType}&keyValue=${this.state.keyValue}&keyColumn=${this.state.keyColumn}&newValue=${this.state.newValue}&updColumn=${this.state.updColumn}`,
+        url: `https://thehangloosehutbackend.herokuapp.com/update?tblName=${this.state.tableType}&keyValue=${this.state.keyValue}&keyColumn=${meta.keyColumn}&newValue=${this.state.newValue}&updColumn=${meta.valueColumn}`,
         headers: {}
       }
 
@@ -309,6 +327,26 @@ export class Admin extends Component {
   }
 
   render() {
+    var dtf_disc_css = ''
+    var dtf_items_css = ''
+    var dtf_meta_css = ''
+    var emb_disc_css = ''
+    var emb_item_css = ''
+    var emb_meta_css = ''
+    var sp_disc_css = ''
+    var sp_item_css = ''
+    var sp_meta_css = ''
+
+    this.state.tableType == 'disc_dtf' ? dtf_disc_css = 'ba b--green': 
+    this.state.tableType == 'disc_embroidery' ? emb_disc_css = 'ba b--green' : 
+    this.state.tableType == 'disc_screenprint' ? sp_disc_css = 'ba b--green' : 
+    this.state.tableType == 'dtf' ? dtf_items_css = 'ba b--green' : 
+    this.state.tableType == 'embroidery' ? emb_item_css = 'ba b--green' : 
+    this.state.tableType == 'screenprint' ? sp_item_css = 'ba b--green' : 
+    this.state.tableType == 'dtf_metadata' ? dtf_meta_css = 'ba b--green' : 
+    this.state.tableType == 'embroidery_metadata' ? emb_meta_css = 'ba b--green' : 
+    this.state.tableType == 'screenprint_metadata' ? sp_meta_css = 'ba b--green' : 
+
     console.log(this.toObject(this.state.dtf, this.state.dtf))
     return (
       <div>
@@ -334,15 +372,15 @@ export class Admin extends Component {
                         style={{ width: '100%' }}
                         onChange={(e) => {this.setState({keyValue: e})}}
                         options={
-                          this.state.tableType == 'disc_dtf' ? this.toObject(this.state.disc_dtf,this.state.disc_dtf) : 
-                          this.state.tableType == 'disc_embroidery' ? this.toObject(this.state.disc_embroidery, this.state.disc_embroidery) : 
-                          this.state.tableType == 'disc_screenprint' ? this.toObject(this.state.disc_screenprint, this.state.disc_screenprint) : 
-                          this.state.tableType == 'dtf' ? this.toObject(this.state.dtf, this.state.dtf) : 
-                          this.state.tableType == 'embroidery' ? this.toObject(this.state.embroidery, this.state.embroidery) : 
-                          this.state.tableType == 'screenprint' ? this.toObject(this.state.screenprint, this.state.screenprint) : 
-                          this.state.tableType == 'dtf_metadata' ? this.toObject(this.state.dtf_metadata, this.state.dtf_metadata) : 
-                          this.state.tableType == 'embroidery_metadata' ? this.toObject(this.state.embroidery_metadata, this.state.embroidery_metadata) : 
-                          this.state.tableType == 'screenprint_metadata' ? this.toObject(this.state.screenprint_metadata, this.state.screenprint_metadata) : 
+                          this.state.tableType == 'disc_dtf' ? this.toObject(this.state.disc_dtf,this.state.disc_dtf, 'disc') : 
+                          this.state.tableType == 'disc_embroidery' ? this.toObject(this.state.disc_embroidery, this.state.disc_embroidery, 'disc') : 
+                          this.state.tableType == 'disc_screenprint' ? this.toObject(this.state.disc_screenprint, this.state.disc_screenprint, 'disc') : 
+                          this.state.tableType == 'dtf' ? this.toObject(this.state.dtf, this.state.dtf, 'items') : 
+                          this.state.tableType == 'embroidery' ? this.toObject(this.state.embroidery, this.state.embroidery, 'items') : 
+                          this.state.tableType == 'screenprint' ? this.toObject(this.state.screenprint, this.state.screenprint, 'items') : 
+                          this.state.tableType == 'dtf_metadata' ? this.toObject(this.state.dtf_metadata, this.state.dtf_metadata, 'meta') : 
+                          this.state.tableType == 'embroidery_metadata' ? this.toObject(this.state.embroidery_metadata, this.state.embroidery_metadata, 'meta') : 
+                          this.state.tableType == 'screenprint_metadata' ? this.toObject(this.state.screenprint_metadata, this.state.screenprint_metadata, 'meta') : 
                           []
                         }
                       />
@@ -389,13 +427,16 @@ export class Admin extends Component {
               </Row>
               <Row gutter={16}  className=' mt1 mb1 pr4 pl4'>
                 <Col md={8}>
-                  <Table loading={this.state.disc_dtf.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.disc_dtf} columns={disc_clmn}/>
+                  <div className='font-prim-small'>Discount</div>
+                  <Table className={dtf_disc_css} loading={this.state.disc_dtf.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.disc_dtf} columns={disc_clmn}/>
                 </Col>
                 <Col md={8}>
-                  <Table pagination={{pageSize: 8, position: ['bottomCenter']}} loading={this.state.dtf.length == 0} bordered={true} size='small' dataSource={this.state.dtf} columns={table_clmn}/>
+                  <div className='font-prim-small'>Items</div>
+                  <Table className={dtf_items_css} pagination={{pageSize: 8, position: ['bottomCenter']}} loading={this.state.dtf.length == 0} bordered={true} size='small' dataSource={this.state.dtf} columns={table_clmn}/>
                 </Col>
                 <Col md={8}>
-                  <Table loading={this.state.dtf_metadata.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.dtf_metadata.slice(0,7)} columns={metadata_clmn}/>
+                  <div className='font-prim-small'>Details</div>
+                  <Table className={dtf_meta_css} loading={this.state.dtf_metadata.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.dtf_metadata.slice(0,7)} columns={metadata_clmn}/>
                 </Col>
               </Row>
 
@@ -408,13 +449,16 @@ export class Admin extends Component {
               </Row>
               <Row gutter={16}  className=' mt1 mb1 pr4 pl4'>
                 <Col md={8}>
-                  <Table loading={this.state.disc_embroidery.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.disc_embroidery.slice(0,8)} columns={disc_clmn}/>
+                  <div className='font-prim-small'>Discount</div>
+                  <Table className={emb_disc_css} loading={this.state.disc_embroidery.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.disc_embroidery.slice(0,8)} columns={disc_clmn}/>
                 </Col>
                 <Col md={8}>
-                  <Table pagination={{pageSize: 8, position: ['bottomCenter']}} loading={this.state.embroidery.length == 0} bordered={true} size='small' dataSource={this.state.embroidery} columns={table_clmn}/>
+                  <div className='font-prim-small'>Items</div>
+                  <Table className={emb_item_css} pagination={{pageSize: 8, position: ['bottomCenter']}} loading={this.state.embroidery.length == 0} bordered={true} size='small' dataSource={this.state.embroidery} columns={table_clmn}/>
                 </Col>
                 <Col md={8}>
-                  <Table loading={this.state.embroidery_metadata.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.embroidery_metadata.slice(0,5)} columns={metadata_clmn}/>
+                  <div className='font-prim-small'>Details</div>
+                  <Table className={emb_meta_css} loading={this.state.embroidery_metadata.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.embroidery_metadata.slice(0,5)} columns={metadata_clmn}/>
                 </Col>
               </Row>
 
@@ -427,13 +471,16 @@ export class Admin extends Component {
               </Row>
               <Row gutter={16}  className=' mt1 mb1 pr4 pl4'>
                 <Col md={8}>
-                  <Table loading={this.state.disc_screenprint.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.disc_screenprint} columns={disc_clmn}/>
+                  <div className='font-prim-small'>Discount</div>
+                  <Table className={sp_disc_css} loading={this.state.disc_screenprint.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.disc_screenprint} columns={disc_clmn}/>
                 </Col>
                 <Col md={8}>
-                  <Table pagination={{pageSize: 8, position: ['bottomCenter']}} loading={this.state.screenprint.length == 0} bordered={true} size='small' dataSource={this.state.screenprint} columns={table_clmn}/>
+                  <div className='font-prim-small'>Items</div>
+                  <Table className={sp_item_css} pagination={{pageSize: 8, position: ['bottomCenter']}} loading={this.state.screenprint.length == 0} bordered={true} size='small' dataSource={this.state.screenprint} columns={table_clmn}/>
                 </Col>
                 <Col md={8}>
-                  <Table loading={this.state.screenprint_metadata.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.screenprint_metadata} columns={metadata_clmn}/>
+                  <div className='font-prim-small'>Details</div>
+                  <Table className={sp_meta_css} loading={this.state.screenprint_metadata.length == 0} pagination={false} bordered={true} size='small' dataSource={this.state.screenprint_metadata} columns={metadata_clmn}/>
                 </Col>
               </Row>
               

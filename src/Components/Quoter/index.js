@@ -27,7 +27,7 @@ export class Quoter extends Component {
     super(props)
   
     this.state = {
-      printType: 'dtf',
+      printType: 'screenprint',
       disc_dtf: [],
       disc_embroidery: [],
       disc_screenprint: [],
@@ -229,10 +229,52 @@ export class Quoter extends Component {
 
             {
               this.state.printType === 'dtf' ? 
-                <DTF dtfItemList = {this.state.dtf} meta = {this.state.dtf_metadata} discount = {this.state.disc_dtf}/>
+                <DTF 
+                  dtfItemList = {this.state.dtf} 
+                  meta = {this.state.dtf_metadata} 
+                  discount = {this.state.disc_dtf}
+                  getprintType = {this.props.getprintType}
+                  gettotalCost = {this.props.gettotalCost}
+                  getquantity = {this.props.getquantity}
+                  getitemCost = {this.props.getitemCost}
+                  getlogoCost = {this.props.getlogoCost}
+                  getlocationSizes = {this.props.getlocationSizes}
+                  getlocationColors = {this.props.getlocationColors}
+                  getscreens = {this.props.getscreens}
+                  getlocation = {this.props.getlocation}
+                  getitem = {this.props.getitem}
+                />
               : this.state.printType === 'screenprint' ?  
-                <Screenprint screenPrintItemList = {this.state.screenprint} meta = {this.state.screenprint_metadata} discount = {this.state.disc_screenprint}/>
-              : <Embroidery embroideryItemList = {this.state.embroidery} meta = {this.state.embroidery_metadata} discount = {this.state.disc_embroidery}/>
+                <Screenprint 
+                  screenPrintItemList = {this.state.screenprint} 
+                  meta = {this.state.screenprint_metadata} 
+                  discount = {this.state.disc_screenprint}
+                  getprintType = {this.props.getprintType}
+                  gettotalCost = {this.props.gettotalCost}
+                  getquantity = {this.props.getquantity}
+                  getitemCost = {this.props.getitemCost}
+                  getlogoCost = {this.props.getlogoCost}
+                  getlocationSizes = {this.props.getlocationSizes}
+                  getlocationColors = {this.props.getlocationColors}
+                  getscreens = {this.props.getscreens}
+                  getlocation = {this.props.getlocation}
+                  getitem = {this.props.getitem}
+                />
+              : <Embroidery 
+                  embroideryItemList = {this.state.embroidery} 
+                  meta = {this.state.embroidery_metadata} 
+                  discount = {this.state.disc_embroidery}
+                  getprintType = {this.props.getprintType}
+                  gettotalCost = {this.props.gettotalCost}
+                  getquantity = {this.props.getquantity}
+                  getitemCost = {this.props.getitemCost}
+                  getlogoCost = {this.props.getlogoCost}
+                  getlocationSizes = {this.props.getlocationSizes}
+                  getlocationColors = {this.props.getlocationColors}
+                  getscreens = {this.props.getscreens}
+                  getlocation = {this.props.getlocation}
+                  getitem = {this.props.getitem}
+                />
             }
           </Col>
         </Row>
