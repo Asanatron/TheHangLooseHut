@@ -22,7 +22,8 @@ export class Quotemaster extends Component {
       locationSizes: [],
       locationColors: [],
       screens: 0,
-      item: ''
+      item: '',
+      logoSize: ''
     }
 
     this.getprintType = this.getprintType.bind(this);
@@ -35,6 +36,7 @@ export class Quotemaster extends Component {
     this.getscreens = this.getscreens.bind(this);
     this.getlocation = this.getlocation.bind(this);
     this.getitem = this.getitem.bind(this);
+    this.getlogoSize = this.getlogoSize.bind(this)
   }
 
   getitem(e){
@@ -97,6 +99,12 @@ export class Quotemaster extends Component {
     })
   }
 
+  getlogoSize(e){
+    this.setState({
+      logoSize: e
+    })
+  }
+
 
   render() {
     return (
@@ -114,6 +122,7 @@ export class Quotemaster extends Component {
               screens = {this.state.screens}
               location = {this.state.location}
               item = {this.state.item}
+              logoSize = {this.state.logoSize}
             />
           </Col>
           <Col lg={18}>
@@ -129,6 +138,7 @@ export class Quotemaster extends Component {
                 getscreens = {this.getscreens}
                 getlocation = {this.getlocation}
                 getitem = {this.getitem}
+                getlogoSize = {this.getlogoSize}
               />
             </Content>
           </Col>

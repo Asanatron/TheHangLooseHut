@@ -3,6 +3,8 @@ import { Col, Divider, Row, Spin, Input, Upload, Pagination, Card, Select, Butto
 import { LoadingOutlined, InboxOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Pink from '../../Media/pink.png'
+import ReactToPrint from 'react-to-print';
+import Receipt from './Receipt';
 
 const { Dragger } = Upload;
 
@@ -124,11 +126,40 @@ export class CusDetails extends Component {
           </p>
         </Dragger>
 
-        <Row justify="center mb3 pt3">
-          <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.PrintQuote()}}>
-            <img className="button-logo" src={Pink}></img>Print Quote
-          </Button> 
-        </Row>
+        <ReactToPrint
+          trigger={() => {
+            return <Row justify="center mb3 pt3">
+            <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.PrintQuote()}}>
+              <img className="button-logo" src={Pink}></img>Print Quote
+            </Button> 
+          </Row>;
+          }}
+          content={() => this.componentRef}
+        />
+          <div style={{ display: "none" }}>
+          <Receipt 
+            printType = {this.props.printType}
+            totalCost = {this.props.totalCost}
+            quantity = {this.props.quantity}
+            itemCost = {this.props.itemCost}
+            logoCost = {this.props.logoCost}
+            locationSizes = {this.props.locationSizes}
+            locationColors = {this.props.locationColors}
+            screens = {this.props.screens}
+            location = {this.props.location}
+            item = {this.props.item}
+            cusName = {this.state.cusName}
+            sorority = {this.state.sorority}
+            school = {this.state.school}
+            contactInfo = {this.state.contactInfo}
+            image = {this.state.image}
+            FILEBASE64URI = {this.state.FILEBASE64URI}
+            files = {this.state.files}
+            imageName = {this.state.imageName}
+            logoSize = {this.props.logoSize}
+            ref={el => (this.componentRef = el)} 
+          />
+          </div>
       </div>
     )
   }

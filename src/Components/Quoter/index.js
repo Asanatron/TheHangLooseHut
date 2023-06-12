@@ -200,10 +200,6 @@ export class Quoter extends Component {
       console.log(error)
     })
   }
-
-  GetQuote(){
-
-  }
   
   render() {
     // console.log(this.state)
@@ -220,9 +216,9 @@ export class Quoter extends Component {
           <Col lg={18}>
           <div className="pl2 pr2 pt2 font-prim-small">Print Type</div>
             <Select
-              defaultValue={this.state.printType}
+              // defaultValue={this.state.printType}
               style={{ width: '100%' }}
-              onChange={(e) => {this.setState({printType: e})}}
+              onChange={(e) => {this.setState({printType: e}); this.props.getprintType(e)}}
               options={printTypes}
               value={this.state.printType}
             />
@@ -274,6 +270,7 @@ export class Quoter extends Component {
                   getscreens = {this.props.getscreens}
                   getlocation = {this.props.getlocation}
                   getitem = {this.props.getitem}
+                  getlogoSize = {this.props.getlogoSize}
                 />
             }
           </Col>

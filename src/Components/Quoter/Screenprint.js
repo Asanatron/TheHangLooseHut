@@ -83,7 +83,7 @@ export class Screenprint extends Component {
     this.props.getitemCost(this.state.itemCost)
     this.props.getlocationColors(this.state.locationColors)
     this.props.getquantity(this.state.quantity)
-    this.props.gettotalCost(this.state.totalCost)
+    this.props.gettotalCost(totalCost)
     this.props.getlocation(this.state.location)
     this.props.getscreens(this.state.screens)
   }

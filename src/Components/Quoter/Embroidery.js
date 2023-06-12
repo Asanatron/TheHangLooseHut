@@ -95,7 +95,7 @@ export class Embroidery extends Component {
             onChange={(e) => {
               this.setState({
               logoCost: Number(this.props.meta.find((data) => data.Label == e).Value)
-            })}}
+            }); this.props.getlogoSize(e)}}
             options={logoSizes}
           /> 
           <Row className='mt3' align='middle' justify='center' gutter={10}>
