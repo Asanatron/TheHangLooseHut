@@ -127,8 +127,8 @@ export class Asanatron extends Component {
                 </Col>
               </Row>
               <Row justify="center mb3 pt3" gutter={4}>
-                <Col lg={12}><Button className='font-sec-small' style={{minWidth: '32px', width: '100%'}} type="primary" onClick={() => {this.setState({Logistics: 1})}}>Hang Loose</Button></Col>
-                <Col lg={12}><Button style={{minWidth: '32px', width: '100%'}} type="primary" onClick={() => {this.setState({Logistics: 2})}}>New Marketing</Button></Col>
+                <Col lg={12}><Button style={{minWidth: '32px', width: '100%',  fontSize: '16px'}} type="primary" onClick={() => {this.setState({Logistics: 1})}}>Hang Loose</Button></Col>
+                <Col lg={12}><Button style={{minWidth: '32px', width: '100%', fontSize: '16px'}} type="primary" onClick={() => {this.setState({Logistics: 2})}}>New Marketing</Button></Col>
               </Row>
               {
                 this.state.Logistics === 1 ? 

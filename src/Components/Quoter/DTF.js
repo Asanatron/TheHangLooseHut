@@ -133,7 +133,7 @@ export class DTF extends Component {
           </Col>
         </Row>
         <Row justify="center mb3 pt3">
-          <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.GetQuote()}}>
+          <Button className="b" style={{minWidth: '32px', fontSize: '18px' }} type="primary" onClick={() => {this.GetQuote()}}>
             <img className="button-logo" src={Pink}></img>Get Quote
           </Button> 
         </Row>

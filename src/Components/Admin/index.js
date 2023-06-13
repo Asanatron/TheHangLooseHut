@@ -77,15 +77,15 @@ const tables = [{
 
 const metadata = [{
   tableName: 'disc_dtf',
-  keyColumn: 'print',
+  keyColumn: 'piece',
   valueColumn: 'discount'
 }, {
   tableName: 'disc_embroidery',
-  keyColumn: 'print',
+  keyColumn: 'piece',
   valueColumn: 'discount'
 }, {
   tableName: 'disc_screenprint',
-  keyColumn: 'print',
+  keyColumn: 'piece',
   valueColumn: 'discount'
 }, {
   tableName: 'dtf',
@@ -296,6 +296,20 @@ export class Admin extends Component {
 
       console.log(meta)
 
+      if(this.state.tableType == "disc_dtf" || this.state.tableType == "disc_embroidery" || this.state.tableType == "disc_screenprint"){
+        this.setState({
+          newValue: `${this.state.newValue}%`
+        })
+      }
+
+      if(this.state.tableType == "dtf_metadata" || this.state.tableType == "screenprint_metadata" || this.state.tableType == "embroidery_metadata"){
+        this.setState({
+          newValue: `$${this.state.newValue}`
+        })
+      }
+
+      console.log(this.state)
+
       var UpdateTable = {
         method: 'post',
         url: `https://thehangloosehutbackend.herokuapp.com/update?tblName=${this.state.tableType}&keyValue=${this.state.keyValue}&keyColumn=${meta.keyColumn}&newValue=${this.state.newValue}&updColumn=${meta.valueColumn}`,
@@ -361,7 +375,7 @@ export class Admin extends Component {
                     <div className="pr2 pt3 font-prim-small">Table to Update</div>
                       <Select
                         defaultValue="disc_dtf"
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', fontSize: '18px'}}
                         onChange={(e) => {this.setState({tableType: e})}}
                         options={tables}
                       />
@@ -369,7 +383,7 @@ export class Admin extends Component {
                     <div className="pr2 pt3 font-prim-small">Key</div>
                     <Select
                         defaultValue={this.toObject(this.state.disc_dtf,this.state.disc_dtf)}
-                        style={{ width: '100%' }}
+                        style={{ width: '100%', fontSize: '18px' }}
                         onChange={(e) => {this.setState({keyValue: e})}}
                         options={
                           this.state.tableType == 'disc_dtf' ? this.toObject(this.state.disc_dtf,this.state.disc_dtf, 'disc') : 
@@ -391,14 +405,15 @@ export class Admin extends Component {
                       placeholder="Enter new value of the key"
                       onChange={(e) => this.setState({ newValue: e.target.value })}
                       value={this.state.newValue}
+                      style={{ width: '100%', fontSize: '18px' }}
                     />
 
                     <Row align='middle' justify='center'>
                       <Col>
                       {
                         this.state.updating === false ?
-                        <Button className="mt4" style={{minWidth: '32px'}} type="primary" onClick={() => {this.UpdateTable()}}>
-                          <img className="button-logo" src={Pink}></img>Update Calculator
+                        <Button className="mt4" style={{minWidth: '32px', height: '60%'}} type="primary" onClick={() => {this.UpdateTable()}}>
+                          <img className="button-logo v-middle" src={Pink}></img><span className='f4'>Update Calculator</span>
                           </Button>
                         : <Button className="mt4" style={{minWidth: '32px'}} type="primary">
                         <Spin indicator={SmallantIcon} className='dashboard-designs-spin'/>
