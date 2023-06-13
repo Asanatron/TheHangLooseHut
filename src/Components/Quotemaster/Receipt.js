@@ -66,7 +66,7 @@ export class Receipt extends React.PureComponent {
           <Col lg={2}></Col>
         </Row>
         <Row >
-            sdas
+            
         </Row>
       </div>
     )
