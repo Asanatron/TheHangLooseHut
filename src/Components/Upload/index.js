@@ -224,13 +224,13 @@ export class Submission extends Component {
                     Promise.all(res.data.subtasks.data.map(subtask => {
                       return axios.get(`https://thehangloosehutbackend.herokuapp.com/gettask?taskid=${subtask.gid}`)
                     })).then(values => {
-                      values.map(value => {
-                        if(value.data.task.data.tags.length === 0){
-                          isComplete = false
-                        } else if(value.data.task.data.tags.length !== 0){
-                          isComplete = true
-                        }
-                      })
+                      // values.map(value => {
+                      //   if(value.data.task.data.tags.length === 0){
+                      //     isComplete = false
+                      //   } else if(value.data.task.data.tags.length !== 0){
+                      //     isComplete = true
+                      //   }
+                      // })
     
                       if(isComplete === true){
                         if(this.state.sectionID){
