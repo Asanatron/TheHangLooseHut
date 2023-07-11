@@ -14,6 +14,7 @@ export class App extends Component {
     username: '',
     password: '',
     userType: ''
+    
   };
 
   Login(){
