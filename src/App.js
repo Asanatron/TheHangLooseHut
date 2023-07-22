@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { Layout, Row, Col, Input, Button, notification } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import Body from './Components/Body';
-import Logo from './Media/Logo.png';
 import HLHLogoText from './Media/HLHLogoText.png'
 import HLHLogo from './Media/hlhlogo.png'
 import './App.css';
 import axios from "axios";
+import CryptoJS from 'crypto-js';
+
 
 export class App extends Component {
   state = {
@@ -14,7 +15,6 @@ export class App extends Component {
     username: '',
     password: '',
     userType: ''
-    
   };
 
   Login(){
@@ -32,6 +32,11 @@ export class App extends Component {
             loginState: 'LoggedIn',
             userType: res.data.userType
           })
+          const encryptedUserType  = CryptoJS.AES.encrypt(
+          res.data.userType,
+          process.env.REACT_APP_HASH_SECRET
+          ).toString();
+          localStorage.setItem('userType', encryptedUserType );
         } else{
           notification.error({
             message: `Incorrect username or Password`,
@@ -49,8 +54,23 @@ export class App extends Component {
       });
     }
   }
+componentDidMount(){
+  const userType=localStorage.getItem('userType');
+  if(userType){
 
+    const bytes = CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(userType, process.env.REACT_APP_HASH_SECRET));
+    const decryptedUserType = bytes.toString();
+    if(decryptedUserType=="admin" || decryptedUserType == 'asanatron' || decryptedUserType == 'quotemaster'){
+      this.setState({
+        loginState: 'LoggedIn',
+        userType: decryptedUserType
+      });
+    }
+  }
+
+}
   render() {
+  
     return (
       <div>
         {

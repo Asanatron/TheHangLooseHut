@@ -20,6 +20,9 @@ const disc_clmn = [
     title: 'Discount',
     dataIndex: 'Discount',
     key: 'Discount',
+    render: (text, record) => {
+      return `${text}%`;
+    },
   }
 ];
 const table_clmn = [
@@ -32,6 +35,9 @@ const table_clmn = [
     title: 'Cost',
     dataIndex: 'Cost',
     key: 'Cost',
+    render: (text, record) => {
+      return `$${text}`;
+    },
   }
 ];
 const metadata_clmn = [
@@ -106,6 +112,7 @@ const metadata = [{
 },]
 
 export class Admin extends Component {
+  
   constructor(props) {
     super(props)
   
@@ -125,7 +132,9 @@ export class Admin extends Component {
       keyColumn: '',
       keyValue: '',
       newValue: null,
-      updColumn: ''
+      updColumn: '',
+      reload:null,
+      tableUpdated: false,
     }
   }
 
@@ -154,6 +163,202 @@ export class Admin extends Component {
     }
 
     return arrObj;
+  }
+  componentDidUpdate(prevProps, prevState) {
+    // Check if the specific state property you want to track has changed
+    if (this.state.reload !== prevState.reload || this.state.tableUpdated!==prevState.tableUpdated) {
+      // Perform actions or set new state here if needed
+     
+      // Forcing a re-render by updating state can be done like this:
+      this.setState({ updating: false,
+        disc_dtf: [],
+        disc_embroidery: [],
+        disc_screenprint: prevState.disc_screenprint,
+        dtf: [],
+        embroidery: [],
+        screenprint: [],
+        dtf_metadata: [],
+        embroidery_metadata: [],
+        screenprint_metadata: [],
+        printType: '',
+        tableType: 'disc_dtf',
+        keyColumn: '',
+        keyValue: '',
+        newValue:null,
+        updColumn: '',
+        reload:null});
+        var GetTableData_disc_dtf = {
+          method: 'get',
+          url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=disc_dtf',
+          headers: {}
+        }
+    
+        axios(GetTableData_disc_dtf).then((res) => {
+          this.setState({
+            disc_dtf: res.data.solution
+          })
+    
+          var GetTableData_dtf = {
+            method: 'get',
+            url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=dtf',
+            headers: {}
+          }
+      
+          axios(GetTableData_dtf).then((res) => {
+            this.setState({
+              dtf: res.data.solution
+            })
+    
+            var GetTableData_dtf_metadata = {
+              method: 'get',
+              url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=dtf_metadata',
+              headers: {}
+            }
+    
+            axios(GetTableData_dtf_metadata).then((res) => {
+              this.setState({
+                dtf_metadata: res.data.solution
+              })
+    
+            }).catch((error) => {
+              console.log(error)
+            })
+            
+          }).catch((error) => {
+            console.log(error)
+          })
+        }).catch((error) => {
+          console.log(error)
+        })
+    
+        var GetTableData_disc_embroidery = {
+          method: 'get',
+          url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=disc_embroidery',
+          headers: {}
+        }
+    
+        axios(GetTableData_disc_embroidery).then((res) => {
+          this.setState({
+            disc_embroidery: res.data.solution
+          })
+    
+          var GetTableData_embroidery = {
+            method: 'get',
+            url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=embroidery',
+            headers: {}
+          }
+      
+          axios(GetTableData_embroidery).then((res) => {
+            this.setState({
+              embroidery: res.data.solution
+            })
+    
+            var GetTableData_embroidery_metadata = {
+              method: 'get',
+              url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=embroidery_metadata',
+              headers: {}
+            }
+    
+            axios(GetTableData_embroidery_metadata).then((res) => {
+              this.setState({
+                embroidery_metadata: res.data.solution
+              })
+    
+            }).catch((error) => {
+              console.log(error)
+            })
+            
+          }).catch((error) => {
+            console.log(error)
+          })
+        }).catch((error) => {
+          console.log(error)
+        })
+    
+        var GetTableData_disc_screenprint = {
+          method: 'get',
+          url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=disc_screenprint',
+          headers: {}
+        }
+    
+        axios(GetTableData_disc_screenprint).then((res) => {
+          this.setState({
+            disc_screenprint: res.data.solution
+          })
+    
+          var GetTableData_screenprint = {
+            method: 'get',
+            url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=screenprint',
+            headers: {}
+          }
+      
+          axios(GetTableData_screenprint).then((res) => {
+            this.setState({
+              screenprint: res.data.solution
+            })
+    
+            var GetTableData_screenprint_metadata = {
+              method: 'get',
+              url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=screenprint_metadata',
+              headers: {}
+            }
+    
+            axios(GetTableData_screenprint_metadata).then((res) => {
+              this.setState({
+                screenprint_metadata: res.data.solution
+              })
+    
+            }).catch((error) => {
+              console.log(error)
+            })
+            
+          }).catch((error) => {
+            console.log(error)
+          })
+        }).catch((error) => {
+          console.log(error)
+        })
+
+        axios(GetTableData_disc_screenprint).then((res) => {
+          this.setState({
+            disc_screenprint: res.data.solution
+          })
+    
+          var GetTableData_screenprint = {
+            method: 'get',
+            url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=screenprint',
+            headers: {}
+          }
+      
+          axios(GetTableData_screenprint).then((res) => {
+            this.setState({
+              screenprint: res.data.solution
+            })
+    
+            var GetTableData_screenprint_metadata = {
+              method: 'get',
+              url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=screenprint_metadata',
+              headers: {}
+            }
+    
+            axios(GetTableData_screenprint_metadata).then((res) => {
+              this.setState({
+                screenprint_metadata: res.data.solution
+              })
+    
+            }).catch((error) => {
+              console.log(error)
+            })
+            
+          }).catch((error) => {
+            console.log(error)
+          })
+        }).catch((error) => {
+          console.log(error)
+        })
+      // Alternatively, you can force a re-render by using forceUpdate()
+      // this.forceUpdate();
+    }
   }
 
   async componentDidMount(){
@@ -298,17 +503,17 @@ export class Admin extends Component {
 
       if(this.state.tableType == "disc_dtf" || this.state.tableType == "disc_embroidery" || this.state.tableType == "disc_screenprint"){
         this.setState({
-          newValue: `${this.state.newValue}%`
+          newValue: `${this.state.newValue}`
         })
       }
 
       if(this.state.tableType == "dtf_metadata" || this.state.tableType == "screenprint_metadata" || this.state.tableType == "embroidery_metadata"){
         this.setState({
-          newValue: `$${this.state.newValue}`
+          newValue: `${this.state.newValue}`
         })
       }
 
-      console.log(this.state)
+
 
       var UpdateTable = {
         method: 'post',
@@ -318,16 +523,20 @@ export class Admin extends Component {
 
       axios(UpdateTable).then((res) => {
         console.log(res)
+        this.setState({reload:"reload"})
+        console.log(this.state)
         notification.success({
           message: `Data Updated`,
           placement: "bottomRight",
         });
+        // update component
         this.setState({
           updating: false
         })
         this.setState({
           updating: false
         })
+        this.setState({ tableUpdated: true });
       })
     } else{
       notification.error({
@@ -350,7 +559,6 @@ export class Admin extends Component {
     var sp_disc_css = ''
     var sp_item_css = ''
     var sp_meta_css = ''
-
     this.state.tableType == 'disc_dtf' ? dtf_disc_css = 'ba b--green': 
     this.state.tableType == 'disc_embroidery' ? emb_disc_css = 'ba b--green' : 
     this.state.tableType == 'disc_screenprint' ? sp_disc_css = 'ba b--green' : 
@@ -361,7 +569,7 @@ export class Admin extends Component {
     this.state.tableType == 'embroidery_metadata' ? emb_meta_css = 'ba b--green' : 
     this.state.tableType == 'screenprint_metadata' ? sp_meta_css = 'ba b--green' : 
 
-    console.log(this.toObject(this.state.dtf, this.state.dtf))
+    console.log("test 1",this.toObject(this.state.dtf, this.state.dtf))
     return (
       <div>
         <Row style={{minHeight: '85vh'}} gutter={16}>
@@ -381,11 +589,12 @@ export class Admin extends Component {
                       />
 
                     <div className="pr2 pt3 font-prim-small">Key</div>
-                    <Select
-                        defaultValue={this.toObject(this.state.disc_dtf,this.state.disc_dtf)}
+                    {this.state.tableUpdated?<Select
+                        defaultValue={this.state.keyValue}
                         style={{ width: '100%', fontSize: '18px' }}
                         onChange={(e) => {this.setState({keyValue: e})}}
-                        options={
+                        optionFilterProp="children"
+                          options={
                           this.state.tableType == 'disc_dtf' ? this.toObject(this.state.disc_dtf,this.state.disc_dtf, 'disc') : 
                           this.state.tableType == 'disc_embroidery' ? this.toObject(this.state.disc_embroidery, this.state.disc_embroidery, 'disc') : 
                           this.state.tableType == 'disc_screenprint' ? this.toObject(this.state.disc_screenprint, this.state.disc_screenprint, 'disc') : 
@@ -397,13 +606,36 @@ export class Admin extends Component {
                           this.state.tableType == 'screenprint_metadata' ? this.toObject(this.state.screenprint_metadata, this.state.screenprint_metadata, 'meta') : 
                           []
                         }
-                      />
+                      />:<Select
+                      defaultValue={this.state.keyValue}
+                      style={{ width: '100%', fontSize: '18px' }}
+                      onChange={(e) => {this.setState({keyValue: e})}}
+                      optionFilterProp="children"
+                        options={
+                          
+                        this.state.tableType == 'disc_dtf' ? this.toObject(this.state.disc_dtf,this.state.disc_dtf, 'disc') : 
+                        this.state.tableType == 'disc_embroidery' ? this.toObject(this.state.disc_embroidery, this.state.disc_embroidery, 'disc') : 
+                        this.state.tableType == 'disc_screenprint' ? this.toObject(this.state.disc_screenprint, this.state.disc_screenprint, 'disc') : 
+                        this.state.tableType == 'dtf' ? this.toObject(this.state.dtf, this.state.dtf, 'items') : 
+                        this.state.tableType == 'embroidery' ? this.toObject(this.state.embroidery, this.state.embroidery, 'items') : 
+                        this.state.tableType == 'screenprint' ? this.toObject(this.state.screenprint, this.state.screenprint, 'items') : 
+                        this.state.tableType == 'dtf_metadata' ? this.toObject(this.state.dtf_metadata, this.state.dtf_metadata, 'meta') : 
+                        this.state.tableType == 'embroidery_metadata' ? this.toObject(this.state.embroidery_metadata, this.state.embroidery_metadata, 'meta') : 
+                        this.state.tableType == 'screenprint_metadata' ? this.toObject(this.state.screenprint_metadata, this.state.screenprint_metadata, 'meta') : 
+                        []
+                      }
+                    />}
 
                     <div className="pr2 pt3 font-prim-small">New Value</div>
                     <Input
                       className=""
                       placeholder="Enter new value of the key"
-                      onChange={(e) => this.setState({ newValue: e.target.value })}
+                      onChange={(e) => {
+                        const newValue = e.target.value;
+                        if (/^\d*\.?\d*$/.test(newValue)) { // Allow integers and decimals
+                          this.setState({ newValue });
+                        }
+                      }}
                       value={this.state.newValue}
                       style={{ width: '100%', fontSize: '18px' }}
                     />
@@ -412,7 +644,7 @@ export class Admin extends Component {
                       <Col>
                       {
                         this.state.updating === false ?
-                        <Button className="mt4" style={{minWidth: '32px', height: '60%'}} type="primary" onClick={() => {this.UpdateTable()}}>
+                        <Button className="mt4" style={{minWidth: '32px', height: '60%'}} type="primary" onClick={() => {this.UpdateTable();this.setState({tableUpdated:true})}}>
                           <img className="button-logo v-middle" src={Pink}></img><span className='f4'>Update Calculator</span>
                           </Button>
                         : <Button className="mt4" style={{minWidth: '32px'}} type="primary">
