@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/TheHangLooseHut/precache-manifest.6fb37f79e0eafb809e1e6bfc148ef2d9.js"
+  "/TheHangLooseHut/precache-manifest.94a7400b30f492f1a977a625b39a7f57.js"
 );
 
 workbox.clientsClaim();
