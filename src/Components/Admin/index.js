@@ -182,8 +182,8 @@ export class Admin extends Component {
         screenprint_metadata: [],
         printType: '',
         tableType: 'disc_dtf',
-        keyColumn: '',
-        keyValue: '',
+        keyColumn:  prevState.keyColumn,
+        keyValue: prevState.keyValue,
         newValue:null,
         updColumn: '',
         reload:null});
