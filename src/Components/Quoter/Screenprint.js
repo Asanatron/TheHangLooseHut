@@ -55,7 +55,7 @@ export class Screenprint extends Component {
 
     if(this.state.quantity > 23 && this.state.quantity < 200){
       var temp = this.props.discount.find((data) => Number(data.From) <= this.state.quantity && this.state.quantity <= Number(data.To)).Discount
-      discount = Number(temp.substring(0, temp.length-1))
+      discount = Number(temp)
     } else if(this.state.quantity >= 200){
       discount = 35
     } else{
@@ -67,10 +67,15 @@ export class Screenprint extends Component {
     if(this.state.locationColors.length == this.state.location && this.state.location !== 0){
       for(var i=0; i< this.state.location; i++){
         var value = this.props.meta.find((data) => data.Label === this.state.locationColors[i].color).Value
-        value = value.length === 2 ? value[1] : value.slice(1, value.length-1)
+        // console.log(value)
+        // value = value.length === 2 ? value[1] : value.slice(1, value.length-1)
         logoCost += Number(value)
       }
     }
+
+    // console.log("Logo Cost : ", discount)
+    // console.log(Number(this.props.meta.find((data) => data.Label == 'Screen_Cost').Value))
+    // console.log((((Number(this.state.itemCost) + logoCost) * this.state.quantity)+(this.state.screens*Number(this.props.meta.find((data) => data.Label == 'Screen_Cost').Value)))* Number(this.props.meta.find((data) => data.Label == 'Markup').Value))
 
     var totalCost = this.state.itemCost !== 0 && this.state.locationColors.length == this.state.location && this.state.quantity !== 0 && this.state.location !== 0 && this.props.meta && this.props.meta.length !== 0
               ? Number((((Number(this.state.itemCost) + logoCost) * this.state.quantity)+(this.state.screens*Number(this.props.meta.find((data) => data.Label == 'Screen_Cost').Value))) * Number(this.props.meta.find((data) => data.Label == 'Markup').Value)*Number((100-discount)/100))
@@ -91,7 +96,7 @@ export class Screenprint extends Component {
   render() {
 
     const itemOptions = this.props.screenPrintItemList.length !== 0 ? this.props.screenPrintItemList.map((item, i) => (<Option key={i+1} value={item.label}>{item.label}</Option>)) : <></>
-
+    console.log(this.props.discount)
     var locationHTML = []
     for (let i = 1; i <= this.state.location; i++) {
       locationHTML.push(<div key={i+1}>
