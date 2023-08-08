@@ -73,7 +73,7 @@ export class Screenprint extends Component {
     }
 
     var totalCost = this.state.itemCost !== 0 && this.state.locationColors.length == this.state.location && this.state.quantity !== 0 && this.state.location !== 0 && this.props.meta && this.props.meta.length !== 0
-              ? Number((Number(this.state.itemCost) + logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup').Value)*Number((100-discount)/100)*this.state.screens)
+              ? Number((((Number(this.state.itemCost) + logoCost) * this.state.quantity)+(this.state.screens*Number(this.props.meta.find((data) => data.Label == 'Screen_Cost').Value))) * Number(this.props.meta.find((data) => data.Label == 'Markup').Value)*Number((100-discount)/100))
               : 0
 
     this.setState({
