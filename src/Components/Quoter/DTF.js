@@ -38,7 +38,7 @@ export class DTF extends Component {
 
     if(this.state.quantity > 23 && this.state.quantity < 200){
       var temp = this.props.discount.find((data) => Number(data.From) <= this.state.quantity && this.state.quantity <= Number(data.To)).Discount
-      discount = Number(temp.substring(0, temp.length-1))
+      discount = Number(temp)
     } else if(this.state.quantity >= 200){
       discount = 35
     } else{
@@ -50,7 +50,7 @@ export class DTF extends Component {
     if(this.state.locationSizes.length == this.state.location && this.state.location !== 0){
       for(var i=0; i< this.state.location; i++){
         var value = this.props.meta.find((data) => data.Label === this.state.locationSizes[i].size).Value
-        value = value.length === 2 ? value[1] : value.slice(1, value.length-1)
+        // value = value.length === 2 ? value[1] : value.slice(1, value.length-1)
         logoCost += Number(value)
       }
     }
