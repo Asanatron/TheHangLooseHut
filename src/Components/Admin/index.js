@@ -517,7 +517,7 @@ export class Admin extends Component {
 
       var UpdateTable = {
         method: 'post',
-        url: `https://thehangloosehutbackend.herokuapp.com/update?tblName=${this.state.tableType}&keyValue=${this.state.keyValue}&keyColumn=${meta.keyColumn}&newValue=${this.state.newValue}&updColumn=${meta.valueColumn}`,
+        url: `https://thehangloosehutbackend.herokuapp.com/update?tblName=${this.state.tableType}&keyValue=${encodeURIComponent(this.state.keyValue)}&keyColumn=${meta.keyColumn}&newValue=${this.state.newValue}&updColumn=${meta.valueColumn}`,
         headers: {}
       }
 
