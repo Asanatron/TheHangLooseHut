@@ -534,7 +534,7 @@ export class Admin extends Component {
           updating: false
         })
         this.setState({
-          updating: false
+          keyColumn: ''
         })
         this.setState({ tableUpdated: true });
       })
