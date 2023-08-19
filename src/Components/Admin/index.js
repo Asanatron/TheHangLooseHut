@@ -586,6 +586,7 @@ export class Admin extends Component {
                         style={{ width: '100%', fontSize: '18px'}}
                         onChange={(e) => {this.setState({tableType: e})}}
                         options={tables}
+                        value={this.state.tableType}
                       />
 
                     <div className="pr2 pt3 font-prim-small">Key</div>
@@ -606,6 +607,7 @@ export class Admin extends Component {
                           this.state.tableType == 'screenprint_metadata' ? this.toObject(this.state.screenprint_metadata, this.state.screenprint_metadata, 'meta') : 
                           []
                         }
+                        value={this.state.keyValue}
                       />:<Select
                       defaultValue={this.state.keyValue}
                       style={{ width: '100%', fontSize: '18px' }}
@@ -624,6 +626,7 @@ export class Admin extends Component {
                         this.state.tableType == 'screenprint_metadata' ? this.toObject(this.state.screenprint_metadata, this.state.screenprint_metadata, 'meta') : 
                         []
                       }
+                      value={this.state.keyValue}
                     />}
 
                     <div className="pr2 pt3 font-prim-small">New Value</div>
