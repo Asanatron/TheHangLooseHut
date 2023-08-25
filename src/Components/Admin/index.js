@@ -99,15 +99,23 @@ const metadata = [{
   valueColumn: 'cost'
 }, {
   tableName: 'embroidery',
-  keyColumn: 'Key',
-  valueColumn: 'value'
+  keyColumn: 'item',
+  valueColumn: 'cost'
 }, {
   tableName: 'screenprint',
-  keyColumn: 'Key',
-  valueColumn: 'value'
+  keyColumn: 'item',
+  valueColumn: 'cost'
 }, {
   tableName: 'dtf_metadata',
-  keyColumn: 'Key',
+  keyColumn: 'label',
+  valueColumn: 'value'
+}, {
+  tableName: 'embroidery_metadata',
+  keyColumn: 'label',
+  valueColumn: 'value'
+}, {
+  tableName: 'screenprint_metadata',
+  keyColumn: 'label',
   valueColumn: 'value'
 },]
 

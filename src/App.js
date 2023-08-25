@@ -54,21 +54,22 @@ export class App extends Component {
       });
     }
   }
-componentDidMount(){
-  const userType=localStorage.getItem('userType');
-  if(userType){
+  
+  componentDidMount(){
+    const userType=localStorage.getItem('userType');
+    if(userType){
 
-    const bytes = CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(userType, process.env.REACT_APP_HASH_SECRET));
-    const decryptedUserType = bytes.toString();
-    if(decryptedUserType=="admin" || decryptedUserType == 'asanatron' || decryptedUserType == 'quotemaster'){
-      this.setState({
-        loginState: 'LoggedIn',
-        userType: decryptedUserType
-      });
+      const bytes = CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(userType, process.env.REACT_APP_HASH_SECRET));
+      const decryptedUserType = bytes.toString();
+      if(decryptedUserType=="admin" || decryptedUserType == 'asanatron' || decryptedUserType == 'quotemaster'){
+        this.setState({
+          loginState: 'LoggedIn',
+          userType: decryptedUserType
+        });
+      }
     }
   }
 
-}
   render() {
   
     return (
