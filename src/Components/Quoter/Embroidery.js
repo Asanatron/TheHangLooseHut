@@ -103,11 +103,11 @@ export class Embroidery extends Component {
               <div className='b f4'>Total Cost : <span className='f3'>${Math.round(this.state.totalCost)}</span></div>
             </Col>
           </Row>
-          {/* <Row className='mt3 mb3' align='middle' justify='center' gutter={10}>
+          <Row className='mt3 mb3' align='middle' justify='center' gutter={10}>
             <Col>
               <div className='b f4'>Piece Cost : <span className='f3'>${Math.round(this.state.ppCost)}</span></div>
             </Col>
-          </Row> */}
+          </Row>
           <Row justify="center mb3 pt3">
             <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.GetQuote()}}>
               <img className="button-logo" src={Pink}></img>Get Quote

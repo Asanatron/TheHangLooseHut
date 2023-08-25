@@ -130,14 +130,6 @@ export class Screenprint extends Component {
             value={this.state.quantity}
           /> 
 
-        <div className="pr2 pt3 font-prim-small">Screens</div>
-          <Input
-            className=""
-            placeholder="Enter number of screens for printing"
-            onChange={(e) => {this.setState({ screens: Number(e.target.value)});}}
-            value={this.state.screens}
-          />  
-
         <div className="pr2 pt3 font-prim-small">Number of locations</div>
           <Input
             className=""
@@ -147,6 +139,15 @@ export class Screenprint extends Component {
           />     
 
             {locationHTML}
+
+        <div className="pr2 pt3 font-prim-small">Screens</div>
+          <Input
+            className=""
+            placeholder="Enter number of screens for printing"
+            onChange={(e) => {this.setState({ screens: Number(e.target.value)});}}
+            value={this.state.screens}
+          />  
+
           <Row className='mt3' align='middle' justify='center' gutter={10}>
           <Col>
             <div className='b f4'>Total Cost : <span className='f3'>${Math.round(this.state.totalCost)}</span></div>
