@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "81e6a8c8145ce2dda402",
+    "revision": "53618015a33bdc2ff9a4",
     "url": "/TheHangLooseHut/static/css/main.7564ec13.chunk.css"
   },
   {
-    "revision": "81e6a8c8145ce2dda402",
-    "url": "/TheHangLooseHut/static/js/main.81e6a8c8.chunk.js"
+    "revision": "53618015a33bdc2ff9a4",
+    "url": "/TheHangLooseHut/static/js/main.53618015.chunk.js"
   },
   {
     "revision": "49b2f222efaa66bc2554",
@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/TheHangLooseHut/static/media/hlhlogo.771c9b84.png"
   },
   {
-    "revision": "b1fe53a75a8af530c0a2c49506a4ff61",
+    "revision": "9d00531f50b181ed44c974d47ee9f53b",
     "url": "/TheHangLooseHut/index.html"
   }
 ];
