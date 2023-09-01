@@ -6,16 +6,16 @@ const { Option } = Select;
 
 var logoSizes = [
   {
-    label: '2-5"',
-    value: '2-5"'
+    label: '2-5 Inches',
+    value: '2-5 Inches'
   },
   {
-    label: '5.1-6.9"',
-    value: '5.1-6.9"'
+    label: '5.1-6.9 Inches',
+    value: '5.1-6.9 Inches'
   }, 
   {
-    label: '7-12"',
-    value: '7-12"'
+    label: '7-12 Inches',
+    value: '7-12 Inches'
   },
 ];
 
@@ -49,13 +49,14 @@ export class Embroidery extends Component {
               ? Number((this.state.itemCost + this.state.logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup_bulk').Value)*Number((100-discount)/100))
               : 0
 
-      var PPCost = this.state.itemCost !== 0 && this.state.logoCost !== 0 && this.state.quantity !== 0 && this.props.meta && this.props.meta.length !== 0
-              ? Number((this.state.itemCost + this.state.logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup_piece').Value)*Number((100-discount)/100))
-              : 0
-
+      // var PPCost = this.state.itemCost !== 0 && this.state.logoCost !== 0 && this.state.quantity !== 0 && this.props.meta && this.props.meta.length !== 0
+      //         ? Number((this.state.itemCost + this.state.logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup_piece').Value)*Number((100-discount)/100))
+      //         : 0
+    console.log('this.props.logoCost'+this.props.logoCost)
+    console.log('this.state.logoCost'+this.state.logoCost)
       this.setState({
-        totalCost: totalCost,
-        ppCost: PPCost
+        totalCost: totalCost
+        // ppCost: PPCost
       })
 
       this.props.gettotalCost(totalCost)
@@ -103,11 +104,11 @@ export class Embroidery extends Component {
               <div className='b f4'>Total Cost : <span className='f3'>${Math.round(this.state.totalCost)}</span></div>
             </Col>
           </Row>
-          <Row className='mt3 mb3' align='middle' justify='center' gutter={10}>
+          {/* <Row className='mt3 mb3' align='middle' justify='center' gutter={10}>
             <Col>
               <div className='b f4'>Piece Cost : <span className='f3'>${Math.round(this.state.ppCost)}</span></div>
             </Col>
-          </Row>
+          </Row> */}
           <Row justify="center mb3 pt3">
             <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.GetQuote()}}>
               <img className="button-logo" src={Pink}></img>Get Quote
