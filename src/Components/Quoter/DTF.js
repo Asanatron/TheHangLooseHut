@@ -29,6 +29,7 @@ export class DTF extends Component {
       location: 0,
       locationSizes: [],
       quantity: 0,
+      ppCost: 0,
       totalCost: 0
     }
   }
@@ -58,9 +59,13 @@ export class DTF extends Component {
     var totalCost = this.state.itemCost !== 0 && this.state.locationSizes.length == this.state.location && this.state.quantity !== 0 && this.state.location !== 0 && this.props.meta && this.props.meta.length !== 0
               ? Number((Number(this.state.itemCost) + logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup').Value)*Number((100-discount)/100))
               : 0
+    var PPCost = this.state.itemCost !== 0 && this.state.locationSizes.length == this.state.location && this.state.quantity !== 0 && this.state.location !== 0 && this.props.meta && this.props.meta.length !== 0
+              ? Number(Math.round(Number((Number(this.state.itemCost) + logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup').Value)*Number((100-discount)/100)))/this.state.quantity)
+              : 0
 
     this.setState({
-      totalCost: totalCost
+      totalCost: totalCost,
+      ppCost: PPCost
     })
 
     this.props.getitemCost(this.state.itemCost)
@@ -131,6 +136,11 @@ export class DTF extends Component {
           <Col>
             <div className='b f4'>Total Cost : <span className='f3'>${Math.round(this.state.totalCost)}</span></div>
           </Col>
+        </Row>
+        <Row className='mt3 mb3' align='middle' justify='center' gutter={10}>
+            <Col>
+              <div className='b f4'>Per Piece Cost : <span className='f3'>${Number(this.state.ppCost).toFixed(2)}</span></div>
+            </Col>
         </Row>
         <Row justify="center mb3 pt3">
           <Button className="b" style={{minWidth: '32px', fontSize: '18px' }} type="primary" onClick={() => {this.GetQuote()}}>
