@@ -59,19 +59,20 @@ export class DTF extends Component {
     var totalCost = this.state.itemCost !== 0 && this.state.locationSizes.length == this.state.location && this.state.quantity !== 0 && this.state.location !== 0 && this.props.meta && this.props.meta.length !== 0
               ? Number((Number(this.state.itemCost) + logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup').Value)*Number((100-discount)/100))
               : 0
-    var PPCost = this.state.itemCost !== 0 && this.state.locationSizes.length == this.state.location && this.state.quantity !== 0 && this.state.location !== 0 && this.props.meta && this.props.meta.length !== 0
+    var ppCost = this.state.itemCost !== 0 && this.state.locationSizes.length == this.state.location && this.state.quantity !== 0 && this.state.location !== 0 && this.props.meta && this.props.meta.length !== 0
               ? Number(Math.round(Number((Number(this.state.itemCost) + logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup').Value)*Number((100-discount)/100)))/this.state.quantity)
               : 0
 
     this.setState({
       totalCost: totalCost,
-      ppCost: PPCost
+      ppCost: ppCost
     })
 
     this.props.getitemCost(this.state.itemCost)
     this.props.getlocationSizes(this.state.locationSizes)
     this.props.getquantity(this.state.quantity)
     this.props.gettotalCost(totalCost)
+    this.props.getppCost(ppCost)
     this.props.getlocation(this.state.location)
   }
 

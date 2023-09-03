@@ -231,6 +231,7 @@ export class Quoter extends Component {
                   discount = {this.state.disc_dtf}
                   getprintType = {this.props.getprintType}
                   gettotalCost = {this.props.gettotalCost}
+                  getppCost = {this.props.getppCost}
                   getquantity = {this.props.getquantity}
                   getitemCost = {this.props.getitemCost}
                   getlogoCost = {this.props.getlogoCost}
@@ -247,6 +248,7 @@ export class Quoter extends Component {
                   discount = {this.state.disc_screenprint}
                   getprintType = {this.props.getprintType}
                   gettotalCost = {this.props.gettotalCost}
+                  getppCost = {this.props.getppCost}
                   getquantity = {this.props.getquantity}
                   getitemCost = {this.props.getitemCost}
                   getlogoCost = {this.props.getlogoCost}
@@ -262,6 +264,7 @@ export class Quoter extends Component {
                   discount = {this.state.disc_embroidery}
                   getprintType = {this.props.getprintType}
                   gettotalCost = {this.props.gettotalCost}
+                  getppCost = {this.props.getppCost}
                   getquantity = {this.props.getquantity}
                   getitemCost = {this.props.getitemCost}
                   getlogoCost = {this.props.getlogoCost}

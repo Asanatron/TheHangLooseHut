@@ -46,18 +46,19 @@ export class Embroidery extends Component {
 
     if(this.props.meta && this.props.meta.length != 0){
       var totalCost = this.state.itemCost !== 0 && this.state.logoCost !== 0 && this.state.quantity !== 0 && this.props.meta && this.props.meta.length !== 0
-              ? Number((this.state.itemCost + this.state.logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup_bulk').Value)*Number((100-discount)/100))
+              ? Number((this.state.itemCost + this.state.logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup').Value)*Number((100-discount)/100))
               : 0
 
-      var PPCost = this.state.itemCost !== 0 && this.state.logoCost !== 0 && this.state.quantity !== 0 && this.props.meta && this.props.meta.length !== 0
-              ? Number(Math.round(Number((this.state.itemCost + this.state.logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup_bulk').Value)*Number((100-discount)/100)))/this.state.quantity)
+      var ppCost = this.state.itemCost !== 0 && this.state.logoCost !== 0 && this.state.quantity !== 0 && this.props.meta && this.props.meta.length !== 0
+              ? Number(Math.round(Number((this.state.itemCost + this.state.logoCost) * this.state.quantity * Number(this.props.meta.find((data) => data.Label == 'Markup').Value)*Number((100-discount)/100)))/this.state.quantity)
               : 0
       this.setState({
         totalCost: totalCost,
-        ppCost: PPCost
+        ppCost: ppCost
       })
 
       this.props.gettotalCost(totalCost)
+      this.props.getppCost(ppCost)
       this.props.getquantity(this.state.quantity)
       this.props.getitemCost(this.state.itemCost)
       this.props.getlogoCost(this.state.logoCost)

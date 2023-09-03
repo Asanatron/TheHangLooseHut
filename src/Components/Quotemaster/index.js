@@ -15,6 +15,7 @@ export class Quotemaster extends Component {
     this.state = {
       printType: '',
       totalCost: 0,
+      ppCost: 0,
       quantity: 0, 
       itemCost: 0,
       logoCost: 0,
@@ -28,6 +29,7 @@ export class Quotemaster extends Component {
 
     this.getprintType = this.getprintType.bind(this);
     this.gettotalCost = this.gettotalCost.bind(this);
+    this.getppCost = this.getppCost.bind(this);
     this.getquantity = this.getquantity.bind(this);
     this.getitemCost = this.getitemCost.bind(this);
     this.getlogoCost = this.getlogoCost.bind(this);
@@ -54,6 +56,12 @@ export class Quotemaster extends Component {
   gettotalCost(e){
     this.setState({
       totalCost: e
+    })
+  }
+
+  getppCost(e){
+    this.setState({
+      ppCost: e
     })
   }
 
@@ -114,6 +122,7 @@ export class Quotemaster extends Component {
             <CusDetails 
               printType = {this.state.printType}
               totalCost = {this.state.totalCost}
+              ppCost = {this.state.ppCost}
               quantity = {this.state.quantity}
               itemCost = {this.state.itemCost}
               logoCost = {this.state.logoCost}
@@ -130,6 +139,7 @@ export class Quotemaster extends Component {
               <Quoter 
                 getprintType = {this.getprintType}
                 gettotalCost = {this.gettotalCost}
+                getppCost = {this.getppCost}
                 getquantity = {this.getquantity}
                 getitemCost = {this.getitemCost}
                 getlogoCost = {this.getlogoCost}
