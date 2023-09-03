@@ -1,12 +1,12 @@
 {
   "main.css": "/TheHangLooseHut/static/css/main.7564ec13.chunk.css",
-  "main.js": "/TheHangLooseHut/static/js/main.0521a69c.chunk.js",
-  "main.js.map": "/TheHangLooseHut/static/js/main.0521a69c.chunk.js.map",
+  "main.js": "/TheHangLooseHut/static/js/main.65af36df.chunk.js",
+  "main.js.map": "/TheHangLooseHut/static/js/main.65af36df.chunk.js.map",
   "static/js/1.49b2f222.chunk.js": "/TheHangLooseHut/static/js/1.49b2f222.chunk.js",
   "static/js/1.49b2f222.chunk.js.map": "/TheHangLooseHut/static/js/1.49b2f222.chunk.js.map",
   "static/css/2.73b96879.chunk.css": "/TheHangLooseHut/static/css/2.73b96879.chunk.css",
-  "static/js/2.87ed4b7d.chunk.js": "/TheHangLooseHut/static/js/2.87ed4b7d.chunk.js",
-  "static/js/2.87ed4b7d.chunk.js.map": "/TheHangLooseHut/static/js/2.87ed4b7d.chunk.js.map",
+  "static/js/2.b7527212.chunk.js": "/TheHangLooseHut/static/js/2.b7527212.chunk.js",
+  "static/js/2.b7527212.chunk.js.map": "/TheHangLooseHut/static/js/2.b7527212.chunk.js.map",
   "runtime~main.js": "/TheHangLooseHut/static/js/runtime~main.e23eb455.js",
   "runtime~main.js.map": "/TheHangLooseHut/static/js/runtime~main.e23eb455.js.map",
   "static/media/pink.png": "/TheHangLooseHut/static/media/pink.be97cbda.png",
@@ -15,6 +15,6 @@
   "static/css/main.7564ec13.chunk.css.map": "/TheHangLooseHut/static/css/main.7564ec13.chunk.css.map",
   "static/css/2.73b96879.chunk.css.map": "/TheHangLooseHut/static/css/2.73b96879.chunk.css.map",
   "index.html": "/TheHangLooseHut/index.html",
-  "precache-manifest.29973bd926b551a2fd398264fdbb206a.js": "/TheHangLooseHut/precache-manifest.29973bd926b551a2fd398264fdbb206a.js",
+  "precache-manifest.0f5b030c6a7ecb487c0929484d433e56.js": "/TheHangLooseHut/precache-manifest.0f5b030c6a7ecb487c0929484d433e56.js",
   "service-worker.js": "/TheHangLooseHut/service-worker.js"
 }
