@@ -56,26 +56,26 @@ const tables = [{
   value: 'disc_dtf',
   label: 'Direct to film Discount'
 }, {
-  value: 'disc_embroidery',
-  label: 'Embroidery Discount'
-}, {
-  value: 'disc_screenprint',
-  label: 'Screenprint Discount'
-}, {
   value: 'dtf',
-  label: 'Direct to film Cost'
-}, {
-  value: 'embroidery',
-  label: 'Embroidery Cost'
-}, {
-  value: 'screenprint',
-  label: 'Screenprint Cost'
+  label: 'Direct to film Items'
 }, {
   value: 'dtf_metadata',
   label: 'Direct to film Details'
 }, {
+  value: 'disc_embroidery',
+  label: 'Embroidery Discount'
+}, {
+  value: 'embroidery',
+  label: 'Embroidery Items'
+}, {
   value: 'embroidery_metadata',
   label: 'Embroidery Details'
+}, {
+  value: 'disc_screenprint',
+  label: 'Screenprint Discount'
+}, {
+  value: 'screenprint',
+  label: 'Screenprint Items'
 }, {
   value: 'screenprint_metadata',
   label: 'Screenprint Details'

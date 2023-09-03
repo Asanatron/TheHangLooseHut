@@ -104,7 +104,7 @@ export class Embroidery extends Component {
           </Row>
           <Row className='mt3 mb3' align='middle' justify='center' gutter={10}>
             <Col>
-              <div className='b f4'>Per Piece Cost : <span className='f3'>${Number(this.state.ppCost).toFixed(2)}</span></div>
+              <div className='b f4'>Per Piece Cost : <span className='f3'>${Math.ceil(Number(this.state.ppCost)*2)/2}</span></div>
             </Col>
           </Row>
           <Row justify="center mb3 pt3">

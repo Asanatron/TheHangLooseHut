@@ -137,9 +137,9 @@ export class DTF extends Component {
             <div className='b f4'>Total Cost : <span className='f3'>${Math.round(this.state.totalCost)}</span></div>
           </Col>
         </Row>
-        <Row className='mt3 mb3' align='middle' justify='center' gutter={10}>
+        <Row className='mt3 mb3' align='middle' justify='center' gutter={10}> 
             <Col>
-              <div className='b f4'>Per Piece Cost : <span className='f3'>${Number(this.state.ppCost).toFixed(2)}</span></div>
+              <div className='b f4'>Per Piece Cost : <span className='f3'>${Math.ceil(Number(this.state.ppCost)*2)/2}</span></div>
             </Col>
         </Row>
         <Row justify="center mb3 pt3">
