@@ -530,9 +530,9 @@ export class Admin extends Component {
       }
 
       axios(UpdateTable).then((res) => {
-        console.log(res)
+        // console.log(res)
         this.setState({reload:"reload"})
-        console.log(this.state)
+        // console.log(this.state)
         notification.success({
           message: `Data Updated`,
           placement: "bottomRight",

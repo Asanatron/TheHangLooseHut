@@ -234,7 +234,7 @@ export class Submission extends Component {
     
                       if(isComplete === true){
                         if(this.state.sectionID){
-                          console.log("section found")
+                          // console.log("section found")
                           var MoveTaskConfig = {
                             method: "post",
                             url: `https://thehangloosehutbackend.herokuapp.com/movetask?taskid=${this.state.ParentID}&sectionid=${this.state.sectionID}`,

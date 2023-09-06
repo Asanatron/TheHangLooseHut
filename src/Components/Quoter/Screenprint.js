@@ -102,7 +102,7 @@ export class Screenprint extends Component {
   render() {
 
     const itemOptions = this.props.screenPrintItemList.length !== 0 ? this.props.screenPrintItemList.map((item, i) => (<Option key={i+1} value={item.label}>{item.label}</Option>)) : <></>
-    console.log(this.props.discount)
+    // console.log(this.props.discount)
     var locationHTML = []
     for (let i = 1; i <= this.state.location; i++) {
       locationHTML.push(<div key={i+1}>

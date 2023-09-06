@@ -11,7 +11,7 @@ export class DashBoard extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    console.log("props", props);
+    // console.log("props", props);
   }
   updateSelectedPage = (selectedPage) => {
     this.props.onPageSelected(selectedPage);

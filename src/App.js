@@ -26,7 +26,7 @@ export class App extends Component {
     if(this.state.password !== '' && this.state.username !== ''){
       axios(configLogin)
       .then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         if(res.data.status === true){
           this.setState({
             loginState: 'LoggedIn',
@@ -59,7 +59,7 @@ export class App extends Component {
 
     const userType=localStorage.getItem('userType');
     if(userType){
-
+      
       const bytes = CryptoJS.enc
       .Utf8.stringify(CryptoJS.AES.decrypt(userType, "iCiTd51fTn"));
       const decryptedUserType = bytes.toString();

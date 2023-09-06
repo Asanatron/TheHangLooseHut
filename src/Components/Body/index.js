@@ -19,7 +19,7 @@ export class Body extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.pageSelected !== prevState.pageSelected) {
-      console.log(this.state.pageSelected, "from body");
+      // console.log(this.state.pageSelected, "from body");
     }
   }
 

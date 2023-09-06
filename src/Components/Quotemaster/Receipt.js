@@ -7,7 +7,7 @@ import './receipt.css'
 export class Receipt extends React.PureComponent {
   render() {
     return (
-      <div className='ma4'>
+      <div className='ma4 printer'>
         <Row className='header ba bw1 mb2' align='center'>
           <Col>
           <img alt='TheHangLooseHut' className='header-logo' src={HLHLogo}/><img alt='TheHangLooseHut' className='header-logo-text' src={HLHLogoText}/>
@@ -66,7 +66,6 @@ export class Receipt extends React.PureComponent {
           <Col lg={2}></Col>
         </Row>
         <Row >
-            
         </Row>
       </div>
     )

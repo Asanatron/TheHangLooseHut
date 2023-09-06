@@ -7,6 +7,7 @@ import ReactToPrint from 'react-to-print';
 import Receipt from './Receipt';
 
 const { Dragger } = Upload;
+const { Option } = Select;
 
 export class CusDetails extends Component {
   constructor(props) {
@@ -14,8 +15,12 @@ export class CusDetails extends Component {
   
     this.state = {
       cusName: '',
+      sororityList: [],
+      schoolList: [],
       sorority: '',
       school: '',
+      sororityOthers: '',
+      schoolOthers: '',
       contactInfo: '',
       image: null,
       files: null,
@@ -25,11 +30,82 @@ export class CusDetails extends Component {
   }
 
   PrintQuote(){
-      
+      if(this.state.school === 'Others' && this.state.schoolOthers !== ''){
+        var insertSchool = {
+          method: 'post',
+          url: `https://thehangloosehutbackend.herokuapp.com/insertSchool?newValue=${this.state.schoolOthers}`,
+          headers: {}
+        }
+  
+        axios(insertSchool).then((res) => {
+          notification.success({
+            message: `School List Updated`,
+            placement: "bottomRight",
+          });
+          this.setState({
+            school: ''
+          })
+        })
+      }
+
+      if(this.state.sorority === 'Others' && this.state.sororityOthers !== ''){
+        var insertSchool = {
+          method: 'post',
+          url: `https://thehangloosehutbackend.herokuapp.com/insertSorority?newValue=${this.state.sororityOthers}`,
+          headers: {}
+        }
+  
+        axios(insertSchool).then((res) => {
+          notification.success({
+            message: `Sorority List Updated`,
+            placement: "bottomRight",
+          });
+          this.setState({
+            sorority: ''
+          })
+        })
+      }
+  }
+
+  componentDidMount(){
+    var GetTableData_schools = {
+      method: 'get',
+      url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=schools',
+      headers: {}
+    }
+
+    axios(GetTableData_schools).then((res) => {
+      // console.log(res.data.solution)
+      this.setState({
+        schoolList: res.data.solution
+      })
+
+      var GetTableData_sorority = {
+        method: 'get',
+        url: 'https://thehangloosehutbackend.herokuapp.com/sql?tblName=sorority',
+        headers: {}
+      }
+  
+      axios(GetTableData_sorority).then((res) => {
+        // console.log(res.data.solution)
+        this.setState({
+          sororityList: res.data.solution
+        })
+      }).catch((error) => {
+        console.log(error)
+      })
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 
 
   render() {
+    const schoolOptions = this.state.schoolList.length !== 0 ? this.state.schoolList.map((item, i) => (<Option key={i+1} value={item.School_Name}>{item.School_Name}</Option>)) : <></>
+    const sororityOptions = this.state.sororityList.length !== 0 ? this.state.sororityList.map((item, i) => (<Option key={i+1} value={item.Sorority_name}>{item.Sorority_name}</Option>)) : <></>
+
+
+    // console.log(this.state)
     const props = {
       name: "file",
       multiple: false,
@@ -64,7 +140,7 @@ export class CusDetails extends Component {
       },
     };
 
-    console.log(this.props)
+    // console.log(this.props)
 
     return (
       <div className='pl3'>
@@ -84,21 +160,47 @@ export class CusDetails extends Component {
           value={this.state.cusName}
         />
 
-<       div className="pl2 pr2 pt2 font-prim-small">Sorority Name</div>
-        <Input
-          className=""
-          placeholder="Enter Sorority Name"
-          onChange={(e) => this.setState({ sorority: e.target.value })}
-          value={this.state.sorority}
-        />
+      <div className="pl2 pr2 pt2 font-prim-small">School Name</div>
+        <Select placeholder="Choose school"
+            style={{ width: '100%' }}
+            onChange={(e) => {this.setState({
+              school: e
+            })}}>
+          {schoolOptions}
+        </Select>
 
-        <div className="pl2 pr2 pt2 font-prim-small">School Name</div>
-        <Input
-          className=""
-          placeholder="Enter School Name"
-          onChange={(e) => this.setState({ school: e.target.value })}
-          value={this.state.school}
-        />
+        {
+          this.state.school === 'Others' ? <div className='mt3'>
+            <Input
+              className=""
+              placeholder="Enter School Name"
+              onChange={(e) => this.setState({ schoolOthers: e.target.value })}
+              value={this.state.schoolOthers}
+            />
+          </div> : <div>
+          </div>
+        }
+
+        <div className="pl2 pr2 pt2 font-prim-small">Sorority Name</div>
+        <Select placeholder="Choose sorority"
+            style={{ width: '100%' }}
+            onChange={(e) => {this.setState({
+              sorority: e
+            })}}>
+          {sororityOptions}
+        </Select>
+
+        {
+          this.state.sorority === 'Others' ? <div className='mt3'>
+            <Input
+              className=""
+              placeholder="Enter Sorority Name"
+              onChange={(e) => this.setState({ sororityOthers: e.target.value })}
+              value={this.state.sororityOthers}
+            />
+          </div> : <div>
+          </div>
+        }
 
         <div className="pl2 pr2 pt2 font-prim-small">Contact Info</div>
         <Input
@@ -127,13 +229,15 @@ export class CusDetails extends Component {
         </Dragger>
 
         <ReactToPrint
+          onBeforePrint={() => this.PrintQuote()}
           trigger={() => {
             return <Row justify="center mb3 pt3">
-            <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {this.PrintQuote()}}>
+            <Button className="" style={{minWidth: '32px'}} type="primary" onClick={() => {}}>
               <img className="button-logo" src={Pink}></img>Print Quote
             </Button> 
           </Row>;
           }}
+          removeAfterPrint={false}
           content={() => this.componentRef}
         />
           <div style={{ display: "none" }}>
