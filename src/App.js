@@ -57,9 +57,9 @@ export class App extends Component {
   
   componentDidMount(){
 
-    console.log("Secret: " + process.env.REACT_APP_HASH_SECRET)
-    console.log("URL: " + process.env.REACT_APP_SITE_URL)
-    
+    console.log("Secret: " + env.REACT_APP_HASH_SECRET)
+    console.log("URL: " + env.REACT_APP_SITE_URL)
+
     const userType=localStorage.getItem('userType');
     if(userType){
 
