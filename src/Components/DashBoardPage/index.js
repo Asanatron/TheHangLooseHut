@@ -4,7 +4,7 @@ import "./content.css";
 import { Card, Row } from "antd";
 
 function buildUrl(url) {
-  const updatedUrl = process.env.REACT_APP_SITE_URL + url;
+  const updatedUrl = "https://asanatron.github.io/TheHangLooseHut/" + url;
   return updatedUrl;
 }
 export class DashBoard extends Component {

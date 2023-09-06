@@ -27,7 +27,7 @@ export class Body extends Component {
     const userType = localStorage.getItem("userType");
     if (userType) {
       const bytes = CryptoJS.enc.Utf8.stringify(
-        CryptoJS.AES.decrypt(userType, process.env.REACT_APP_HASH_SECRET)
+        CryptoJS.AES.decrypt(userType, "iCiTd51fTn")
       );
       const decryptedUserType = bytes.toString();
       if (

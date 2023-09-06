@@ -34,7 +34,7 @@ export class App extends Component {
           })
           const encryptedUserType  = CryptoJS.AES.encrypt(
           res.data.userType,
-          process.env.REACT_APP_HASH_SECRET
+          "iCiTd51fTn"
           ).toString();
           localStorage.setItem('userType', encryptedUserType );
         } else{
@@ -57,14 +57,11 @@ export class App extends Component {
   
   componentDidMount(){
 
-    console.log("Secret: " + env.REACT_APP_HASH_SECRET)
-    console.log("URL: " + env.REACT_APP_SITE_URL)
-
     const userType=localStorage.getItem('userType');
     if(userType){
 
       const bytes = CryptoJS.enc
-      .Utf8.stringify(CryptoJS.AES.decrypt(userType, process.env.REACT_APP_HASH_SECRET));
+      .Utf8.stringify(CryptoJS.AES.decrypt(userType, "iCiTd51fTn"));
       const decryptedUserType = bytes.toString();
       if(decryptedUserType=="admin" || decryptedUserType == 'asanatron' || decryptedUserType == 'quotemaster'){
         this.setState({
