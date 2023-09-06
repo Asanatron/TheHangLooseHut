@@ -56,10 +56,15 @@ export class App extends Component {
   }
   
   componentDidMount(){
+
+    console.log("Secret: " + process.env.REACT_APP_HASH_SECRET)
+    console.log("URL: " + process.env.REACT_APP_SITE_URL)
+    
     const userType=localStorage.getItem('userType');
     if(userType){
 
-      const bytes = CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(userType, process.env.REACT_APP_HASH_SECRET));
+      const bytes = CryptoJS.enc
+      .Utf8.stringify(CryptoJS.AES.decrypt(userType, process.env.REACT_APP_HASH_SECRET));
       const decryptedUserType = bytes.toString();
       if(decryptedUserType=="admin" || decryptedUserType == 'asanatron' || decryptedUserType == 'quotemaster'){
         this.setState({
