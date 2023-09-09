@@ -71,8 +71,8 @@ export class DTF extends Component {
     this.props.getitemCost(this.state.itemCost)
     this.props.getlocationSizes(this.state.locationSizes)
     this.props.getquantity(this.state.quantity)
-    this.props.gettotalCost(this.state.totalCost)
-    this.props.getppCost(this.state.ppCost)
+    this.props.gettotalCost(totalCost)
+    this.props.getppCost(ppCost)
     this.props.getlocation(this.state.location)
   }
 
