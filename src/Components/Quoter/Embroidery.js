@@ -57,8 +57,8 @@ export class Embroidery extends Component {
         ppCost: ppCost
       })
 
-      this.props.gettotalCost(totalCost)
-      this.props.getppCost(ppCost)
+      this.props.gettotalCost(this.state.totalCost)
+      this.props.getppCost(this.state.ppCost)
       this.props.getquantity(this.state.quantity)
       this.props.getitemCost(this.state.itemCost)
       this.props.getlogoCost(this.state.logoCost)
@@ -72,6 +72,7 @@ export class Embroidery extends Component {
       <div>
          <div className="pr2 pt3 font-prim-small">Item</div>
           <Select placeholder="Choose item"
+            showSearch
               style={{ width: '100%' }}
               onChange={(e) => {
                 this.setState({

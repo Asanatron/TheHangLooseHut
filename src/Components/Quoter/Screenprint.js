@@ -93,8 +93,8 @@ export class Screenprint extends Component {
     this.props.getitemCost(this.state.itemCost)
     this.props.getlocationColors(this.state.locationColors)
     this.props.getquantity(this.state.quantity)
-    this.props.gettotalCost(totalCost)
-    this.props.getppCost(ppCost)
+    this.props.gettotalCost(this.state.totalCost)
+    this.props.getppCost(this.state.ppCost)
     this.props.getlocation(this.state.location)
     this.props.getscreens(this.state.screens)
   }
@@ -121,6 +121,7 @@ export class Screenprint extends Component {
       <div>
         <div className="pr2 pt3 font-prim-small">Item</div>
         <Select placeholder="Choose item"
+            showSearch
             style={{ width: '100%' }}
             onChange={(e) => {this.setState({
               itemCost: Number(this.props.screenPrintItemList.find((data) => data.label === e).value)

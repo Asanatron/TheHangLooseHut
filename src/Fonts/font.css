@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'HangLooseNormal';
+  src: local('CustomFoHangLooseNormalnt1Name'),
+       url('./NeutralFace.otf') format('otf'),
+       url('./NeutralFace.otf') format('otf');
+}
+@font-face {
+  font-family: 'HangLooseBold';
+  src: local('CustomFont2Name'),
+       url('./NeutralFace-Bold.otf') format('otf'),
+       url('./NeutralFace-Bold.otf') format('otf');
+}

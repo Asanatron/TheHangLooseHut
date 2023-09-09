@@ -246,6 +246,7 @@ export class CusDetails extends Component {
           <Receipt 
             printType = {this.props.printType}
             totalCost = {this.props.totalCost}
+            ppCost = {this.props.ppCost}
             quantity = {this.props.quantity}
             itemCost = {this.props.itemCost}
             logoCost = {this.props.logoCost}

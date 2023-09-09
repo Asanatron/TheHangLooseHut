@@ -71,8 +71,8 @@ export class DTF extends Component {
     this.props.getitemCost(this.state.itemCost)
     this.props.getlocationSizes(this.state.locationSizes)
     this.props.getquantity(this.state.quantity)
-    this.props.gettotalCost(totalCost)
-    this.props.getppCost(ppCost)
+    this.props.gettotalCost(this.state.totalCost)
+    this.props.getppCost(this.state.ppCost)
     this.props.getlocation(this.state.location)
   }
 
@@ -111,6 +111,7 @@ export class DTF extends Component {
         <div className="pr2 pt3 font-prim-small">Item</div>
         <Select placeholder="Choose item"
             style={{ width: '100%' }}
+            showSearch
             onChange={(e) => {this.setState({
               itemCost: Number(this.props.dtfItemList.find((data) => data.label === e).value)
             }); this.props.getitem(e)}}>

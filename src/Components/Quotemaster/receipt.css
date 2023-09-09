@@ -10,3 +10,18 @@
     overflow: hidden;
   }
 }
+.customer-box{
+  background-color: rgb(237, 196, 218);;
+}
+.border-dotted{
+  border-top: 2px black dashed;
+  padding: 10px;
+}
+.border-dotted-all{
+  border: 2px black dashed;
+  padding: 10px;
+  border-radius: 10px;
+}
+.hl-normal{
+  /* font-family: HangLooseNormal; */
+}
