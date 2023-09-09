@@ -162,6 +162,7 @@ export class CusDetails extends Component {
 
       <div className="pl2 pr2 pt2 font-prim-small">School Name</div>
         <Select placeholder="Choose school"
+            showSearch
             style={{ width: '100%' }}
             onChange={(e) => {this.setState({
               school: e
@@ -183,6 +184,7 @@ export class CusDetails extends Component {
 
         <div className="pl2 pr2 pt2 font-prim-small">Sorority Name</div>
         <Select placeholder="Choose sorority"
+            showSearch
             style={{ width: '100%' }}
             onChange={(e) => {this.setState({
               sorority: e
