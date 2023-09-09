@@ -101,8 +101,8 @@ export class CusDetails extends Component {
 
 
   render() {
-    const schoolOptions = this.state.schoolList.length !== 0 ? this.state.schoolList.map((item, i) => (<Option key={i+1} value={item.School_Name}>{item.School_Name}</Option>)) : <></>
-    const sororityOptions = this.state.sororityList.length !== 0 ? this.state.sororityList.map((item, i) => (<Option key={i+1} value={item.Sorority_name}>{item.Sorority_name}</Option>)) : <></>
+    const schoolOptions = this.state.schoolList.length !== 0 ? this.state.schoolList.sort(function(a, b){return a.School_Name > b.School_Name}).map((item, i) => (<Option key={i+1} value={item.School_Name}>{item.School_Name}</Option>)) : <></>
+    const sororityOptions = this.state.sororityList.length !== 0 ? this.state.sororityList.sort(function(a, b){return a.Sorority_name > b.Sorority_name}).map((item, i) => (<Option key={i+1} value={item.Sorority_name}>{item.Sorority_name}</Option>)) : <></>
 
 
     // console.log(this.state)
