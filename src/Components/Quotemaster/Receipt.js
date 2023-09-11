@@ -24,7 +24,7 @@ export class Receipt extends React.PureComponent {
         </Row>
         <Row gutter={10} className='mt2 pa2'>
           <Col lg={12} className='pt1 pb1'>
-            <div className='f5 mb2 pl1 pr1 pt1 pb1'><span className='b'>INSPIRATION DESIGN </span><span className='f5'>{this.props.cusName.toUpperCase()}</span></div>
+            <div className='f5 mb2 pl1 pr1 pt1 pb1'><span className='b'>INSPIRATION DESIGN </span><span className='f5'></span></div>
             <Image className='mt1 border-dotted-all' src={this.props.FILEBASE64URI}/></Col>
           <Col lg={12} className='pt1 pb1'>
             <div className='f5 mb2 pl1 pr1 pt1 pb1'><span className='b'>PRINT TYPE: </span><span className='f5'>{this.props.printType.toUpperCase()}</span></div>
