@@ -32,7 +32,7 @@ export class Receipt extends React.PureComponent {
             <div className='f5 mb2 pl1 pr1 pt1 pb1'><span className='b'>QUANTITY: </span><span className='f5'>{this.props.quantity}</span></div>
             <div className='border-dotted'>
               <div className='f5 b customer-box pl1 pr1 pt1'>PRICE PER PIECE</div>
-              <div className='f5 customer-box pl1 pr1 pb1'>${Math.ceil(Number(this.state.ppCost)*2)/2}</div>
+              <div className='f5 customer-box pl1 pr1 pb1'>${Math.ceil(Number(this.props.ppCost)*2)/2}</div>
               <div className='f4 b pl1 pr1 pt1'>TOTAL COST</div>
               <div className='f4 pl1 pr1 pb1'>${Math.round(Number(this.props.totalCost))}</div>
             </div>
