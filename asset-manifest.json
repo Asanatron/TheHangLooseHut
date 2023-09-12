@@ -1,7 +1,7 @@
 {
   "main.css": "/TheHangLooseHut/static/css/main.f3d08414.chunk.css",
-  "main.js": "/TheHangLooseHut/static/js/main.226d8f66.chunk.js",
-  "main.js.map": "/TheHangLooseHut/static/js/main.226d8f66.chunk.js.map",
+  "main.js": "/TheHangLooseHut/static/js/main.2ef2d487.chunk.js",
+  "main.js.map": "/TheHangLooseHut/static/js/main.2ef2d487.chunk.js.map",
   "static/js/1.49b2f222.chunk.js": "/TheHangLooseHut/static/js/1.49b2f222.chunk.js",
   "static/js/1.49b2f222.chunk.js.map": "/TheHangLooseHut/static/js/1.49b2f222.chunk.js.map",
   "static/css/2.73b96879.chunk.css": "/TheHangLooseHut/static/css/2.73b96879.chunk.css",
@@ -15,6 +15,6 @@
   "static/css/main.f3d08414.chunk.css.map": "/TheHangLooseHut/static/css/main.f3d08414.chunk.css.map",
   "static/css/2.73b96879.chunk.css.map": "/TheHangLooseHut/static/css/2.73b96879.chunk.css.map",
   "index.html": "/TheHangLooseHut/index.html",
-  "precache-manifest.bb0410667f70d0b9d56dc1a8b2e4abde.js": "/TheHangLooseHut/precache-manifest.bb0410667f70d0b9d56dc1a8b2e4abde.js",
+  "precache-manifest.07db7d2f75e423e7c719981a22caa679.js": "/TheHangLooseHut/precache-manifest.07db7d2f75e423e7c719981a22caa679.js",
   "service-worker.js": "/TheHangLooseHut/service-worker.js"
 }
