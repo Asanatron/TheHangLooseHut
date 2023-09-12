@@ -256,8 +256,8 @@ export class CusDetails extends Component {
             location = {this.props.location}
             item = {this.props.item}
             cusName = {this.state.cusName}
-            sorority = {this.state.sorority}
-            school = {this.state.school}
+            sorority = {this.state.sorority==='Others'?this.state.sororityOthers:this.state.sorority}
+            school = {this.state.school==='Others'?this.state.schoolOthers:this.state.school}
             contactInfo = {this.state.contactInfo}
             image = {this.state.image}
             FILEBASE64URI = {this.state.FILEBASE64URI}
