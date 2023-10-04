@@ -35,11 +35,9 @@ export class Embroidery extends Component {
   GetQuote(){
     var discount = 0
 
-    if(this.state.quantity > 23 && this.state.quantity < 200){
+    if(this.state.quantity > 23){
       var temp = this.props.discount.find((data) => Number(data.From) <= this.state.quantity && this.state.quantity <= Number(data.To)).Discount
       discount = Number(temp)
-    } else if(this.state.quantity >= 200){
-      discount = 35
     } else{
       discount = 0
     }
