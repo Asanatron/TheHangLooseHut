@@ -118,14 +118,13 @@ export class Submission extends Component {
   }
 
   onPost() {
-    var link = ''
-    if(this.state.desc[this.state.desc.length-1] === 'f'){
-      var subs1 = this.state.desc.substring(0,this.state.desc.lastIndexOf("/"))
-      link = subs1.substring(subs1.lastIndexOf("/")+1)
-    } else{
-      link = this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)
-    }
-
+    var link = this.state.desc.substring(this.state.desc.lastIndexOf('/')+1,this.state.desc.lastIndexOf('?'))
+    // if(this.state.desc[this.state.desc.length-1] === 'f'){
+    //   var subs1 = this.state.desc.substring(0,this.state.desc.lastIndexOf("/"))
+    //   link = subs1.substring(subs1.lastIndexOf("/")+1)
+    // } else{
+    //   link = this.state.desc.substring(this.state.desc.lastIndexOf("/")+1)
+    // }
     if (
       (this.state.imageName !== "" || this.state.title) &&
       this.state.category !== "" &&
